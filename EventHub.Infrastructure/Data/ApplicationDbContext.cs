@@ -1,4 +1,5 @@
-﻿using EventHub.Infrastructure.Models;
+﻿using EventHub.Infrastructure.Data.Configurations;
+using EventHub.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventHub.Infrastructure.Data
@@ -18,9 +19,11 @@ namespace EventHub.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Comment>().HasOne(x => x.User).WithMany(x => x.Comments).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Event>().HasOne(x => x.Creator).WithMany(x => x.CreatedEvents).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<EventRegistration>().HasOne(x => x.User).WithMany(x => x.Registrations).OnDelete(DeleteBehavior.Restrict);
+            builder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new EventConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
+            builder.ApplyConfiguration(new EventRegistrationConfiguration());
 
             base.OnModelCreating(builder);
         }

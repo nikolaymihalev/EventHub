@@ -35,11 +35,11 @@ namespace EventHub.Infrastructure.Data
         {
             Users = new List<User>
             {
-                new User {Id = Guid.NewGuid().ToString(), Username = "john_doe", Email = "john.doe@example.com", FirstName = "John", LastName = "Doe", CreatedAt = new DateTime(2024,5,12)},
-                new User {Id = Guid.NewGuid().ToString(), Username = "jane_smith", Email = "jane.smith@example.com", FirstName = "Jane", LastName = "Smith", CreatedAt = new DateTime(2024,3,5)},
-                new User {Id = Guid.NewGuid().ToString(), Username = "mike_jones", Email = "mike.jones@example.com", FirstName = "Mike", LastName = "Jones", CreatedAt = new DateTime(2024,2,7)},
-                new User {Id = Guid.NewGuid().ToString(), Username = "lucy_brown", Email = "lucy.brown@example.com" , FirstName = "Lucy", LastName = "Brown", CreatedAt = new DateTime(2024,1,10)},
-                new User {Id = Guid.NewGuid().ToString(), Username = "susan_lee", Email = "susan.lee@example.com", FirstName = "Susan", LastName = "Lee", CreatedAt = new DateTime(2024, 10, 5)}
+                new User {Id = "3f8cece7-c485-4d8c-95b2-bfd3d97d28cc", Username = "john_doe", Email = "john.doe@example.com", FirstName = "John", LastName = "Doe", CreatedAt = new DateTime(2024,5,12)},
+                new User {Id = "52569acc-8c9f-4e79-86ef-d55071e0be3d", Username = "jane_smith", Email = "jane.smith@example.com", FirstName = "Jane", LastName = "Smith", CreatedAt = new DateTime(2024,3,5)},
+                new User {Id = "8fc80a8c-5fd1-4745-bcb4-6b3b00cf9f40", Username = "mike_jones", Email = "mike.jones@example.com", FirstName = "Mike", LastName = "Jones", CreatedAt = new DateTime(2024,2,7)},
+                new User {Id = "92b2c75a-ab33-425a-be05-6d6f7af74a5a", Username = "lucy_brown", Email = "lucy.brown@example.com" , FirstName = "Lucy", LastName = "Brown", CreatedAt = new DateTime(2024,1,10)},
+                new User {Id = "f593b51d-ef90-4914-9099-3188302616dc", Username = "susan_lee", Email = "susan.lee@example.com", FirstName = "Susan", LastName = "Lee", CreatedAt = new DateTime(2024, 10, 5)}
             };
 
             var passwordHasher = new PasswordHasher<User>();
@@ -59,7 +59,7 @@ namespace EventHub.Infrastructure.Data
                 new Event { Id = 2, Title = "Rock Concert", Description = "Live rock music concert", Date = new DateTime(2024, 6, 10), CategoryId = 2, Location = "New York, NY", CreatorId = Users[1].Id },
                 new Event { Id = 3, Title = "Art Gallery Opening", Description = "New art exhibition opening", Date = new DateTime(2024, 7, 5), CategoryId = 3, Location = "Paris, France" , CreatorId = Users[2].Id },
                 new Event { Id = 4, Title = "Football Tournament", Description = "Exciting football competition", Date = new DateTime(2024, 8, 20), CategoryId = 4, Location = "London, UK" , CreatorId = Users[3].Id },
-                new Event { Id = 5, Title = "Online Education Webinar", Description = "A webinar about online learning", Date = new DateTime(2024, 9, 30), CategoryId = 5 , Location = "Virtual", CreatorId = Users[1].Id},
+                new Event { Id = 5, Title = "Online Education Webinar", Description = "A webinar about online learning", Date = new DateTime(2024, 9, 25), CategoryId = 5 , Location = "Virtual", CreatorId = Users[1].Id},
                 new Event { Id = 6, Title = "AI and Machine Learning Seminar", Description = "Seminar on AI and machine learning", Date = new DateTime(2024, 10, 12), CategoryId = 1, Location = "San Francisco, CA", CreatorId = Users[4].Id },
                 new Event { Id = 7, Title = "Jazz Music Night", Description = "Enjoy a night of live jazz music", Date = new DateTime(2024, 11, 22), CategoryId = 2, Location = "Chicago, IL", CreatorId = Users[2].Id },
                 new Event { Id = 8, Title = "Modern Art Exhibition", Description = "Explore the world of modern art", Date = new DateTime(2024, 12, 10), CategoryId = 3, Location = "Berlin, Germany" , CreatorId = Users[3].Id },
@@ -80,7 +80,7 @@ namespace EventHub.Infrastructure.Data
                 new Comment { Id = 1, Content = "Great event!", CreatedAt = new DateTime(2024, 6, 16), UserId = Users[0].Id, EventId = 2 },
                 new Comment { Id = 2, Content = "Looking forward to it!", CreatedAt = new DateTime(2024, 5, 17), UserId = Users[1].Id, EventId = 1 },
                 new Comment { Id = 3, Content = "This sounds amazing!", CreatedAt = new DateTime(2024, 8, 23), UserId = Users[2].Id, EventId = 4 },
-                new Comment { Id = 4, Content = "I am going to join this!", CreatedAt = new DateTime(2024, 9, 31), UserId = Users[3].Id, EventId = 5 },
+                new Comment { Id = 4, Content = "I am going to join this!", CreatedAt = new DateTime(2024, 9, 29), UserId = Users[3].Id, EventId = 5 },
                 new Comment { Id = 5, Content = "Excited to attend!", CreatedAt = new DateTime(2024, 7, 10), UserId = Users[4].Id, EventId = 3 }
             };
         }
