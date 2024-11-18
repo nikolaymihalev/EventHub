@@ -55,13 +55,6 @@ namespace EventHub.Infrastructure.Models
         public int CategoryId { get; set; }
 
         /// <summary>
-        /// URL to an image representing the event.
-        /// </summary>
-        [Required]
-        [Comment("Event's image link")]
-        public string ImageUrl { get; set; } = string.Empty;
-
-        /// <summary>
         /// Foreign key referencing the user who created the event.
         /// </summary>
         [Required]
