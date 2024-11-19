@@ -18,18 +18,18 @@ namespace EventHub.Core.Services
 
         public async Task AddAsync(EventFormModel model)
         {
-            var eventModel = new Event()
-            {
-                Title = model.Title,
-                Description = model.Description,
-                CreatorId = model.CreatorId,
-                Location = model.Location,
-                Date = model.Date,
-                CategoryId = model.CategoryId
-            };
-
             try
             {
+                var eventModel = new Event()
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    CreatorId = model.CreatorId,
+                    Location = model.Location,
+                    Date = model.Date,
+                    CategoryId = model.CategoryId
+                };
+
                 await repository.AddAsync(eventModel);
                 await repository.SaveChangesAsync();
             }
@@ -71,7 +71,7 @@ namespace EventHub.Core.Services
             var eventM = await repository.GetByIdAsync<Event>(id);
 
             if (eventM == null)
-                throw new ArgumentException(ErrorMessages.DoesntExistErrorMessage);
+                throw new ArgumentException(string.Format(ErrorMessages.DoesntExistErrorMessage, "event"));
 
             return new EventInfoModel()
             {
