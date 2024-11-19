@@ -1,4 +1,6 @@
-﻿using EventHub.Infrastructure.Common;
+﻿using EventHub.Core.Contracts;
+using EventHub.Core.Services;
+using EventHub.Infrastructure.Common;
 using EventHub.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +10,8 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            
+            services.AddScoped<ICategoryService, CategoryService>();
+
             return services;
         }
 

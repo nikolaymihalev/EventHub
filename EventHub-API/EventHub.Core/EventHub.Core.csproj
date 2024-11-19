@@ -10,4 +10,10 @@
     <ProjectReference Include="..\EventHub.Infrastructure\EventHub.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Comment\" />
+    <Folder Include="Models\Event\" />
+    <Folder Include="Models\User\" />
+  </ItemGroup>
+
 </Project>
