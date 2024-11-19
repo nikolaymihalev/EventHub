@@ -28,7 +28,7 @@ namespace EventHub.Core.Contracts
         /// </summary>
         /// <param name="model">The <see cref="CommentFormModel"/> containing the updated data for the comment.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task EditAsync(CommentFormModel model);
+        Task EditAsync(CommentFormModel model, string userId);
 
         /// <summary>
         /// Deletes a comment by its unique identifier asynchronously.

@@ -48,11 +48,11 @@ namespace EventHub.Core.Services
             await repository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(CommentFormModel model)
+        public async Task EditAsync(CommentFormModel model, string userId)
         {
             var comment = await repository.GetByIdAsync<Comment>(model.Id);
 
-            if(comment == null)
+            if(comment == null || comment.UserId != userId)
                 throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);
 
             comment.Content = model.Content;

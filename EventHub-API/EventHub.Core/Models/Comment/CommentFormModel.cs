@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EventHub.Core.Models.Comment
 {
+    /// <summary>
+    /// Model for adding or editing Comment
+    /// </summary>
     public class CommentFormModel
     {
         /// <summary>
