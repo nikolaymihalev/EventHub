@@ -32,7 +32,7 @@ namespace EventHub.Core.Services
             var category = await repository.GetByIdAsync<Category>(id);
 
             if (category == null)
-                throw new ArgumentException(ErrorMessages.DoesntExistErrorMessage);
+                throw new ArgumentException(string.Format(ErrorMessages.DoesntExistErrorMessage, "category"));
 
             return new CategoryModel()
             {

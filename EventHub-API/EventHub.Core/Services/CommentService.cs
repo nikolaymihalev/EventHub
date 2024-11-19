@@ -18,16 +18,16 @@ namespace EventHub.Core.Services
 
         public async Task AddAsync(CommentFormModel model)
         {
-            var comment = new Comment()
-            {
-                Content = model.Content,
-                CreatedAt = DateTime.Now,
-                EventId = model.EventId,
-                UserId = model.UserId,
-            };
-
             try
             {
+                var comment = new Comment()
+                {
+                    Content = model.Content,
+                    CreatedAt = DateTime.Now,
+                    EventId = model.EventId,
+                    UserId = model.UserId,
+                };
+
                 await repository.AddAsync(comment);
                 await repository.SaveChangesAsync();
             }
@@ -42,7 +42,7 @@ namespace EventHub.Core.Services
             var comment = await repository.GetByIdAsync<Comment>(id);
 
             if (comment == null || comment.UserId != userId)
-                throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);           
+                throw new ArgumentException(string.Format(ErrorMessages.InvalidModelErrorMessage, "parameters"));           
 
             await repository.DeleteAsync<Comment>(id);
             await repository.SaveChangesAsync();
@@ -53,7 +53,7 @@ namespace EventHub.Core.Services
             var comment = await repository.GetByIdAsync<Comment>(model.Id);
 
             if(comment == null || comment.UserId != userId)
-                throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);
+                throw new ArgumentException(string.Format(ErrorMessages.InvalidModelErrorMessage, "parameters"));
 
             comment.Content = model.Content;
 

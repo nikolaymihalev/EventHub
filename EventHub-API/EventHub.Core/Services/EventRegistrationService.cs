@@ -18,15 +18,15 @@ namespace EventHub.Core.Services
 
         public async Task AddAsync(RegistrationFormModel model)
         {
-            var registration = new EventRegistration()
-            {
-                EventId = model.EventId,
-                UserId = model.UserId,
-                RegisteredAt = DateTime.Now,
-            };
-
             try
             {
+                var registration = new EventRegistration()
+                {
+                    EventId = model.EventId,
+                    UserId = model.UserId,
+                    RegisteredAt = DateTime.Now,
+                };
+
                 await repository.AddAsync(registration);
                 await repository.SaveChangesAsync();
             }
@@ -41,7 +41,7 @@ namespace EventHub.Core.Services
             var registration = await repository.GetByIdAsync<EventRegistration>(id);
 
             if (registration == null || registration.UserId != userId)
-                throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);
+                throw new ArgumentException(string.Format(ErrorMessages.InvalidModelErrorMessage, "parameters"));
 
             await repository.DeleteAsync<EventRegistration>(id);
             await repository.SaveChangesAsync();

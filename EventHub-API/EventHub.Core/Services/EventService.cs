@@ -44,7 +44,7 @@ namespace EventHub.Core.Services
             var eventM = await repository.GetByIdAsync<Event>(id);
 
             if (eventM == null || eventM.CreatorId != creatorId)
-                throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);
+                throw new ArgumentException(string.Format(ErrorMessages.InvalidModelErrorMessage, "parameters"));
 
             await repository.DeleteAsync<Event>(id);
             await repository.SaveChangesAsync();
@@ -55,7 +55,7 @@ namespace EventHub.Core.Services
             var eventM = await repository.GetByIdAsync<Event>(model.Id);
 
             if (eventM == null || eventM.CreatorId != creatorId)
-                throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);
+                throw new ArgumentException(string.Format(ErrorMessages.InvalidModelErrorMessage, "parameters"));
 
             eventM.Title = model.Title;
             eventM.Description = model.Description;
