@@ -11,8 +11,9 @@ namespace EventHub.Core.Contracts
         /// Retrieves a paginated list of events asynchronously.
         /// </summary>
         /// <param name="currentPage">The current page number (default is 1).</param>
+        /// <param name="userId">The user identifier (default is null).</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="EventPageModel"/> with the events for the specified page.</returns>
-        Task<EventPageModel> GetEventsForPageAsync(int currentPage = 1);
+        Task<EventPageModel> GetEventsForPageAsync(int currentPage = 1, string? userId = null);
 
         /// <summary>
         /// Retrieves detailed information about a specific event asynchronously.

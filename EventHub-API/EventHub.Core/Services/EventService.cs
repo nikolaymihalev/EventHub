@@ -85,7 +85,7 @@ namespace EventHub.Core.Services
             };
         }
 
-        public async Task<EventPageModel> GetEventsForPageAsync(int currentPage = 1)
+        public async Task<EventPageModel> GetEventsForPageAsync(int currentPage = 1, string? userId = null)
         {
             var eventPageModel = new EventPageModel();
             int formula = (currentPage - 1) * VariablesConstants.MaxEventsPerPage;
@@ -95,7 +95,7 @@ namespace EventHub.Core.Services
                 formula = 0;
             }
 
-            eventPageModel.Events = await GetAllEventsAsync();
+            eventPageModel.Events = await GetAllEventsAsync(userId);
 
             eventPageModel.PagesCount = Math.Ceiling(eventPageModel.Events.Count() / Convert.ToDouble(VariablesConstants.MaxEventsPerPage));
 
@@ -108,8 +108,23 @@ namespace EventHub.Core.Services
             return eventPageModel;
         }
 
-        private async Task<IEnumerable<EventInfoModel>> GetAllEventsAsync() 
+        private async Task<IEnumerable<EventInfoModel>> GetAllEventsAsync(string? userId) 
         {
+            if (userId != null)             
+                return await repository.AllReadonly<Event>()
+                .Where(x => x.CreatorId == userId)
+                .Select(x => new EventInfoModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    CreatorId = x.CreatorId,
+                    Location = x.Location,
+                    Date = x.Date.ToString(VariablesConstants.DataFormat),
+                    CategoryId = x.CategoryId
+                }).ToListAsync();
+            
+
             return await repository.AllReadonly<Event>()
                 .Select(x => new EventInfoModel()
                 {
