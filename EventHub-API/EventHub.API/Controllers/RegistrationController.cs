@@ -16,7 +16,7 @@ namespace EventHub.API.Controllers
             eventRegistrationService = _eventRegistrationService;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("all/{userId}")]
         public async Task<IActionResult> GetRegistrations(string userId)
         {
             var model = await eventRegistrationService.GetUserEventRegistrationsAsync(userId);
@@ -24,7 +24,7 @@ namespace EventHub.API.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Create([FromBody]RegistrationFormModel model)
         {
             try
@@ -39,7 +39,7 @@ namespace EventHub.API.Controllers
             return Ok(new { Message = string.Format(SuccessfullMessages.Created, "Registration for event") });
         }
 
-        [HttpDelete("{id}/user/{userId}")]
+        [HttpDelete("delete/{id}/user/{userId}")]
         public async Task<IActionResult> Delete(int id, string userId)
         {
             try

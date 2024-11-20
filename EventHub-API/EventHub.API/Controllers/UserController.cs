@@ -19,16 +19,17 @@ namespace EventHub.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
+            string result = "";
             try
             {
-                await userService.RegisterAsync(model);
+                result = await userService.RegisterAsync(model);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            return Ok(new { Message = SuccessfullMessages.Registered });
+            return Ok(result);
         }
 
         [HttpPost("login")]

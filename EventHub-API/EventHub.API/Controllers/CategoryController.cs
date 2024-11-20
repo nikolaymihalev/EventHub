@@ -15,7 +15,7 @@ namespace EventHub.API.Controllers
             categoryService = _categoryService;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetCategories()
         {
             var model = await categoryService.GetAllCategoriesAsync();
@@ -23,7 +23,7 @@ namespace EventHub.API.Controllers
             return Ok(model);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var model = new CategoryModel();

@@ -16,7 +16,7 @@ namespace EventHub.API.Controllers
             eventService = _eventService;
         }
 
-        [HttpGet]
+        [HttpGet("all/{currentPage}/user/{userId}")]
         public async Task<IActionResult> GetEvents(int currentPage = 1, string? userId = null)
         {
             var model = await eventService.GetEventsForPageAsync(currentPage, userId);
@@ -24,7 +24,7 @@ namespace EventHub.API.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Create([FromBody] EventFormModel model)
         {
             try
@@ -54,7 +54,7 @@ namespace EventHub.API.Controllers
             return Ok(new { Message = string.Format(SuccessfullMessages.Deleted, "Event") });
         }
 
-        [HttpPut("{userId}")]
+        [HttpPut("update/{userId}")]
         public async Task<IActionResult> Update(string userId, [FromBody] EventFormModel model)
         {
             try
@@ -69,7 +69,7 @@ namespace EventHub.API.Controllers
             return Ok(new { Message = string.Format(SuccessfullMessages.Updated, "Event") });
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var model = new EventInfoModel();

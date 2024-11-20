@@ -16,7 +16,7 @@ namespace EventHub.API.Controllers
             commentService = _commentService;
         }
 
-        [HttpGet("{eventId}")]
+        [HttpGet("get-all/{eventId}")]
         public async Task<IActionResult> GetComments(int eventId) 
         {
             var model = await commentService.GetEventCommentsAsync(eventId);
@@ -24,7 +24,7 @@ namespace EventHub.API.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Create([FromBody] CommentFormModel model)
         {
             try
@@ -39,7 +39,7 @@ namespace EventHub.API.Controllers
             return Ok(new { Message = string.Format(SuccessfullMessages.Created, "Comment") });
         }
 
-        [HttpDelete("{id}/user/{userId}")]
+        [HttpDelete("delete/{id}/user/{userId}")]
         public async Task<IActionResult> Delete(int id, string userId)
         {
             try
@@ -54,7 +54,7 @@ namespace EventHub.API.Controllers
             return Ok(new { Message = string.Format(SuccessfullMessages.Deleted, "Comment") });
         }
 
-        [HttpPut("{userId}")]
+        [HttpPut("update/{userId}")]
         public async Task<IActionResult> Update(string userId, [FromBody] CommentFormModel model)
         {
             try

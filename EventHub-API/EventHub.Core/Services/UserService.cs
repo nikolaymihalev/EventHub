@@ -37,15 +37,21 @@ namespace EventHub.Core.Services
             return string.Format(ErrorMessages.DoesntExistErrorMessage, "user");
         }
 
-        public async Task RegisterAsync(RegisterModel model)
+        public async Task<string> RegisterAsync(RegisterModel model)
         {
             try
             {
-                var user = new User()
+                var user = await repository.AllReadonly<User>()
+                    .FirstOrDefaultAsync(x => x.Email == model.Email);
+
+                if (user != null)
+                    return "Already exists!";
+
+                user = new User()
                 {
-                    Username = model.UserName, 
-                    Email = model.Email, 
-                    FirstName = model.FirstName, 
+                    Username = model.UserName,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
                     LastName = model.LastName,
                     CreatedAt = DateTime.Now,
                 };
@@ -56,6 +62,8 @@ namespace EventHub.Core.Services
 
                 await repository.AddAsync(user);
                 await repository.SaveChangesAsync();
+
+                return "You was successfully registered!";
             }
             catch (Exception)
             {

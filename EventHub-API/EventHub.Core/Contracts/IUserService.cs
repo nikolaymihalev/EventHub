@@ -12,7 +12,7 @@ namespace EventHub.Core.Contracts
         /// </summary>
         /// <param name="model">The <see cref="RegisterModel"/> containing the user's registration details.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task RegisterAsync(RegisterModel model);
+        Task<string> RegisterAsync(RegisterModel model);
 
         /// <summary>
         /// Authenticates a user and generates a login token asynchronously.
