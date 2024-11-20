@@ -2,8 +2,8 @@
 {
     public static class SuccessfullMessages
     {
-        public const string CreatedEvent = "Event was successfully created";
-        public const string DeletedEvent = "Event deleted successfully";
-        public const string UpdatedEvent = "Event was successfully updated";
+        public const string Created = "{0} was successfully created";
+        public const string Deleted = "{0} deleted successfully";
+        public const string Updated = "{0} was successfully updated";
     }
 }

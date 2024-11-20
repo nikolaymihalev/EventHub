@@ -36,7 +36,7 @@ namespace EventHub.API.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok(new { Message = SuccessfullMessages.CreatedEvent});
+            return Ok(new { Message = string.Format(SuccessfullMessages.Created, "Event")});
         }
 
         [HttpDelete("{id}/user/{userId}")]
@@ -51,7 +51,7 @@ namespace EventHub.API.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok(new { Message = SuccessfullMessages.DeletedEvent });
+            return Ok(new { Message = string.Format(SuccessfullMessages.Deleted, "Event") });
         }
 
         [HttpPut("{userId}")]
@@ -66,7 +66,7 @@ namespace EventHub.API.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok(new { Message = SuccessfullMessages.UpdatedEvent });
+            return Ok(new { Message = string.Format(SuccessfullMessages.Updated, "Event") });
         }
 
         [HttpGet("{id}")]

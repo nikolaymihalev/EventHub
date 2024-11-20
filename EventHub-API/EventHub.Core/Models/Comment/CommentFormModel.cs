@@ -24,12 +24,6 @@ namespace EventHub.Core.Models.Comment
         public string Content { get; set; } = string.Empty;
 
         /// <summary>
-        /// Date and time the comment was created.
-        /// </summary>
-        [Required(ErrorMessage = ErrorMessages.RequireErrorMessage)]
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>
         /// Foreign key referencing the user who wrote the comment.
         /// </summary>
         [Required(ErrorMessage = ErrorMessages.RequireErrorMessage)]
