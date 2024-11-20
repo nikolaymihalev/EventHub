@@ -20,20 +20,19 @@ namespace EventHub.Core.Services
         public async Task<string> LoginAsync(LoginModel model)
         {
             var user = await repository.AllReadonly<User>()
-                .FirstOrDefaultAsync(x => x.Id == model.Id);
+                .FirstOrDefaultAsync(x => x.Email == model.Email);
 
-            if (user != null)
+            if (user != null) 
             {
-                if (user.Email == model.Email) 
+                var passwordHasher = new PasswordHasher<User>();
+
+                var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+
+                if (result == PasswordVerificationResult.Success)
                 {
-                    var passwordHasher = new PasswordHasher<User>();
-
-                    string hashedPass = passwordHasher.HashPassword(user, model.Password);
-
-                    if (user.PasswordHash == hashedPass)
-                        return "User successfully logged in!";
+                    return "User successfully logged in!";
                 }
-            }
+            }         
 
             return string.Format(ErrorMessages.DoesntExistErrorMessage, "user");
         }

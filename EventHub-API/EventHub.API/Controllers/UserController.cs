@@ -1,4 +1,6 @@
-﻿using EventHub.Core.Models.User;
+﻿using EventHub.API.Constants;
+using EventHub.Core.Contracts;
+using EventHub.Core.Models.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventHub.API.Controllers
@@ -7,15 +9,37 @@ namespace EventHub.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IUserService userService;
 
-        public UserController()
+        public UserController(IUserService _userService)
         {
+            userService = _userService;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            return Ok();
+            try
+            {
+                await userService.RegisterAsync(model);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(new { Message = SuccessfullMessages.Registered });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new { Message = "Unsuccessful login" });
+
+            string result = await userService.LoginAsync(model);
+
+            return Ok(result);
         }
     }
 }

@@ -10,12 +10,6 @@ namespace EventHub.Core.Models.User
     public class LoginModel
     {
         /// <summary>
-        /// The user's identifier used for login authentication
-        /// </summary>
-        [Required(ErrorMessage = ErrorMessages.RequireErrorMessage)]
-        public string Id { get; set; } = string.Empty;
-
-        /// <summary>
         /// The user's email address used for login authentication
         /// </summary>
         [Required(ErrorMessage = ErrorMessages.RequireErrorMessage)]
