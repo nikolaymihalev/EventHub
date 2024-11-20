@@ -70,7 +70,7 @@ namespace EventHub.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEventById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var model = new EventInfoModel();
 
