@@ -16,7 +16,7 @@ namespace EventHub.API.Controllers
             eventService = _eventService;
         }
 
-        [HttpGet("all/{currentPage}/user/{userId}")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetEvents(int currentPage = 1, string? userId = null)
         {
             var model = await eventService.GetEventsForPageAsync(currentPage, userId);

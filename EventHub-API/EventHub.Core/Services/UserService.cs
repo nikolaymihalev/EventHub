@@ -34,7 +34,7 @@ namespace EventHub.Core.Services
                 }
             }         
 
-            return string.Format(ErrorMessages.DoesntExistErrorMessage, "user");
+            return ErrorMessages.InvalidLogin;
         }
 
         public async Task<string> RegisterAsync(RegisterModel model)

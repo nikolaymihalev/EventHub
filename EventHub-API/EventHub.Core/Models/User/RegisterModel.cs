@@ -34,7 +34,6 @@ namespace EventHub.Core.Models.User
         /// The user's first name used for account registration
         /// </summary>
         [Required(ErrorMessage = ErrorMessages.RequireErrorMessage)]
-        [EmailAddress]
         [StringLength(ValidationConstants.UserNameMaxLength,
             MinimumLength = ValidationConstants.UserNameMinLength,
             ErrorMessage = ErrorMessages.StringLengthErrorMessage)]
@@ -44,7 +43,6 @@ namespace EventHub.Core.Models.User
         /// The user's last name used for account registration
         /// </summary>
         [Required(ErrorMessage = ErrorMessages.RequireErrorMessage)]
-        [EmailAddress]
         [StringLength(ValidationConstants.UserNameMaxLength,
             MinimumLength = ValidationConstants.UserNameMinLength,
             ErrorMessage = ErrorMessages.StringLengthErrorMessage)]

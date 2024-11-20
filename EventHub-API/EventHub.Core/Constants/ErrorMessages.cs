@@ -7,5 +7,6 @@
         public const string OperationFailedErrorMessage = "Operation failed. Try again!";
         public const string InvalidModelErrorMessage = "Invalid {0}!";
         public const string DoesntExistErrorMessage = "This {0} doesn't exist!";
+        public const string InvalidLogin = "The email or password is incorrect!";
     }
 }
