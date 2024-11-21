@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHub.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHub.Core", "..\EventHub.Core\EventHub.Core.csproj", "{CAF416BA-0B08-4B70-B9DC-5E719EA7A54D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHub.UnitTests", "..\EventHub.UnitTests\EventHub.UnitTests.csproj", "{64E1520E-14DB-48B3-9AA4-9FB3643D0190}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHub.UnitTests", "..\EventHub.UnitTests\EventHub.UnitTests.csproj", "{64E1520E-14DB-48B3-9AA4-9FB3643D0190}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
