@@ -18,7 +18,7 @@ namespace EventHub.Core.Models.User
         [StringLength(ValidationConstants.UserUsernameMaxLength,
             MinimumLength = ValidationConstants.UserUsernameMinLength,
             ErrorMessage = ErrorMessages.StringLengthErrorMessage)]
-        public string UserName { get; set; } = null!;
+        public string Username { get; set; } = null!;
 
         /// <summary>
         /// The user's email address used for account registration

@@ -49,7 +49,7 @@ namespace EventHub.Core.Services
 
                 user = new User()
                 {
-                    Username = model.UserName,
+                    Username = model.Username,
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
