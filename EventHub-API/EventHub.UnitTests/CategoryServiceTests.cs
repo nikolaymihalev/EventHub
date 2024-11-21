@@ -42,19 +42,14 @@ namespace EventHub.UnitTests
         [Test]
         public async Task GetAllCategoriesAsync_ShouldReturnAllCategories()
         {
+            int exCount = 2;
+
             // Act
             var result = await categoryService.GetAllCategoriesAsync();
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count());
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            this.context.Database.EnsureDeleted();
-            this.context.Dispose();
+            Assert.IsTrue(exCount == result.Count());
         }
 
         [Test]
@@ -68,8 +63,8 @@ namespace EventHub.UnitTests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(categoryId, result.Id);
-            Assert.AreEqual("Category1", result.Name);
+            Assert.IsTrue(categoryId == result.Id);
+            Assert.IsTrue("Category1" == result.Name);
         }
 
         [Test]
@@ -80,7 +75,14 @@ namespace EventHub.UnitTests
 
             // Act & Assert
             var ex = Assert.ThrowsAsync<ArgumentException>(async () => await categoryService.GetByIdAsync(categoryId));
-            Assert.AreEqual(string.Format(ErrorMessages.DoesntExistErrorMessage, "category"), ex.Message); 
+            Assert.IsTrue(string.Format(ErrorMessages.DoesntExistErrorMessage, "category") == ex.Message); 
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            this.context.Database.EnsureDeleted();
+            this.context.Dispose();
         }
     }
 }
