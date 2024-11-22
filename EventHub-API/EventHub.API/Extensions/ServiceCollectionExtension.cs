@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 options.AddPolicy("AllowAngular", policy =>
                 {
-                    policy.WithOrigins("http://localhost:4200") // Angular url
+                    policy.WithOrigins("http://localhost:4200")
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
