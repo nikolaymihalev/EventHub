@@ -1,0 +1,30 @@
+services:
+  sqlserver:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=yourStrongPassword12#
+    volumes:
+      - sqldata:/var/opt/mssql
+    networks:
+      - eventhub_network
+
+  api_app:
+    container_name: eventhub_api
+    build:
+      context: ./EventHub-API 
+      dockerfile: Dockerfile 
+    ports:
+      - "5000:8080"
+    networks:
+      - eventhub_network
+    depends_on:
+      - sqlserver
+
+volumes:
+  sqldata:
+networks:
+  eventhub_network:

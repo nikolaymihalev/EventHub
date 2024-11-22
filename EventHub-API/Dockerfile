@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
@@ -11,14 +11,17 @@ COPY ["EventHub.API/EventHub.API.csproj", "EventHub.API/"]
 COPY ["EventHub.Core/EventHub.Core.csproj", "EventHub.Core/"]
 COPY ["EventHub.Infrastructure/EventHub.Infrastructure.csproj", "EventHub.Infrastructure/"]
 COPY ["EventHub.UnitTests/EventHub.UnitTests.csproj", "EventHub.UnitTests/"]
-RUN dotnet restore "./EventHub.API/./EventHub.API.csproj"
+RUN dotnet restore "./EventHub.API/EventHub.API.csproj"
 COPY . .
 WORKDIR "/src/EventHub.API"
-RUN dotnet build "./EventHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "EventHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./EventHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "EventHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
 
 FROM base AS final
 WORKDIR /app
