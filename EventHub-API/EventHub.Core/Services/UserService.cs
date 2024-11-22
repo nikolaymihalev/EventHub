@@ -49,6 +49,7 @@ namespace EventHub.Core.Services
 
                 user = new User()
                 {
+                    Id = Guid.NewGuid().ToString(),
                     Username = model.Username,
                     Email = model.Email,
                     FirstName = model.FirstName,
