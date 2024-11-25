@@ -1,5 +1,4 @@
 using EventHub.Infrastructure.Data;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +14,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var migrationFlagPath = "migrations_applied.flag";
+    var migrationFlagPath = "/app/data/migrations_applied.flag";
 
     if (File.Exists(migrationFlagPath))
     {

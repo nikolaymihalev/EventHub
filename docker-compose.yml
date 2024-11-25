@@ -19,6 +19,8 @@ services:
       dockerfile: Dockerfile 
     ports:
       - "5000:8080"
+    volumes:
+      - appdata:/app/data
     networks:
       - eventhub_network
     depends_on:
@@ -26,5 +28,6 @@ services:
 
 volumes:
   sqldata:
+  appdata:
 networks:
   eventhub_network:
