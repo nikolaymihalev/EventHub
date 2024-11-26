@@ -1,3 +1,15 @@
-@for (eventItem of eventsPageModel.events; track $index) {
-    <h1>{{eventItem.title}}</h1>
-}
+<aside>
+    <div class="container">
+        @for (eventItem of eventsPageModel.events; track $index) {
+            <div class="event-container">
+                <a routerLink="/event">
+                    <div class="title">
+                        <h2>{{eventItem.title}}</h2>
+                        <p>{{eventItem.date}}</p>
+                    </div>
+                    <p>Description: {{eventItem.description}}</p>
+                </a>
+            </div>
+        }
+    </div>
+</aside>
