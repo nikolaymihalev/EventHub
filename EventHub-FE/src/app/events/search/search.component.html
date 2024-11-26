@@ -1,0 +1,10 @@
+<form class="search-form">
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title" placeholder="Football..">
+    <select>
+        @for (categoryItem of categories; track $index) {
+            <option value={{categoryItem.name}}>{{categoryItem.name}}</option>
+        }
+    </select>
+    <button>Search</button>
+</form>

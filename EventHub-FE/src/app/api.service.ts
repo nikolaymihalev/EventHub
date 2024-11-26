@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment.development";
 import { Event } from "./types/event";
 import { EventPageModel } from "./types/eventsPageModel";
+import { Category } from "./types/category";
 
 @Injectable({
     providedIn: 'root',
@@ -27,5 +28,12 @@ export class ApiService {
         }        
 
         return this.http.get<EventPageModel>(url);
+    }
+
+    getCategories(){
+        const {apiUrl} = environment;
+        let url = `${apiUrl}/category/all`;
+
+        return this.http.get<Category[]>(url);
     }
 }
