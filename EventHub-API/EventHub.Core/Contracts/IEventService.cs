@@ -16,6 +16,15 @@ namespace EventHub.Core.Contracts
         Task<EventPageModel> GetEventsForPageAsync(int currentPage = 1, string? userId = null);
 
         /// <summary>
+        /// Retrieves a paginated list of searched events asynchronously.
+        /// </summary>
+        /// <param name="currentPage">The current page number (default is 1).</param>
+        /// <param name="searchTitle">The searched event title.</param>
+        /// <param name="categoryId">The searched event category.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="EventPageModel"/> with the events for the specified page.</returns>
+        Task<EventPageModel> GetSearchedEvents(int currentPage = 1, string searchTitle = "", int? categoryId = null);
+
+        /// <summary>
         /// Retrieves detailed information about a specific event asynchronously.
         /// </summary>
         /// <param name="id">The unique identifier of the event.</param>

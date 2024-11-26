@@ -24,6 +24,14 @@ namespace EventHub.API.Controllers
             return Ok(model);
         }
 
+        [HttpGet("search/title={title}")]
+        public async Task<IActionResult> GetSearchedEvents(int currentPage = 1, string title = "", int? category = null)
+        {
+            var model = await eventService.GetSearchedEvents(currentPage, title, category);
+
+            return Ok(model);
+        }
+
         [HttpPost("add")]
         public async Task<IActionResult> Create([FromBody] EventFormModel model)
         {

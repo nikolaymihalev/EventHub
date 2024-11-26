@@ -108,7 +108,37 @@ namespace EventHub.Core.Services
             return eventPageModel;
         }
 
-        private async Task<IEnumerable<EventInfoModel>> GetAllEventsAsync(string? userId) 
+        public async Task<EventPageModel> GetSearchedEvents(int currentPage = 1, string searchTitle = "", int? categoryId = null)
+        {
+            var eventPageModel = new EventPageModel();
+            int formula = (currentPage - 1) * VariablesConstants.MaxEventsPerPage;
+
+            if (currentPage <= 1)
+            {
+                formula = 0;
+            }
+
+            eventPageModel.Events = await GetAllEventsAsync();
+
+            eventPageModel.Events = eventPageModel.Events.Where(x => x.Title.ToLower().Contains(searchTitle.ToLower())).ToList();
+
+            if(categoryId != null)
+            {
+                eventPageModel.Events = eventPageModel.Events.Where(x=>x.CategoryId==categoryId).ToList();
+            }
+
+            eventPageModel.PagesCount = Math.Ceiling(eventPageModel.Events.Count() / Convert.ToDouble(VariablesConstants.MaxEventsPerPage));
+
+            eventPageModel.Events = eventPageModel.Events
+               .Skip(formula)
+               .Take(VariablesConstants.MaxEventsPerPage);
+
+            eventPageModel.CurrentPage = currentPage;
+
+            return eventPageModel;
+        }
+
+        private async Task<IEnumerable<EventInfoModel>> GetAllEventsAsync(string? userId = null) 
         {
             if (userId != null)             
                 return await repository.AllReadonly<Event>()
