@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment.development";
-import { Event } from "./types/event";
 import { EventPageModel } from "./types/eventsPageModel";
 import { Category } from "./types/category";
 
@@ -35,5 +34,28 @@ export class ApiService {
         let url = `${apiUrl}/category/all`;
 
         return this.http.get<Category[]>(url);
+    }
+
+    searchEvents(title?: string, categoryId?: number, currentPage?: number){
+        const {apiUrl} = environment;
+
+
+        let url = `${apiUrl}/Event/search`;
+
+        if(title && categoryId && currentPage){
+            url += `?title=${title}&currentPage=${currentPage}&category=${categoryId}`;
+        }else{
+            if(title && !categoryId && !currentPage){
+                url += `?title=${title}`;
+            }else if(!title && categoryId && !currentPage){
+                url += `?category=${categoryId}`;
+            }else if(title && categoryId && !currentPage){
+                url += `?title=${title}&category=${categoryId}`;
+            }else if(!title && categoryId && currentPage){
+                url += `?currentPage=${currentPage}&category=${categoryId}`;
+            }            
+        } 
+
+        return this.http.get<EventPageModel>(url);
     }
 }

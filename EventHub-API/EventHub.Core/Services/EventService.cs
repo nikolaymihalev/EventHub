@@ -108,8 +108,11 @@ namespace EventHub.Core.Services
             return eventPageModel;
         }
 
-        public async Task<EventPageModel> GetSearchedEvents(int currentPage = 1, string searchTitle = "", int? categoryId = null)
+        public async Task<EventPageModel> GetSearchedEvents(int currentPage = 1, string? searchTitle = null, int? categoryId = null)
         {
+            if(searchTitle == null && categoryId == null)
+                return new EventPageModel();
+
             var eventPageModel = new EventPageModel();
             int formula = (currentPage - 1) * VariablesConstants.MaxEventsPerPage;
 
@@ -120,9 +123,12 @@ namespace EventHub.Core.Services
 
             eventPageModel.Events = await GetAllEventsAsync();
 
-            eventPageModel.Events = eventPageModel.Events.Where(x => x.Title.ToLower().Contains(searchTitle.ToLower())).ToList();
+            if(searchTitle != null)
+            {
+                eventPageModel.Events = eventPageModel.Events.Where(x => x.Title.ToLower().Contains(searchTitle.ToLower())).ToList();
+            }
 
-            if(categoryId != null)
+            if (categoryId != null)
             {
                 eventPageModel.Events = eventPageModel.Events.Where(x=>x.CategoryId==categoryId).ToList();
             }

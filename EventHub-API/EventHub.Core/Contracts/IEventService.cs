@@ -22,7 +22,7 @@ namespace EventHub.Core.Contracts
         /// <param name="searchTitle">The searched event title.</param>
         /// <param name="categoryId">The searched event category.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="EventPageModel"/> with the events for the specified page.</returns>
-        Task<EventPageModel> GetSearchedEvents(int currentPage = 1, string searchTitle = "", int? categoryId = null);
+        Task<EventPageModel> GetSearchedEvents(int currentPage = 1, string? searchTitle = null, int? categoryId = null);
 
         /// <summary>
         /// Retrieves detailed information about a specific event asynchronously.

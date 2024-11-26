@@ -24,8 +24,8 @@ namespace EventHub.API.Controllers
             return Ok(model);
         }
 
-        [HttpGet("search/title={title}")]
-        public async Task<IActionResult> GetSearchedEvents(int currentPage = 1, string title = "", int? category = null)
+        [HttpGet("search")]
+        public async Task<IActionResult> GetSearchedEvents(int currentPage = 1, string? title = null, int? category = null)
         {
             var model = await eventService.GetSearchedEvents(currentPage, title, category);
 
