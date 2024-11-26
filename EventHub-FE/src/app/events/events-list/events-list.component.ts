@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Event } from '../../types/event';
 import { ApiService } from '../../api.service';
+import { EventPageModel } from '../../types/eventsPageModel';
 
 @Component({
   selector: 'app-events-list',
@@ -10,13 +10,13 @@ import { ApiService } from '../../api.service';
   styleUrl: './events-list.component.css'
 })
 export class EventsListComponent implements OnInit{
-  events: Event[] = [];
+  eventsPageModel= {} as EventPageModel;
 
   constructor(private apiService: ApiService){}
 
   ngOnInit(): void {
-    this.apiService.getEvents().subscribe((events)=>{
-      this.events = events;            
+    this.apiService.getEvents().subscribe((eventsPageModel)=>{
+      this.eventsPageModel = eventsPageModel;      
     })
   }
 }

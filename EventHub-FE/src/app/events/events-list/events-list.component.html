@@ -1,6 +1,3 @@
-<div class="container">
-    @for (item of events; track $index) {
-        <h1>{{item.title}}</h1>
-    }
-
-</div>
+@for (eventItem of eventsPageModel.events; track $index) {
+    <h1>{{eventItem.title}}</h1>
+}

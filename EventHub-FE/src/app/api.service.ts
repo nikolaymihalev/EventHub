@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment.development";
 import { Event } from "./types/event";
+import { EventPageModel } from "./types/eventsPageModel";
 
 @Injectable({
     providedIn: 'root',
@@ -25,6 +26,6 @@ export class ApiService {
             }
         }        
 
-        return this.http.get<Event[]>(url);
+        return this.http.get<EventPageModel>(url);
     }
 }
