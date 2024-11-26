@@ -7,12 +7,12 @@ import { Event } from "./types/event";
     providedIn: 'root',
 })
 export class ApiService {
-    apiUrl = environment;
-
     constructor(private http: HttpClient) {}
 
     getEvents(page?: number, userId?: string){
-        let url = `${this.apiUrl}/Events/all`;
+        const {apiUrl} = environment;
+
+        let url = `${apiUrl}/Event/all`;
         if(page){
             url += `?currentPage=${page}`;
             if(userId){
