@@ -49,6 +49,8 @@ export class ApiService {
                 url += `?title=${title}`;
             }else if(!title && categoryId && !currentPage){
                 url += `?category=${categoryId}`;
+            }else if(title && !categoryId && currentPage){
+                url += `?title=${title}&currentPage=${currentPage}`;
             }else if(title && categoryId && !currentPage){
                 url += `?title=${title}&category=${categoryId}`;
             }else if(!title && categoryId && currentPage){

@@ -25,9 +25,7 @@ export class EventsListComponent implements OnInit{
 
   ngOnInit(): void {
     this.apiService.getEvents().subscribe((eventsPageModel)=>{
-      this.eventsPageModel = eventsPageModel;  
-      this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
-      this.currentPage = eventsPageModel.currentPage;
+      this.setEventModelVariables(eventsPageModel);
       this.operation = "all";
     })
 
@@ -42,9 +40,7 @@ export class EventsListComponent implements OnInit{
     }
 
     this.apiService.searchEvents(this.searchTitle, this.searchCategoryId).subscribe((eventsPageModel) => {
-      this.eventsPageModel = eventsPageModel;
-      this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
-      this.currentPage = eventsPageModel.currentPage;
+      this.setEventModelVariables(eventsPageModel);
       this.operation = "search";
     });
   }
@@ -52,14 +48,22 @@ export class EventsListComponent implements OnInit{
   changePage(page: number){
     if(this.operation === "all"){
       this.apiService.getEvents(page).subscribe((eventsPageModel)=>{
-        this.eventsPageModel = eventsPageModel;  
-        this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
-        this.currentPage = eventsPageModel.currentPage;
+        this.setEventModelVariables(eventsPageModel);
       })
+    }else if(this.operation === "search"){
+      this.apiService.searchEvents(this.searchTitle, this.searchCategoryId, page).subscribe((eventsPageModel) => {
+        this.setEventModelVariables(eventsPageModel);
+      });
     }
   }
 
   getPagesRange(length: number): number[] {
     return Array.from({ length }, (_, i) => i+=1);
+  }
+
+  setEventModelVariables(eventsPageModel: EventPageModel){
+    this.eventsPageModel = eventsPageModel;  
+    this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
+    this.currentPage = eventsPageModel.currentPage;
   }
 }
