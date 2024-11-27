@@ -11,16 +11,23 @@
     </form>
     
     <div class="events-container">
-        @for (eventItem of eventsPageModel.events; track $index) {
-            <div class="event-container">
-                <a routerLink="/event">
-                    <div class="title">
-                        <h2>{{eventItem.title}}</h2>
-                        <p>{{eventItem.date}}</p>
-                    </div>
-                    <p>Description: {{eventItem.description}}</p>
-                </a>
-            </div>
+        @if(eventsPageModel.events.length > 0){
+            @for (eventItem of eventsPageModel.events; track $index) {
+                <div class="event-container">
+                    <a routerLink="/event">
+                        <div class="title">
+                            <h2>{{eventItem.title}}</h2>
+                            <span>{{eventItem.date}}</span>
+                        </div>
+                        <p>Description: {{eventItem.description}}</p>
+                    </a>
+                </div>
+            }
+        }
+        @else{
+            <div class="no-results">
+                <p>No results!</p>
+            </div> 
         }
     </div>
 </div>
