@@ -24,11 +24,7 @@ export class EventsListComponent implements OnInit{
   constructor(private apiService: ApiService){}
 
   ngOnInit(): void {
-    this.apiService.getEvents().subscribe((eventsPageModel)=>{
-      this.setEventModelVariables(eventsPageModel);
-      this.operation = "all";
-    })
-
+    this.homeEvents();
     this.apiService.getCategories().subscribe((categories)=>{
       this.categories = categories;      
     })
@@ -39,10 +35,14 @@ export class EventsListComponent implements OnInit{
       return;
     }
 
-    this.apiService.searchEvents(this.searchTitle, this.searchCategoryId).subscribe((eventsPageModel) => {
-      this.setEventModelVariables(eventsPageModel);
-      this.operation = "search";
-    });
+    if(this.searchTitle || this.searchCategoryId){
+      this.apiService.searchEvents(this.searchTitle, this.searchCategoryId).subscribe((eventsPageModel) => {
+        this.setEventModelVariables(eventsPageModel);
+        this.operation = "search";
+      });
+    }else {
+      this.homeEvents();
+    }
   }
 
   changePage(page: number){
@@ -55,6 +55,13 @@ export class EventsListComponent implements OnInit{
         this.setEventModelVariables(eventsPageModel);
       });
     }
+  }
+
+  homeEvents(){
+    this.apiService.getEvents().subscribe((eventsPageModel)=>{
+      this.setEventModelVariables(eventsPageModel);
+      this.operation = "all";
+    })
   }
 
   getPagesRange(length: number): number[] {

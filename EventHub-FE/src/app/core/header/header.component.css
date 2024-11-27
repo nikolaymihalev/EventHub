@@ -58,3 +58,20 @@ a{
     background-color: #F9F7F7;
     border-radius: 0.3em;
 }
+
+ul li a:hover{
+    color: #112D4E;
+    background: #F9F7F7;
+    border: none;
+    border-radius: 0.3em;
+}
+
+.user-btns .register-btn:hover{
+    color: #F9F7F7;
+    background-color: #3F72AF;
+}
+
+.user-btns a:hover{
+    color: #3F72AF;
+    background-color: #F9F7F7;
+}
