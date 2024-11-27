@@ -18,13 +18,17 @@ export class EventsListComponent implements OnInit{
   searchTitle: string | any;
   searchCategoryId: number | any;
   pages: number[] = [];
+  currentPage: number | any;
+  operation: string | any;
 
   constructor(private apiService: ApiService){}
 
   ngOnInit(): void {
     this.apiService.getEvents().subscribe((eventsPageModel)=>{
       this.eventsPageModel = eventsPageModel;  
-      this.pages = this.getRange(eventsPageModel.pagesCount);   
+      this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
+      this.currentPage = eventsPageModel.currentPage;
+      this.operation = "all";
     })
 
     this.apiService.getCategories().subscribe((categories)=>{
@@ -39,11 +43,23 @@ export class EventsListComponent implements OnInit{
 
     this.apiService.searchEvents(this.searchTitle, this.searchCategoryId).subscribe((eventsPageModel) => {
       this.eventsPageModel = eventsPageModel;
-      this.pages = this.getRange(eventsPageModel.pagesCount);   
+      this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
+      this.currentPage = eventsPageModel.currentPage;
+      this.operation = "search";
     });
   }
 
-  getRange(length: number): number[] {
+  changePage(page: number){
+    if(this.operation === "all"){
+      this.apiService.getEvents(page).subscribe((eventsPageModel)=>{
+        this.eventsPageModel = eventsPageModel;  
+        this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
+        this.currentPage = eventsPageModel.currentPage;
+      })
+    }
+  }
+
+  getPagesRange(length: number): number[] {
     return Array.from({ length }, (_, i) => i+=1);
   }
 }

@@ -26,6 +26,6 @@
 </div>
 <div class="pages-container">
     @for (page of pages; track $index) {
-        <button >{{page}}</button>
+        <button [class.currentPage]="page === currentPage" (click)="changePage(page)">{{page}}</button>        
     }
 </div>

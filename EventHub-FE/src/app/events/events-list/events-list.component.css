@@ -93,6 +93,11 @@
     font-size: 0.9rem;
 }
 
+.pages-container .currentPage{
+    background: #3F72AF;
+    color: #F9F7F7;
+}
+
 .pages-container button:hover{
     background: #3F72AF;
     color: #F9F7F7;
