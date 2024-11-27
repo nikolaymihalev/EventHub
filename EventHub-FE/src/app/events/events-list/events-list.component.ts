@@ -17,12 +17,14 @@ export class EventsListComponent implements OnInit{
   categories: Category[] = [];
   searchTitle: string | any;
   searchCategoryId: number | any;
+  pages: number[] = [];
 
   constructor(private apiService: ApiService){}
 
   ngOnInit(): void {
     this.apiService.getEvents().subscribe((eventsPageModel)=>{
-      this.eventsPageModel = eventsPageModel;      
+      this.eventsPageModel = eventsPageModel;  
+      this.pages = this.getRange(eventsPageModel.pagesCount);   
     })
 
     this.apiService.getCategories().subscribe((categories)=>{
@@ -37,6 +39,11 @@ export class EventsListComponent implements OnInit{
 
     this.apiService.searchEvents(this.searchTitle, this.searchCategoryId).subscribe((eventsPageModel) => {
       this.eventsPageModel = eventsPageModel;
+      this.pages = this.getRange(eventsPageModel.pagesCount);   
     });
+  }
+
+  getRange(length: number): number[] {
+    return Array.from({ length }, (_, i) => i+=1);
   }
 }

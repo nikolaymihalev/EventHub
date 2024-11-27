@@ -73,3 +73,28 @@
     padding: 0.5em 0;
     cursor: pointer;
 }
+
+.pages-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    margin-top: 5em;
+}
+
+.pages-container button{
+    padding: 1em;
+    cursor: pointer;
+    background: #F9F7F7;
+    color: #3F72AF;
+    border: 1px solid #3F72AF;
+    border-radius: 0.3em;
+    font-size: 0.9rem;
+}
+
+.pages-container button:hover{
+    background: #3F72AF;
+    color: #F9F7F7;
+    font-size: 1rem;
+}

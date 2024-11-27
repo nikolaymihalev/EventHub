@@ -36,10 +36,9 @@ a{
     text-decoration: none;
     color: #F9F7F7;
     font-size: 1.2rem;
-    background-color: #3F72AF;
     display: inline-block;
     padding: 0.3em 0.5em;
-    border-radius: 0.3em;
+    border-bottom: 2px solid #F9F7F7;
 }
 
 .user-btns{
@@ -48,7 +47,14 @@ a{
     gap: 1em;
 }
 
-.register-btn{
+.user-btns a{
+    background: #3F72AF;
+    border-radius: 0.3em;
+    border: none;
+}
+
+.user-btns .register-btn{
     color: #3F72AF;
     background-color: #F9F7F7;
+    border-radius: 0.3em;
 }
