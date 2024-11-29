@@ -1,0 +1,37 @@
+<div class="register-container">
+    <form class="register-form" #form="ngForm" (ngSubmit)="(form.value)">
+        <h3>Register</h3>
+        <div class="fields-container">
+            <i class="fa-solid fa-user field-icon"></i>
+            <div class="field-container">
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" placeholder="John">
+            </div>
+            
+            <div class="field-container">
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" placeholder="Doe">            
+            </div>
+        </div>
+        <div class="fields-container">
+            <i class="fa-solid fa-envelope field-icon"></i>
+            <div class="field-container">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="johndoe@gmail.com">
+            </div>
+        </div>
+        <div class="fields-container">
+            <i class="fa-solid fa-key field-icon"></i>
+            <div class="field-container">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div class="field-container">
+                <label for="repassword">Confirm Password</label>
+                <input type="password" name="repassword" id="repassword">
+            </div>
+        </div>
+
+        <button>Sign Up</button>
+    </form>
+</div>
