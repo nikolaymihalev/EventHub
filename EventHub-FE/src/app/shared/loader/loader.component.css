@@ -1,0 +1,18 @@
+.wrapper {
+    min-width: 200px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: 
+      radial-gradient(farthest-side,#3F72AF 95%,#0000) 50% 1px/12px 12px no-repeat,
+      radial-gradient(farthest-side,#0000 calc(100% - 14px),#ccc 0);
+    animation: l9 2s infinite linear;
+  }
+  @keyframes l9 {to{transform: rotate(1turn)}}

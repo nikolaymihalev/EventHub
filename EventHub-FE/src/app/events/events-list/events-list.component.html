@@ -9,27 +9,30 @@
         </select>
         <button>Search</button>
     </form>
-    
-    <div class="events-container">
-        @if(eventsPageModel.events.length > 0){
-            @for (eventItem of eventsPageModel.events; track $index) {
-                <div class="event-container">
-                    <a routerLink="/event">
-                        <div class="title">
-                            <h2>{{eventItem.title}}</h2>
-                            <span>{{eventItem.date}}</span>
-                        </div>
-                        <p>Description: {{eventItem.description}}</p>
-                    </a>
-                </div>
+    @if (isLoading) {
+        <app-loader />
+    }@else {
+        <div class="events-container">
+            @if(eventsPageModel.events.length > 0){
+                @for (eventItem of eventsPageModel.events; track $index) {
+                    <div class="event-container">
+                        <a routerLink="/event">
+                            <div class="title">
+                                <h2>{{eventItem.title | slice: 20}}</h2>
+                                <span>{{eventItem.date}}</span>
+                            </div>
+                            <p>Description: {{eventItem.description | slice: 30}}</p>
+                        </a>
+                    </div>
+                }
             }
-        }
-        @else{
-            <div class="no-results">
-                <p>No results!</p>
-            </div> 
-        }
-    </div>
+            @else{
+                <div class="no-results">
+                    <p>No results!</p>
+                </div> 
+            }
+        </div>
+    }
 </div>
 <div class="pages-container">
     @for (page of pages; track $index) {

@@ -4,11 +4,13 @@ import { EventPageModel } from '../../types/eventsPageModel';
 import { RouterLink } from '@angular/router';
 import { Category } from '../../types/category';
 import { FormsModule, NgForm } from '@angular/forms';
+import { LoaderComponent } from '../../shared/loader/loader.component';
+import { SlicePipe } from '../../shared/pipes/slice.pipe';
 
 @Component({
   selector: 'app-events-list',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, LoaderComponent, SlicePipe],
   templateUrl: './events-list.component.html',
   styleUrl: './events-list.component.css'
 })
@@ -20,6 +22,7 @@ export class EventsListComponent implements OnInit{
   pages: number[] = [];
   currentPage: number | any;
   operation: string | any;
+  isLoading = true;
 
   constructor(private apiService: ApiService){}
 
@@ -34,6 +37,8 @@ export class EventsListComponent implements OnInit{
     if (form.invalid) {
       return;
     }
+    this.isLoading = true;
+
 
     if(this.searchTitle || this.searchCategoryId){
       this.apiService.searchEvents(this.searchTitle, this.searchCategoryId).subscribe((eventsPageModel) => {
@@ -72,5 +77,7 @@ export class EventsListComponent implements OnInit{
     this.eventsPageModel = eventsPageModel;  
     this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
     this.currentPage = eventsPageModel.currentPage;
+
+    this.isLoading = false;
   }
 }

@@ -24,20 +24,12 @@
 .event-container h2{
     color: #F9F7F7;
     font-size: 1.8rem;
-    width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .event-container p{
     color: #DBE2EF;
     font-size: 1.2rem;
     margin-top: 1em;
-    width: 400px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .event-container .title span{
