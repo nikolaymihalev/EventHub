@@ -1,0 +1,45 @@
+.error-container{
+    color: #3F72AF;
+}
+
+.error-info{
+    width: 500px;    
+    margin: 4em auto;    
+}
+
+.error-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.error-title i{
+    font-size: 10rem;
+}
+
+.error-title h2{
+    font-size: 6rem;
+}
+
+.error-info p{
+    font-size: 1.2rem;
+    margin-top: 1.3em;
+    text-align: center;
+}
+
+.error-button{
+    margin-top: 2em;
+    text-align: center;
+}
+
+.error-info a{
+    text-decoration: none;
+    display: inline-block;
+    background: #3F72AF;
+    border: none;
+    border-radius: 0.3em;
+    color: #F9F7F7;
+    padding: 1em;
+    font-size: 1rem;
+    cursor: pointer;
+}
