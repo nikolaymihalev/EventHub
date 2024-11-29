@@ -1,0 +1,59 @@
+.login-form{
+    margin: 2em auto;
+    width: 700px;
+    font-size: 1.5rem;
+    background: #F9F7F7;
+    padding: 1em 3em;
+    border-radius: 0.3em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.login-form h3{
+    font-size: 2rem;
+    color: #112D4E;
+}
+
+.fields-container{
+    display: flex;
+    gap: 0.5em;
+    align-items: end;
+}
+
+.field-icon{
+    font-size: 2rem;
+    margin-right: 0.3em;
+    border-right: 4px solid #112D4E;
+    padding-right: 0.3em;
+    color: #3F72AF;
+}
+
+.field-container{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 49%;
+    gap: 0.3em;
+}
+
+
+.field-container label{
+    font-size: 1.1rem;
+    color: #3F72AF;
+}
+
+.field-container input{
+    font-size: 1rem;
+    padding: 0.2em 0.3em;
+}
+
+.login-form button{
+    background: #3F72AF;
+    border: none;
+    border-radius: 0.3em;
+    color: #F9F7F7;
+    padding: 1em;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 2em;
+}
