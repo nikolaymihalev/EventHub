@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.css'
 })
@@ -23,6 +23,6 @@ export class NotificationComponent implements OnInit {
     this.isVisible = true;
     setTimeout(() => {
       this.isVisible = false;
-    }, 3000);
+    }, this.duration);
   }
 }

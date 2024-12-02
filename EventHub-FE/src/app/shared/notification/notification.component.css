@@ -1,19 +1,18 @@
 .notification {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    opacity: 0.9;
-    z-index: 9999;
-    transition: opacity 0.5s;
-  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  margin-top: 13em;
+  margin-right: 1em;
+  color: #fff;
+  padding: 0.3em 0.5em;
+  border-radius: 0.3em;
+  font-size: 1.1rem;
+}
   
   .notification.success {
-    background-color: green;
+    background-color: #03fc03;
   }
   
   .notification.error {
@@ -21,9 +20,9 @@
   }
   
   .notification.info {
-    background-color: blue;
+    background-color: #03a5fc;
   }
   
   .notification.warning {
-    background-color: orange;
+    background-color: #fcad03;
   }

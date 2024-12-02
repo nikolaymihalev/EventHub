@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       setTimeout(() => {
         this.notificationMessage = '';
         this.hasNotification = false;
-      }, 3000);
+      }, 5000);
     });
   }
 
