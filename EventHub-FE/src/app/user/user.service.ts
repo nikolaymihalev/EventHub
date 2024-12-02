@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserForAuth } from '../types/user';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,9 @@ export class UserService {
             this.getUser();
           }
         }),
+        catchError((err: HttpErrorResponse)=>{
+          return throwError(() => new Error(err.error));
+        })
       );
   }
 
