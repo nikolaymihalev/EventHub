@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserForAuth } from '../types/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, tap } from 'rxjs';
 
 @Injectable({
@@ -8,16 +8,13 @@ import { BehaviorSubject, tap } from 'rxjs';
 })
 export class UserService {
   private user$$ = new BehaviorSubject<UserForAuth | null>(null);
-  private user$ = this.user$$.asObservable();
 
-  USER_KEY = '[user]';
-  user: UserForAuth | null = null;
-  
   get isLogged(): boolean {
-    return !!this.user;
+    return !!this.user$$.getValue();
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   login(email: string, password: string) {
     return this.http
@@ -25,18 +22,31 @@ export class UserService {
       .pipe(
         tap((response) => {
           if (response.token) {
-            sessionStorage.setItem('authToken', response.token); 
+            sessionStorage.setItem('authToken', response.token);
+
+            this.getUser();
           }
-        })
+        }),
       );
   }
 
   getUser() {
-    return this.user$$.asObservable();
+    const token = sessionStorage.getItem('authToken');
+
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+      this.http.get<UserForAuth>('/api/user/getUserInfo', { headers })
+        .pipe(
+          tap((user) => {
+            this.user$$.next(user);
+          })
+        ).subscribe();
+    }
   }
 
   logout() {
-    sessionStorage.removeItem('authToken'); 
-    this.user$$.next(null); 
+    sessionStorage.removeItem('authToken');
+    this.user$$.next(null);
   }
 }

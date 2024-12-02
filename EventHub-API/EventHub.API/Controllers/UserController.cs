@@ -69,7 +69,46 @@ namespace EventHub.API.Controllers
                 return Ok(new { token = tokenString });
             }
 
-            return Ok(result);
+            return BadRequest(result);
+        }
+
+        [HttpGet("getUserInfo")]
+        public async Task<IActionResult> GetUserInfo()
+        {
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized(new { Message = "No token provided" });
+            }
+
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var keyBytes = Encoding.UTF8.GetBytes(Variables.JwtKey); 
+
+                var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero 
+                }, out var validatedToken);
+
+                var email = principal.FindFirst(ClaimTypes.Name)?.Value;
+
+                var userInfo = await userService.GetUserInfoAsync(email);
+
+                if (userInfo is null)
+                    throw new Exception();
+
+                return Ok(userInfo);
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { Message = "Invalid token"});
+            }
         }
     }
 }

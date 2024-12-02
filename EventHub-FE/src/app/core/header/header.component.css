@@ -51,6 +51,7 @@ a{
     background: #3F72AF;
     border-radius: 0.3em;
     border: none;
+    cursor: pointer;
 }
 
 .user-btns .register-btn{

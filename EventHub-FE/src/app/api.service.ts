@@ -11,9 +11,7 @@ export class ApiService {
     constructor(private http: HttpClient) {}
 
     getEvents(page?: number, userId?: string){
-        const {apiUrl} = environment;
-
-        let url = `${apiUrl}/Event/all`;
+        let url = `/api/Event/all`;
         if(page){
             url += `?currentPage=${page}`;
             if(userId){
@@ -30,17 +28,13 @@ export class ApiService {
     }
 
     getCategories(){
-        const {apiUrl} = environment;
-        let url = `${apiUrl}/category/all`;
+        let url = `/api/category/all`;
 
         return this.http.get<Category[]>(url);
     }
 
     searchEvents(title?: string, categoryId?: number, currentPage?: number){
-        const {apiUrl} = environment;
-
-
-        let url = `${apiUrl}/Event/search`;
+        let url = `/api/Event/search`;
 
         if(title && categoryId && currentPage){
             url += `?title=${title}&currentPage=${currentPage}&category=${categoryId}`;

@@ -4,6 +4,4 @@ export interface UserForAuth {
     firstname:string;
     lastname: string;
     email: string;
-    password: string;
-    token: string;
 }

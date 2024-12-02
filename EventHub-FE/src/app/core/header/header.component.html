@@ -18,8 +18,12 @@
             </ul>
         </div>
         <div class="user-btns">
-            <a routerLink="/register" class="register-btn">Get started</a>
-            <a routerLink="/login">Sign in</a>
+            @if(isLoggedIn){
+                <a (click)="logout()">Log out</a>
+            }@else {
+                <a routerLink="/register" class="register-btn">Get started</a>
+                <a routerLink="/login">Sign in</a>
+            }
         </div>
     </div>
 </header>
