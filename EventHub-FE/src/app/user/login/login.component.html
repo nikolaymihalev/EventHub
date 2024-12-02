@@ -1,18 +1,18 @@
 <div class="login-container">
-    <form class="login-form" #form="ngForm" (ngSubmit)="(form.value)">
+    <form class="login-form" #form="ngForm" (ngSubmit)="login(form)">
         <h3>Login</h3>
         <div class="fields-container">
             <i class="fa-solid fa-envelope field-icon"></i>
             <div class="field-container">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="johndoe@gmail.com">
+                <input type="email" name="email" id="email" placeholder="johndoe@gmail.com" ngModel #inputEmail="ngModel">
             </div>
         </div>
         <div class="fields-container">
             <i class="fa-solid fa-key field-icon"></i>
             <div class="field-container">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password" ngModel #inputPassword="ngModel">
             </div>
         </div>
 
