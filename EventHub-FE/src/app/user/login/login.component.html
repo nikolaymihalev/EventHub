@@ -19,3 +19,6 @@
         <button>Log in</button>
     </form>
 </div>
+@if(hasNotification){
+    <app-notification [message]="notificationMessage" [type]="notificationType"></app-notification>
+}
