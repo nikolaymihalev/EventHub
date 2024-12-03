@@ -45,6 +45,7 @@ a{
     display: flex;
     align-items: center;
     gap: 1em;
+    position: relative;
 }
 
 .user-btns a{
@@ -75,4 +76,33 @@ ul li a:hover{
 .user-btns a:hover{
     color: #3F72AF;
     background-color: #F9F7F7;
+}
+.user-btns summary{
+    font-size: 2.5rem;
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+summary i {    
+    color: #F9F7F7;
+}
+
+.logged-btns{
+    position: absolute;
+    background: #F9F7F7;
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 0.5em;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.user-btns .logged-btns a{
+    font-size: 1rem;
+    background: none;
+    padding: 0;    
+    color: #112D4E;
+    opacity: 0.9;
 }
