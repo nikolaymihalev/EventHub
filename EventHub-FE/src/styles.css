@@ -20,3 +20,10 @@ body {
 h1, h2, h3 {
     font-family: 'Poppins', sans-serif;
 }
+
+.validation-error{
+    font-size: 1.2rem;
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+}

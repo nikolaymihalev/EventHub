@@ -4,11 +4,12 @@ import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../shared/notification/notification.service';
 import { NotificationComponent } from "../../shared/notification/notification.component";
+import { EmailDirective } from '../../directives/email.directive';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, NotificationComponent],
+  imports: [FormsModule, NotificationComponent, EmailDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -40,8 +41,12 @@ export class LoginComponent implements OnInit {
 
     this.userService.login(email, password).subscribe({
       next: () => {
-        this.router.navigate(['/profile']);
-      },
+          this.notificationService.showNotification('Successfully logged in!', 'success');  
+          this.hasNotification = true;
+          setTimeout(() => {
+            this.router.navigate(['/profile']);
+          }, 2000);
+        },
       error: (err: Error)=>{  
         this.notificationService.showNotification(err.message, 'error');  
         this.hasNotification = true;

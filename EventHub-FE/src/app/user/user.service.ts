@@ -10,7 +10,8 @@ export class UserService {
   private user$$ = new BehaviorSubject<UserForAuth | null>(null);
 
   get isLogged(): boolean {
-    return !!this.user$$.getValue();
+    const token = sessionStorage.getItem('authToken');
+    return !!token;
   }
 
   constructor(private http: HttpClient) {
