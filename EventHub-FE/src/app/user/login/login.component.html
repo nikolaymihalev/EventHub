@@ -50,7 +50,7 @@
                     id="password" 
                     required
                     ngModel 
-                    minlength="3"
+                    minlength={{passMinLength}}
                     #inputPassword="ngModel">
             </div>
         </div>
@@ -60,7 +60,7 @@
               <p class="validation-error">Password is required!</p>
               }
               @if(inputPassword?.errors?.['minlength']){
-              <p class="validation-error">Password must be at least 3 characters!</p>
+              <p class="validation-error">Password must be at least {{passMinLength}} characters!</p>
               }
             </div>
         }

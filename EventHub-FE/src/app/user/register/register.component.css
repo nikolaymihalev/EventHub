@@ -57,3 +57,8 @@
     cursor: pointer;
     margin-top: 2em;
 }
+
+.input-error{
+    color: red;
+    border-color: red;
+}

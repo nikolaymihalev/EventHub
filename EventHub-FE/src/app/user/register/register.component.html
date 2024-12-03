@@ -1,45 +1,151 @@
 <div class="register-container">
-    <form class="register-form" #form="ngForm" (ngSubmit)="(form.value)">
+    <form class="register-form" [formGroup]="form" (ngSubmit)="register()">
         <h3>Register</h3>
         <div class="fields-container">
-            <i class="fa-solid fa-user field-icon"></i>
+            <i [class]="isFieldTextMissing('firstName') || isNotInMinLength('firstName') || isOverMaxLength('firstName') 
+                || isFieldTextMissing('lastName') || isNotInMinLength('lastName') || isOverMaxLength('lastName') ? 'input-error'  : 'field-icon' "                        
+                class="fa-solid fa-user field-icon"></i>
             <div class="field-container">
                 <label for="firstname">First Name</label>
-                <input type="text" id="firstname" placeholder="John">
+                <input 
+                [class]="isFieldTextMissing('firstName') || isNotInMinLength('firstName') || isOverMaxLength('firstName')  ? 'input-error'  : '' "
+                type="text" 
+                id="firstname" 
+                placeholder="John"
+                name="firstname"
+                formControlName="firstName">
             </div>
             
             <div class="field-container">
                 <label for="lastname">Last Name</label>
-                <input type="text" id="lastname" placeholder="Doe">            
-            </div>
-            
+                <input [class]="isFieldTextMissing('lastName') || isNotInMinLength('lastName') || isOverMaxLength('lastName') ? 'input-error'  : '' "
+                type="text" 
+                id="lastname" 
+                placeholder="Doe"
+                name="lastname"
+                formControlName="lastName">
+            </div>            
         </div> 
+        @if(form.get('firstName')?.touched){
+            <div>
+              @if(form.get('firstName')?.errors?.['required']){
+              <p class="validation-error">First name is required!</p>
+              }
+              @if(form.get('firstName')?.errors?.['minlength']){
+              <p class="validation-error">First name must be at least {{nameMinLength}} characters!</p>
+              }
+              @if(form.get('firstName')?.errors?.['maxlength']){
+                <p class="validation-error">First name must not exceed {{nameMaxLength}} characters.</p>
+                }
+            </div>
+        }
+        @if(form.get('lastName')?.touched){
+            <div>
+            @if(form.get('lastName')?.errors?.['required']){
+            <p class="validation-error">Last name is required!</p>
+            }
+            @if(form.get('lastName')?.errors?.['minlength']){
+            <p class="validation-error">Last name must be at least {{nameMinLength}} characters!</p>
+            }
+            @if(form.get('lastName')?.errors?.['maxlength']){
+                <p class="validation-error">Last name must not exceed {{nameMaxLength}} characters.</p>
+                }
+            </div>
+        }
         <div class="fields-container">
-            <i class="fa-regular fa-user field-icon"></i>
+            <i [class]="isFieldTextMissing('username') || isNotInMinLength('username') || isOverMaxLength('username') ? 'input-error'  : 'field-icon' "
+            class="fa-regular fa-user field-icon"></i>
             <div class="field-container">
                 <label for="username">Username</label>
-                <input type="text" name="username" id="username">
+                <input [class]="isFieldTextMissing('username') || isNotInMinLength('username') || isOverMaxLength('username') ? 'input-error'  : '' "
+                type="text" 
+                name="username" 
+                id="username"
+                formControlName="username">
             </div>
         </div>
+        @if(form.get('username')?.touched){
+            <div>
+            @if(form.get('username')?.errors?.['required']){
+            <p class="validation-error">Username is required!</p>
+            }
+            @if(form.get('username')?.errors?.['minlength']){
+            <p class="validation-error">Username must be at least {{usernameMinLength}} characters!</p>
+            }
+            @if(form.get('username')?.errors?.['maxlength']){
+                <p class="validation-error">Username must not exceed {{usernameMaxLength}} characters.</p>
+                }
+            </div>
+        }
         <div class="fields-container">
-            <i class="fa-solid fa-envelope field-icon"></i>
+            <i [class]="isFieldTextMissing('email') || isEmailNotValid ? 'input-error'  : 'field-icon' "
+            class="fa-solid fa-envelope field-icon"></i>
             <div class="field-container">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="johndoe@gmail.com">
+                <input [class]="isFieldTextMissing('email') || isEmailNotValid ? 'input-error'  : '' "
+                type="email" 
+                name="email" 
+                id="email" 
+                placeholder="johndoe@gmail.com"
+                formControlName="email">
             </div>
         </div>
-        <div class="fields-container">
-            <i class="fa-solid fa-key field-icon"></i>
+        @if(form.get('email')?.touched){
+            <div>
+              @if(form.get('email')?.errors?.['required']){
+              <p class="validation-error">Email is required!</p>
+              }
+              @if(form.get('email')?.errors?.['emailValidator']){
+              <p class="validation-error">Email is not valid!</p>
+              }
+            </div>
+        }
+        <div class="fields-container" formGroupName="passGroup">
+            <i [class]="((passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['required'] ) 
+                    ||(passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['minlength'])) 
+                    ||((passGroup?.get('rePassword')?.touched &&(passGroup?.get('rePassword')?.errors?.['required'] 
+                    || passGroup?.errors?.['matchPasswordsValidator'])) )? 'input-error' : 'field-icon'"
+            class="fa-solid fa-key field-icon"></i>
             <div class="field-container">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password">
+                <input [class]="((passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['required'] ) 
+                    ||(passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['minlength'])) ? 'input-error' : ''"
+                type="password" 
+                name="password" 
+                id="password"
+                formControlName="password">
             </div>
             <div class="field-container">
                 <label for="repassword">Confirm Password</label>
-                <input type="password" name="repassword" id="repassword">
+                <input [class]="((passGroup?.get('rePassword')?.touched &&(passGroup?.get('rePassword')?.errors?.['required'] 
+                    || passGroup?.errors?.['matchPasswordsValidator'])) ) ? 'input-error' : ''"
+                type="password" 
+                name="repassword" 
+                id="repassword"
+                formControlName="rePassword">
             </div>
         </div>
-
-        <button>Sign Up</button>
+        @if(passGroup?.get('password')?.touched){
+            @if(passGroup?.get('password')?.errors?.['required']){
+                <p class="validation-error">Password is required!</p>
+            }
+            @if(passGroup?.get('password')?.errors?.['minlength'] ){
+                <p class="validation-error">Password must be at least {{passMinLength}} characters!</p>
+            }  
+        }
+        @if(passGroup?.get('rePassword')?.touched){
+            <div>
+                @if(passGroup?.errors?.['matchPasswordsValidator'] ||
+                    passGroup?.get('rePassword')?.errors?.['required']){
+                    <p class="validation-error">Passwords does not match!</p>
+                }
+            </div>
+        }
+        <button
+            [disabled]="form.invalid"
+            [style]="{ backgroundColor: form.invalid ? 'grey' : '#3F72AF' }">Sign Up</button>
     </form>
 </div>
+@if(hasNotification){
+    <app-notification [message]="notificationMessage" [type]="notificationType"></app-notification>
+}

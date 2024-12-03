@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NotificationService } from '../../shared/notification/notification.service';
 import { NotificationComponent } from "../../shared/notification/notification.component";
 import { EmailDirective } from '../../directives/email.directive';
+import { ValidationConstants } from '../constants/validation.constants';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,8 @@ export class LoginComponent implements OnInit {
   notificationMessage: string = '';
   notificationType: string = '';
   hasNotification: boolean = false;
+
+  passMinLength = ValidationConstants.PASSWORD_MIN_LENGTH;
 
   constructor(private userService: UserService, private router: Router, private notificationService: NotificationService) {}
 
@@ -33,7 +36,6 @@ export class LoginComponent implements OnInit {
 
   login(form: NgForm) {
     if (form.invalid) {
-      console.error('Invalid Login Form!');
       return;
     }
 
