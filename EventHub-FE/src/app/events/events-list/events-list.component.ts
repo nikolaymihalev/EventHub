@@ -69,11 +69,11 @@ export class EventsListComponent implements OnInit{
     })
   }
 
-  getPagesRange(length: number): number[] {
+  private getPagesRange(length: number): number[] {
     return Array.from({ length }, (_, i) => i+=1);
   }
 
-  setEventModelVariables(eventsPageModel: EventPageModel){
+  private setEventModelVariables(eventsPageModel: EventPageModel){
     this.eventsPageModel = eventsPageModel;  
     this.pages = this.getPagesRange(eventsPageModel.pagesCount);   
     this.currentPage = eventsPageModel.currentPage;
