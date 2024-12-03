@@ -33,7 +33,7 @@ namespace EventHub.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { ex.Message });
             }
 
             return Ok(new { Message = string.Format(SuccessfullMessages.Created, "Comment") });
@@ -48,7 +48,7 @@ namespace EventHub.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { ex.Message });
             }
 
             return Ok(new { Message = string.Format(SuccessfullMessages.Deleted, "Comment") });

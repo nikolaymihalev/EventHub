@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, NgForm, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EmailDirective } from '../../directives/email.directive';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../shared/notification/notification.service';
@@ -50,12 +49,12 @@ export class RegisterComponent implements OnInit {
           Validators.required,
           Validators.minLength(this.passMinLength),
         ]),
-        rePassword: new FormControl('', [
+        confirmPassword: new FormControl('', [
           Validators.required
         ]),
       },
       {
-        validators: [matchPasswordsValidator('password', 'rePassword')],
+        validators: [matchPasswordsValidator('password', 'confirmPassword')],
       }
     ),
   });
@@ -110,5 +109,32 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-  }
+    if (this.form.invalid) {
+      return;
+    }
+
+    const {
+      firstName,
+      lastName,      
+      username,
+      email,
+      passGroup: { password, confirmPassword } = {},
+    } = this.form.value;
+
+    if(firstName&&lastName&&username&&email&&password&&confirmPassword){
+      this.userService.register(firstName, lastName,username,email,password,confirmPassword).subscribe({
+        next: () => {
+            this.notificationService.showNotification('You have successfully registered!', 'success');  
+            this.hasNotification = true;
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 2000);
+          },
+        error: (err: Error)=>{          
+          this.notificationService.showNotification(err.message, 'error');  
+          this.hasNotification = true;
+        }
+      });
+      }
+    }
 }

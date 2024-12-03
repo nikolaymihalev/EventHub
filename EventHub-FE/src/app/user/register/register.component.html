@@ -27,20 +27,17 @@
             </div>            
         </div> 
         @if(form.get('firstName')?.touched){
-            <div>
-              @if(form.get('firstName')?.errors?.['required']){
-              <p class="validation-error">First name is required!</p>
-              }
-              @if(form.get('firstName')?.errors?.['minlength']){
-              <p class="validation-error">First name must be at least {{nameMinLength}} characters!</p>
-              }
-              @if(form.get('firstName')?.errors?.['maxlength']){
+            @if(form.get('firstName')?.errors?.['required']){
+            <p class="validation-error">First name is required!</p>
+            }
+            @if(form.get('firstName')?.errors?.['minlength']){
+            <p class="validation-error">First name must be at least {{nameMinLength}} characters!</p>
+            }
+            @if(form.get('firstName')?.errors?.['maxlength']){
                 <p class="validation-error">First name must not exceed {{nameMaxLength}} characters.</p>
-                }
-            </div>
+            }
         }
         @if(form.get('lastName')?.touched){
-            <div>
             @if(form.get('lastName')?.errors?.['required']){
             <p class="validation-error">Last name is required!</p>
             }
@@ -49,8 +46,7 @@
             }
             @if(form.get('lastName')?.errors?.['maxlength']){
                 <p class="validation-error">Last name must not exceed {{nameMaxLength}} characters.</p>
-                }
-            </div>
+            }
         }
         <div class="fields-container">
             <i [class]="isFieldTextMissing('username') || isNotInMinLength('username') || isOverMaxLength('username') ? 'input-error'  : 'field-icon' "
@@ -65,7 +61,6 @@
             </div>
         </div>
         @if(form.get('username')?.touched){
-            <div>
             @if(form.get('username')?.errors?.['required']){
             <p class="validation-error">Username is required!</p>
             }
@@ -74,8 +69,7 @@
             }
             @if(form.get('username')?.errors?.['maxlength']){
                 <p class="validation-error">Username must not exceed {{usernameMaxLength}} characters.</p>
-                }
-            </div>
+            }
         }
         <div class="fields-container">
             <i [class]="isFieldTextMissing('email') || isEmailNotValid ? 'input-error'  : 'field-icon' "
@@ -91,19 +85,17 @@
             </div>
         </div>
         @if(form.get('email')?.touched){
-            <div>
-              @if(form.get('email')?.errors?.['required']){
-              <p class="validation-error">Email is required!</p>
-              }
-              @if(form.get('email')?.errors?.['emailValidator']){
-              <p class="validation-error">Email is not valid!</p>
-              }
-            </div>
+            @if(form.get('email')?.errors?.['required']){
+            <p class="validation-error">Email is required!</p>
+            }
+            @if(form.get('email')?.errors?.['emailValidator']){
+            <p class="validation-error">Email is not valid!</p>
+            }
         }
         <div class="fields-container" formGroupName="passGroup">
             <i [class]="((passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['required'] ) 
                     ||(passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['minlength'])) 
-                    ||((passGroup?.get('rePassword')?.touched &&(passGroup?.get('rePassword')?.errors?.['required'] 
+                    ||((passGroup?.get('confirmPassword')?.touched &&(passGroup?.get('confirmPassword')?.errors?.['required'] 
                     || passGroup?.errors?.['matchPasswordsValidator'])) )? 'input-error' : 'field-icon'"
             class="fa-solid fa-key field-icon"></i>
             <div class="field-container">
@@ -117,12 +109,12 @@
             </div>
             <div class="field-container">
                 <label for="repassword">Confirm Password</label>
-                <input [class]="((passGroup?.get('rePassword')?.touched &&(passGroup?.get('rePassword')?.errors?.['required'] 
+                <input [class]="((passGroup?.get('confirmPassword')?.touched &&(passGroup?.get('confirmPassword')?.errors?.['required'] 
                     || passGroup?.errors?.['matchPasswordsValidator'])) ) ? 'input-error' : ''"
                 type="password" 
                 name="repassword" 
                 id="repassword"
-                formControlName="rePassword">
+                formControlName="confirmPassword">
             </div>
         </div>
         @if(passGroup?.get('password')?.touched){
@@ -133,13 +125,11 @@
                 <p class="validation-error">Password must be at least {{passMinLength}} characters!</p>
             }  
         }
-        @if(passGroup?.get('rePassword')?.touched){
-            <div>
-                @if(passGroup?.errors?.['matchPasswordsValidator'] ||
-                    passGroup?.get('rePassword')?.errors?.['required']){
-                    <p class="validation-error">Passwords does not match!</p>
-                }
-            </div>
+        @if(passGroup?.get('confirmPassword')?.touched){
+            @if(passGroup?.errors?.['matchPasswordsValidator'] ||
+                passGroup?.get('confirmPassword')?.errors?.['required']){
+                <p class="validation-error">Passwords does not match!</p>
+            }
         }
         <button
             [disabled]="form.invalid"

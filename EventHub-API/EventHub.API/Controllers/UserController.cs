@@ -30,10 +30,10 @@ namespace EventHub.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { Message = ex.Message });
             }
 
-            return Ok(result);
+            return Ok(new { Message = result });
         }
 
         [HttpPost("login")]
@@ -69,7 +69,7 @@ namespace EventHub.API.Controllers
                 return Ok(new { token = tokenString });
             }
 
-            return BadRequest(result);
+            return BadRequest(new { Message = result });
         }
 
         [HttpGet("getUserInfo")]

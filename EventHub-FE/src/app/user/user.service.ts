@@ -34,6 +34,18 @@ export class UserService {
       );
   }
 
+  register(firstName: string, lastName: string, username: string, email: string, password: string, confirmPassword: string){
+    return this.http
+      .post('/api/user/register', {username, email, firstName, lastName, password, confirmPassword})
+      .pipe(
+        catchError((err: HttpErrorResponse)=>{
+          console.log(err);
+          
+          return throwError(() => new Error(err.error));
+        })
+      )
+  }
+
   getUser() {
     const token = sessionStorage.getItem('authToken');
 

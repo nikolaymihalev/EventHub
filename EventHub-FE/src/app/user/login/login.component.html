@@ -23,14 +23,12 @@
             </div>
         </div>
         @if(inputEmail?.touched){
-            <div>
               @if(inputEmail?.errors?.['required']){
               <p class="validation-error">Email is required!</p>
               } 
               @if(inputEmail?.errors?.['emailValidator']){
               <p class="validation-error">Email is not valid!</p>
               }
-            </div>
         }
         <div class="fields-container">
             <i
@@ -55,14 +53,12 @@
             </div>
         </div>
         @if(inputPassword?.touched){
-            <div>
               @if(inputPassword?.errors?.['required']){
               <p class="validation-error">Password is required!</p>
               }
               @if(inputPassword?.errors?.['minlength']){
               <p class="validation-error">Password must be at least {{passMinLength}} characters!</p>
               }
-            </div>
         }
         <button 
             [disabled]="form.invalid"

@@ -41,7 +41,7 @@ namespace EventHub.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { ex.Message });
             }
 
             return Ok(new { Message = string.Format(SuccessfullMessages.Created, "Event")});
@@ -56,7 +56,7 @@ namespace EventHub.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { ex.Message });
             }
 
             return Ok(new { Message = string.Format(SuccessfullMessages.Deleted, "Event") });
@@ -71,7 +71,7 @@ namespace EventHub.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { ex.Message });
             }
 
             return Ok(new { Message = string.Format(SuccessfullMessages.Updated, "Event") });
@@ -88,7 +88,7 @@ namespace EventHub.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { ex.Message });
             }
 
             return Ok(model);
