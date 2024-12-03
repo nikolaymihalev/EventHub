@@ -1,0 +1,46 @@
+.about-container{
+    width: 1000px;
+    margin: 2em auto;
+}
+
+.info-container{
+    background: #F9F7F7;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+}
+
+.info-container h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1em;
+    color: #112D4E;
+}
+
+.info-container ol{
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    font-size: 1.1rem;
+    color: #112D4E;
+    font-size: 1.3rem;
+    padding: 0 1em;
+}
+
+.info-container p{
+    color: #3F72AF;
+    font-size: 1.1rem;
+}
+
+.info-container ul li{
+    margin-top: 1em;
+   list-style: outside none;
+}
+
+.info-container h4,
+.info-container h5{
+    color: #112D4E;
+}
+
+.info-container h5{
+    font-size: 1.2rem;
+}
