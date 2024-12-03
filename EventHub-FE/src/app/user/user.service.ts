@@ -38,9 +38,7 @@ export class UserService {
     return this.http
       .post('/api/user/register', {username, email, firstName, lastName, password, confirmPassword})
       .pipe(
-        catchError((err: HttpErrorResponse)=>{
-          console.log(err);
-          
+        catchError((err: HttpErrorResponse)=>{          
           return throwError(() => new Error(err.error));
         })
       )
