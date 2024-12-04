@@ -16,15 +16,16 @@
         </div>
         <div class="user-btns">
             @if(isLoggedIn){
+                <a class="add-event-btn" routerLink="/add-theme"><i class="fa-solid fa-plus"></i></a>
                 <details>
                     <summary><i class="fa-solid fa-circle-user"></i></summary>
                     <div class="logged-btns">
                         <a routerLink="/">My Events</a>
-                        <a routerLink="/">Add Event</a>
+                        <a routerLink="/">Registrations</a>
                         <a routerLink="/">Profile</a>
                         <a (click)="logout()">Log out</a>
                     </div> 
-                </details>                
+                </details>               
             }@else {
                 <a routerLink="/register" class="register-btn">Get started</a>
                 <a routerLink="/login">Sign in</a>

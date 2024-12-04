@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { NotificationService } from '../../shared/notification/notification.service';
 import { NotificationComponent } from "../../shared/notification/notification.component";
 import { EmailDirective } from '../../directives/email.directive';
-import { ValidationConstants } from '../constants/validation.constants';
+import { UserValidationConstants } from '../constants/user.validation.constants';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   notificationType: string = '';
   hasNotification: boolean = false;
 
-  passMinLength = ValidationConstants.PASSWORD_MIN_LENGTH;
+  passMinLength = UserValidationConstants.PASSWORD_MIN_LENGTH;
 
   constructor(private userService: UserService, private router: Router, private notificationService: NotificationService) {}
 
@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/profile']);
           }, 2000);
         },
-      error: (err: Error)=>{  
-        this.notificationService.showNotification(err.message, 'error');  
+      error: ()=>{  
+        this.notificationService.showNotification('The email or password is invalid!', 'error');  
         this.hasNotification = true;
       }
     });

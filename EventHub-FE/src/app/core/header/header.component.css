@@ -106,3 +106,10 @@ summary i {
     color: #112D4E;
     opacity: 0.9;
 }
+
+.add-event-btn{
+    background-color: none;
+    margin-right: 1em;
+    font-size: 1.6rem;
+    align-items: center;
+}

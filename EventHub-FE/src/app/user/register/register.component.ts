@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../shared/notification/notification.service';
-import { ValidationConstants } from '../constants/validation.constants';
+import { UserValidationConstants } from '../constants/user.validation.constants';
 import { NotificationComponent } from '../../shared/notification/notification.component';
 import { emailValidator } from '../../utils/email.validator';
 import { matchPasswordsValidator } from '../../utils/match.passwords.validator';
@@ -16,12 +16,12 @@ import { matchPasswordsValidator } from '../../utils/match.passwords.validator';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
-  nameMinLength = ValidationConstants.NAME_MIN_LENGTH;
-  nameMaxLength = ValidationConstants.NAME_MAX_LENGTH;
-  passMinLength = ValidationConstants.PASSWORD_MIN_LENGTH;
-  emailMaxLength = ValidationConstants.EMAIL_MAX_LENGTH;
-  usernameMinLength = ValidationConstants.USERNAME_MIN_LENGTH;
-  usernameMaxLength = ValidationConstants.USERNAME_MAX_LENGTH;
+  nameMinLength = UserValidationConstants.NAME_MIN_LENGTH;
+  nameMaxLength = UserValidationConstants.NAME_MAX_LENGTH;
+  passMinLength = UserValidationConstants.PASSWORD_MIN_LENGTH;
+  emailMaxLength = UserValidationConstants.EMAIL_MAX_LENGTH;
+  usernameMinLength = UserValidationConstants.USERNAME_MIN_LENGTH;
+  usernameMaxLength = UserValidationConstants.USERNAME_MAX_LENGTH;
 
   form = new FormGroup({
     firstName: new FormControl('',[

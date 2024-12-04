@@ -146,9 +146,10 @@ namespace EventHub.Core.Services
 
         private async Task<IEnumerable<EventInfoModel>> GetAllEventsAsync(string? userId = null) 
         {
-            if (userId != null)             
+            if (userId != null)
                 return await repository.AllReadonly<Event>()
                 .Where(x => x.CreatorId == userId)
+                .OrderByDescending(x => x.Id)
                 .Select(x => new EventInfoModel()
                 {
                     Id = x.Id,
@@ -162,6 +163,7 @@ namespace EventHub.Core.Services
             
 
             return await repository.AllReadonly<Event>()
+                .OrderByDescending(x => x.Id)
                 .Select(x => new EventInfoModel()
                 {
                     Id = x.Id,
