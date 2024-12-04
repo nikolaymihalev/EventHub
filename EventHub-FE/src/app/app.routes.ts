@@ -17,7 +17,11 @@ export const routes: Routes = [
         (c) => c.AddEventComponent
         ), canActivate: [AuthGuard],
     },
-    
+    { path: 'myevents', loadComponent: () =>
+        import('./events/my-events/my-events.component').then(
+        (c) => c.MyEventsComponent
+        ), canActivate: [AuthGuard],
+    },
     { path: '404', component: ErrorComponent },
     { path: '**', redirectTo: '/404' },
 ];

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../types/user';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, firstValueFrom, map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -54,27 +54,38 @@ export class UserService {
         .pipe(
           tap((user) => {
             this.user$$.next(user);
-          })
+          }),
+          catchError((err: HttpErrorResponse)=>{       
+            console.log(err);
+               
+            return throwError(() => new Error(err.error));
+          })          
         ).subscribe();
     }
   }
 
-  getUserInfo(property: string): string | undefined{
-    let returningValue: string | undefined;
-
+  async getUserInfo(property: string): Promise<string | undefined> {
     this.getUser();
-
-    switch(property){
-      case 'id': returningValue = this.user$$.value?.id; break;
-      case 'email': returningValue = this.user$$.value?.email; break;
-      case 'firstName': returningValue = this.user$$.value?.firstname; break;
-      case 'lastName': returningValue = this.user$$.value?.lastname; break;
-      case 'username': returningValue = this.user$$.value?.username; break;
-    }    
-
-    return returningValue;
+  
+    const userInfo$ = this.user$$.asObservable().pipe(
+      map(user => {
+        if (user) {
+          switch (property) {
+            case 'id': return user.id;
+            case 'email': return user.email;
+            case 'firstName': return user.firstname;
+            case 'lastName': return user.lastname;
+            case 'username': return user.username;
+            default: return undefined;
+          }
+        }
+        return undefined;
+      })
+    );
+  
+    return await firstValueFrom(userInfo$);
   }
-
+  
   logout() {
     localStorage.removeItem('authToken');
     this.user$$.next(null);

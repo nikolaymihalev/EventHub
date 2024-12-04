@@ -50,7 +50,7 @@ export class AddEventComponent implements OnInit{
     })
   }
 
-  create(form:NgForm){
+  async create(form:NgForm){
     if (form.invalid) {
       return;
     }
@@ -58,23 +58,36 @@ export class AddEventComponent implements OnInit{
     const {title, description, category, date, location} = form.value;
 
     const parsedDate = parse(date, "yyyy-MM-dd", new Date());
-    const creatorId = this.userService.getUserInfo('id');
+
     const categoryID = parseInt(category);
 
-    this.apiService.addEvent(title,description,categoryID,parsedDate,location,creatorId!)
-      .subscribe({
-        next:()=>{
-          this.notificationService.showNotification('Successfully published new event!', 'success');  
-          this.hasNotification = true;
-          setTimeout(() => {
-            this.router.navigate(['/myevents']);
-          }, 2000);
-        },
-        error: ()=>{  
-          this.notificationService.showNotification('Operation failed. Try again!', 'error');  
-          this.hasNotification = true;
-        }
-      })
+    await this.addEvent(title,description,categoryID, parsedDate, location);
+
+  }
+
+  async addEvent(title:string,description:string,categoryID:number,parsedDate:Date,location:string): Promise<void> {
+    try {
+
+      const userId = await this.userService.getUserInfo('id');      
+      if (userId) {
+        this.apiService.addEvent(title,description,categoryID,parsedDate,location,userId!)
+          .subscribe({
+            next:()=>{
+              this.notificationService.showNotification('Successfully published new event!', 'success');  
+              this.hasNotification = true;
+              setTimeout(() => {
+                this.router.navigate(['/myevents']);
+              }, 2000);
+            },
+            error: ()=>{  
+              this.notificationService.showNotification('Operation failed. Try again!', 'error');  
+              this.hasNotification = true;
+            }
+          })
+      }
+    } catch (error) {
+      console.error('Error getting user info:', error);
+    }
   }
 
   private initMap(): void {

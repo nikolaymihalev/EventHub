@@ -66,7 +66,6 @@ export class EventsListComponent implements OnInit{
       });
     }
     this.updateVisiblePages(); 
-
   }
 
   homeEvents(){
