@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <div class="add-event-container">
     <form #form="ngForm" (ngSubmit)="(form.value)">
         <h3>Add new Event</h3>
@@ -77,7 +79,7 @@
                     ngModel 
                     #inputDate="ngModel">
             </div>
-        </div>
+        </div>        
         @if(inputDate?.touched){
               @if(inputDate?.errors?.['required']){
               <p class="validation-error">Date is required!</p>
@@ -95,11 +97,11 @@
                     name="location" 
                     id="location" 
                     required
-                    ngModel 
+                    [(ngModel)]="eventLocation"
                     #inputLocation="ngModel">
             </div>
         </div>
-        <div id="map"></div>
+        <div id="map" style="height: 300px; width: 100%;"></div>
         @if(inputLocation?.touched){
               @if(inputLocation?.errors?.['required']){
               <p class="validation-error">Location is required!</p>

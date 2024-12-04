@@ -19,11 +19,9 @@
 }
 
 #map {
-  height: 300px;
-  width: 100%;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    margin-top: 1em;
 }
 
 .button-container button{
