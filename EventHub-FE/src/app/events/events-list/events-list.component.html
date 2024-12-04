@@ -35,7 +35,7 @@
     }
 </div>
 <div class="pages-container">
-    @for (page of pages; track $index) {
-        <button [class.currentPage]="page === currentPage" (click)="changePage(page)">{{page}}</button>        
+    @for (page of visiblePages; track $index) {
+        <button [class.currentPage]="page === currentPage" [disabled]="page === '...'" (click)="changePage(page)">{{page}}</button>        
     }
 </div>

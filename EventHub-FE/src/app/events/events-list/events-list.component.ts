@@ -20,11 +20,13 @@ export class EventsListComponent implements OnInit{
   searchTitle: string | any;
   searchCategoryId: number | any;
   pages: number[] = [];
-  currentPage: number | any;
+  currentPage: number = 1;
   operation: string | any;
   isLoading = true;
+  visiblePages: (number | string)[] = [];
 
-  constructor(private apiService: ApiService){}
+  constructor(private apiService: ApiService){
+  }
 
   ngOnInit(): void {
     this.homeEvents();
@@ -50,7 +52,10 @@ export class EventsListComponent implements OnInit{
     }
   }
 
-  changePage(page: number){
+  changePage(page: number| string): void{
+    if (typeof page === 'string' || page === this.currentPage) {
+      return;
+    }
     if(this.operation === "all"){
       this.apiService.getEvents(page).subscribe((eventsPageModel)=>{
         this.setEventModelVariables(eventsPageModel);
@@ -60,6 +65,8 @@ export class EventsListComponent implements OnInit{
         this.setEventModelVariables(eventsPageModel);
       });
     }
+    this.updateVisiblePages(); 
+
   }
 
   homeEvents(){
@@ -67,6 +74,33 @@ export class EventsListComponent implements OnInit{
       this.setEventModelVariables(eventsPageModel);
       this.operation = "all";
     })
+  }
+
+  private updateVisiblePages(): void {
+    this.visiblePages = [];
+
+    if (this.pages.length <= 5) {
+      this.visiblePages = this.pages;
+      return;
+    }
+
+    this.visiblePages.push(1);
+
+    if (this.currentPage > 3) {
+      this.visiblePages.push('...');
+    }
+
+    const start = Math.max(2, this.currentPage - 1);
+    const end = Math.min(this.pages.length - 1, this.currentPage + 1);
+    for (let i = start; i <= end; i++) {
+      this.visiblePages.push(i);
+    }
+
+    if (this.currentPage < this.pages.length - 2) {
+      this.visiblePages.push('...');
+    }
+
+    this.visiblePages.push(this.pages.length);
   }
 
   private getPagesRange(length: number): number[] {
@@ -79,5 +113,7 @@ export class EventsListComponent implements OnInit{
     this.currentPage = eventsPageModel.currentPage;
 
     this.isLoading = false;
+
+    this.updateVisiblePages();
   }
 }
