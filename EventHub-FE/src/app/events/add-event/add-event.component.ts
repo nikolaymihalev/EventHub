@@ -1,10 +1,12 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EventValidationConstants } from '../constants/event.validation.constants';
 import * as L from 'leaflet';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../../api.service';
+import { Category } from '../../types/category';
 
 @Component({
   selector: 'app-add-event',
@@ -14,19 +16,24 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './add-event.component.css'
 })
 export class AddEventComponent implements OnInit{
+  private map: L.Map | undefined;
+
   eventLocation: string = '';
+  categoryId: number = 0;
+  categories: Category[] = [];
 
   titleMinLength = EventValidationConstants.TITLE_MIN_LENGTH;
   titleMaxLength = EventValidationConstants.TITLE_MAX_LENGTH;
   descriptionMinLength = EventValidationConstants.DESCRIPTION_MIN_LENGTH;
   descriptionMaxLength = EventValidationConstants.DESCRIPTION_MAX_LENGTH;
 
-  private map: L.Map | undefined;
-
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient,private apiService: ApiService){}
 
   ngOnInit(): void {
     this.initMap();
+    this.apiService.getCategories().subscribe((categories)=>{
+      this.categories = categories;      
+    })
   }
 
   private initMap(): void {

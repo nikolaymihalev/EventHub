@@ -42,7 +42,7 @@
             class="fa-solid fa-align-justify field-icon"></i>
             <div class="field-container">
                 <label for="description">Description</label>
-                <input 
+                <textarea 
                     [class]="
                         ((inputDescription?.touched && inputDescription?.errors?.['required']) || 
                         (inputDescription?.touched && inputDescription?.errors?.['minlength']))
@@ -54,7 +54,7 @@
                     ngModel 
                     minlength={{descriptionMinLength}}
                     maxlength={{descriptionMaxLength}}
-                    #inputDescription="ngModel">
+                    #inputDescription="ngModel"></textarea>
             </div>
         </div>
         @if(inputDescription?.touched){
@@ -65,6 +65,29 @@
               <p class="validation-error">Description must be at least {{descriptionMinLength}} characters!</p>
               }
         }
+
+        <div class="fields-container">
+            <i [class]="((selectCategory?.touched && !selectCategory?.value)) ? 'input-error': 'field-icon'"  
+                class="fa-solid fa-icons field-icon"></i>
+            <div class="field-container">
+                <label for="category">Category</label>
+                <select 
+                    [(ngModel)]="categoryId" 
+                    [class]="((selectCategory?.touched && !selectCategory?.value)) ? 'input-error': ''"  
+                    name="category" 
+                    id="category" 
+                    required 
+                    #selectCategory="ngModel">
+                    @for (categoryItem of categories; track $index) {
+                        <option value={{categoryItem.id}}>{{categoryItem.name}}</option>
+                    }
+                </select>
+            </div>
+        </div>              
+        @if(selectCategory?.touched && !selectCategory?.value){
+            <p class="validation-error">Please select a category!</p>
+        }
+
         <div class="fields-container">
             <i [class]="((inputDate?.touched && inputDate?.errors?.['required'])) ? 'input-error': 'field-icon'" 
                 class="fa-solid fa-calendar-days field-icon"></i>

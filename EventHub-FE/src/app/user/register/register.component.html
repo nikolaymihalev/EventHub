@@ -5,26 +5,28 @@
             <i [class]="isFieldTextMissing('firstName') || isNotInMinLength('firstName') || isOverMaxLength('firstName') 
                 || isFieldTextMissing('lastName') || isNotInMinLength('lastName') || isOverMaxLength('lastName') ? 'input-error'  : 'field-icon' "                        
                 class="fa-solid fa-user field-icon"></i>
-            <div class="field-container">
-                <label for="firstname">First Name</label>
-                <input 
-                [class]="isFieldTextMissing('firstName') || isNotInMinLength('firstName') || isOverMaxLength('firstName')  ? 'input-error'  : '' "
-                type="text" 
-                id="firstname" 
-                placeholder="John"
-                name="firstname"
-                formControlName="firstName">
-            </div>
-            
-            <div class="field-container">
-                <label for="lastname">Last Name</label>
-                <input [class]="isFieldTextMissing('lastName') || isNotInMinLength('lastName') || isOverMaxLength('lastName') ? 'input-error'  : '' "
-                type="text" 
-                id="lastname" 
-                placeholder="Doe"
-                name="lastname"
-                formControlName="lastName">
-            </div>            
+                <div class="multiple-field">
+                    <div class="field-container">
+                        <label for="firstname">First Name</label>
+                        <input 
+                        [class]="isFieldTextMissing('firstName') || isNotInMinLength('firstName') || isOverMaxLength('firstName')  ? 'input-error'  : '' "
+                        type="text" 
+                        id="firstname" 
+                        placeholder="John"
+                        name="firstname"
+                        formControlName="firstName">
+                    </div>
+                    
+                    <div class="field-container">
+                        <label for="lastname">Last Name</label>
+                        <input [class]="isFieldTextMissing('lastName') || isNotInMinLength('lastName') || isOverMaxLength('lastName') ? 'input-error'  : '' "
+                        type="text" 
+                        id="lastname" 
+                        placeholder="Doe"
+                        name="lastname"
+                        formControlName="lastName">
+                    </div>            
+                </div>
         </div> 
         @if(form.get('firstName')?.touched){
             @if(form.get('firstName')?.errors?.['required']){
@@ -98,23 +100,25 @@
                     ||((passGroup?.get('confirmPassword')?.touched &&(passGroup?.get('confirmPassword')?.errors?.['required'] 
                     || passGroup?.errors?.['matchPasswordsValidator'])) )? 'input-error' : 'field-icon'"
             class="fa-solid fa-key field-icon"></i>
-            <div class="field-container">
-                <label for="password">Password</label>
-                <input [class]="((passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['required'] ) 
-                    ||(passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['minlength'])) ? 'input-error' : ''"
-                type="password" 
-                name="password" 
-                id="password"
-                formControlName="password">
-            </div>
-            <div class="field-container">
-                <label for="repassword">Confirm Password</label>
-                <input [class]="((passGroup?.get('confirmPassword')?.touched &&(passGroup?.get('confirmPassword')?.errors?.['required'] 
-                    || passGroup?.errors?.['matchPasswordsValidator'])) ) ? 'input-error' : ''"
-                type="password" 
-                name="repassword" 
-                id="repassword"
-                formControlName="confirmPassword">
+            <div class="multiple-field">
+                <div class="field-container">
+                    <label for="password">Password</label>
+                    <input [class]="((passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['required'] ) 
+                        ||(passGroup?.get('password')?.touched && passGroup?.get('password')?.errors?.['minlength'])) ? 'input-error' : ''"
+                    type="password" 
+                    name="password" 
+                    id="password"
+                    formControlName="password">
+                </div>
+                <div class="field-container">
+                    <label for="repassword">Confirm Password</label>
+                    <input [class]="((passGroup?.get('confirmPassword')?.touched &&(passGroup?.get('confirmPassword')?.errors?.['required'] 
+                        || passGroup?.errors?.['matchPasswordsValidator'])) ) ? 'input-error' : ''"
+                    type="password" 
+                    name="repassword" 
+                    id="repassword"
+                    formControlName="confirmPassword">
+                </div>
             </div>
         </div>
         @if(passGroup?.get('password')?.touched){

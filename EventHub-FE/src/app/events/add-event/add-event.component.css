@@ -48,10 +48,11 @@
 
 .field-icon{
     font-size: 2rem;
-    margin-right: 0.3em;
     border-right: 4px solid #112D4E;
     padding-right: 0.3em;
     color: #3F72AF;
+    margin-right: 0.3em;
+    width: 50px;
 }
 
 .field-container{
@@ -67,11 +68,16 @@
     color: #3F72AF;
 }
 
-.field-container input{
+.field-container input,
+.field-container textarea{
     font-size: 1rem;
     padding: 0.2em 0.3em;
 }
 
+.field-container select{
+    font-size: 1.3rem;
+
+}
 .input-error{
     color: red;
     border-color: red;
