@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserForAuth } from '../types/user';
+import { User } from '../types/user';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 
@@ -7,10 +7,10 @@ import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private user$$ = new BehaviorSubject<UserForAuth | null>(null);
+  private user$$ = new BehaviorSubject<User | null>(null);
 
   get isLogged(): boolean {
-    const token = sessionStorage.getItem('authToken');
+    const token = localStorage.getItem('authToken');
     return !!token;
   }
 
@@ -23,7 +23,7 @@ export class UserService {
       .pipe(
         tap((response) => {
           if (response.token) {
-            sessionStorage.setItem('authToken', response.token);
+            localStorage.setItem('authToken', response.token);
 
             this.getUser();
           }
@@ -45,12 +45,12 @@ export class UserService {
   }
 
   getUser() {
-    const token = sessionStorage.getItem('authToken');
+    const token = localStorage.getItem('authToken');
 
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-      this.http.get<UserForAuth>('/api/user/getUserInfo', { headers })
+      this.http.get<User>('/api/user/getUserInfo', { headers })
         .pipe(
           tap((user) => {
             this.user$$.next(user);
@@ -59,8 +59,24 @@ export class UserService {
     }
   }
 
+  getUserInfo(property: string): string | undefined{
+    let returningValue: string | undefined;
+
+    this.getUser();
+
+    switch(property){
+      case 'id': returningValue = this.user$$.value?.id; break;
+      case 'email': returningValue = this.user$$.value?.email; break;
+      case 'firstName': returningValue = this.user$$.value?.firstname; break;
+      case 'lastName': returningValue = this.user$$.value?.lastname; break;
+      case 'username': returningValue = this.user$$.value?.username; break;
+    }    
+
+    return returningValue;
+  }
+
   logout() {
-    sessionStorage.removeItem('authToken');
+    localStorage.removeItem('authToken');
     this.user$$.next(null);
   }
 }

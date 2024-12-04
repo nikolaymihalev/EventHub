@@ -24,14 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private notificationService: NotificationService) {}
 
   ngOnInit() {
-    this.notificationService.notification$.subscribe(notification => {
-      this.notificationMessage = notification.message;
-      this.notificationType = notification.type;
-      setTimeout(() => {
-        this.notificationMessage = '';
-        this.hasNotification = false;
-      }, 5000);
-    });
+    this.subscribeToNotification();
   }
 
   login(form: NgForm) {
@@ -53,6 +46,17 @@ export class LoginComponent implements OnInit {
         this.notificationService.showNotification('The email or password is invalid!', 'error');  
         this.hasNotification = true;
       }
+    });
+  }
+
+  private subscribeToNotification(): void{
+    this.notificationService.notification$.subscribe(notification => {
+      this.notificationMessage = notification.message;
+      this.notificationType = notification.type;
+      setTimeout(() => {
+        this.notificationMessage = '';
+        this.hasNotification = false;
+      }, 5000);
     });
   }
 }

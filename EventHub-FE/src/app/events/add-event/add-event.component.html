@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 <div class="add-event-container">
-    <form #form="ngForm" (ngSubmit)="(form.value)">
+    <form #form="ngForm" (ngSubmit)="create(form)">
         <h3>Add new Event</h3>
         <div class="fields-container">
             <i
@@ -139,3 +140,7 @@
         </div>
     </form>
 </div>
+
+@if(hasNotification){
+    <app-notification [message]="notificationMessage" [type]="notificationType"></app-notification>
+}

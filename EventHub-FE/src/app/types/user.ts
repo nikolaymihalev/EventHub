@@ -1,4 +1,4 @@
-export interface UserForAuth {
+export interface User {
     id: string;
     username: string;
     firstname:string;
