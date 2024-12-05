@@ -12,7 +12,7 @@ export const routes: Routes = [
     { path: 'about', component: AboutComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'add-theme', loadComponent: () =>
+    { path: 'add-event', loadComponent: () =>
         import('./events/add-event/add-event.component').then(
         (c) => c.AddEventComponent
         ), canActivate: [AuthGuard],
@@ -20,6 +20,11 @@ export const routes: Routes = [
     { path: 'myevents', loadComponent: () =>
         import('./events/my-events/my-events.component').then(
         (c) => c.MyEventsComponent
+        ), canActivate: [AuthGuard],
+    },
+    { path: 'edit-event', loadComponent: () =>
+        import('./events/edit-event/edit-event.component').then(
+        (c) => c.EditEventComponent
         ), canActivate: [AuthGuard],
     },
     { path: '404', component: ErrorComponent },
