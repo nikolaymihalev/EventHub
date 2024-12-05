@@ -17,16 +17,25 @@ export const routes: Routes = [
         (c) => c.AddEventComponent
         ), canActivate: [AuthGuard],
     },
-    { path: 'myevents', loadComponent: () =>
-        import('./events/my-events/my-events.component').then(
-        (c) => c.MyEventsComponent
-        ), canActivate: [AuthGuard],
-    },
-    { path: 'edit-event', loadComponent: () =>
-        import('./events/edit-event/edit-event.component').then(
-        (c) => c.EditEventComponent
-        ), canActivate: [AuthGuard],
-    },
+    {
+        path: 'myevents',
+        children: [
+          { 
+            path: '', 
+            loadComponent: () =>
+                import('./events/my-events/my-events.component').then(
+                (c) => c.MyEventsComponent
+                ), canActivate: [AuthGuard],
+          },
+          {
+            path: ':eventId',
+            loadComponent: () =>
+                import('./events/edit-event/edit-event.component').then(
+                (c) => c.EditEventComponent
+                ), canActivate: [AuthGuard],
+          },
+        ],
+      },
     { path: '404', component: ErrorComponent },
     { path: '**', redirectTo: '/404' },
 ];

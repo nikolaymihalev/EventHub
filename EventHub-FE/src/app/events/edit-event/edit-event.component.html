@@ -1,1 +1,146 @@
-<p>edit-event works!</p>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<div class="edit-event-container">
+    <form #form="ngForm" (ngSubmit)="(form)">
+        <h3>Edit {{currentEvent.title}}</h3>
+        <div class="fields-container">
+            <i
+            [class]="((inputTitle?.touched && inputTitle?.errors?.['required']) || 
+                    (inputTitle?.touched && inputTitle?.errors?.['minlength']))
+                    ? 'input-error': 'field-icon'" 
+            class="fa-solid fa-heading field-icon"></i>
+            <div class="field-container">
+                <label for="title">Title</label>
+                <input 
+                    [class]="
+                        ((inputTitle?.touched && inputTitle?.errors?.['required']) || 
+                        (inputTitle?.touched && inputTitle?.errors?.['minlength']))
+                        ? 'input-error': ''"
+                    type="title" 
+                    name="title" 
+                    id="title" 
+                    required
+                    [(ngModel)]="currentEvent.title"
+                    minlength={{titleMinLength}}
+                    maxlength={{titleMaxLength}}
+                    #inputTitle="ngModel">
+            </div>
+        </div>
+        @if(inputTitle?.touched){
+              @if(inputTitle?.errors?.['required']){
+              <p class="validation-error">Title is required!</p>
+              }
+              @if(inputTitle?.errors?.['minlength']){
+              <p class="validation-error">Title must be at least {{titleMinLength}} characters!</p>
+              }
+        }
+        <div class="fields-container">
+            <i
+            [class]="((inputDescription?.touched && inputDescription?.errors?.['required']) || 
+                    (inputDescription?.touched && inputDescription?.errors?.['minlength']))
+                    ? 'input-error': 'field-icon'" 
+            class="fa-solid fa-align-justify field-icon"></i>
+            <div class="field-container">
+                <label for="description">Description</label>
+                <textarea 
+                    [class]="
+                        ((inputDescription?.touched && inputDescription?.errors?.['required']) || 
+                        (inputDescription?.touched && inputDescription?.errors?.['minlength']))
+                        ? 'input-error': ''"
+                    type="description" 
+                    name="description" 
+                    id="description" 
+                    required
+                    [(ngModel)]="currentEvent.description"
+                    minlength={{descriptionMinLength}}
+                    maxlength={{descriptionMaxLength}}
+                    #inputDescription="ngModel"></textarea>
+            </div>
+        </div>
+        @if(inputDescription?.touched){
+              @if(inputDescription?.errors?.['required']){
+              <p class="validation-error">Description is required!</p>
+              }
+              @if(inputDescription?.errors?.['minlength']){
+              <p class="validation-error">Description must be at least {{descriptionMinLength}} characters!</p>
+              }
+        }
+
+        <div class="fields-container">
+            <i [class]="((selectCategory?.touched && !selectCategory?.value)) ? 'input-error': 'field-icon'"  
+                class="fa-solid fa-icons field-icon"></i>
+            <div class="field-container">
+                <label for="category">Category</label>
+                <select 
+                    [(ngModel)]="currentEvent.categoryId"
+                    [class]="((selectCategory?.touched && !selectCategory?.value)) ? 'input-error': ''"  
+                    name="category" 
+                    id="category" 
+                    required 
+                    #selectCategory="ngModel">
+                    @for (categoryItem of categories; track $index) {
+                        <option value={{categoryItem.id}}>{{categoryItem.name}}</option>
+                    }
+                </select>
+            </div>
+        </div>              
+        @if(selectCategory?.touched && !selectCategory?.value){
+            <p class="validation-error">Please select a category!</p>
+        }
+
+        <div class="fields-container">
+            <i [class]="((inputDate?.touched && inputDate?.errors?.['required'])) ? 'input-error': 'field-icon'" 
+                class="fa-solid fa-calendar-days field-icon"></i>
+            <div class="field-container">
+                <label for="date">Date</label>
+                <input 
+                    [class]=" ((inputDate?.touched && inputDate?.errors?.['required'])) ? 'input-error': ''"
+                    type="date" 
+                    name="date" 
+                    id="date" 
+                    required
+                    [(ngModel)]="currentEvent.date" 
+                    #inputDate="ngModel">
+            </div>
+        </div>        
+        @if(inputDate?.touched){
+              @if(inputDate?.errors?.['required']){
+              <p class="validation-error">Date is required!</p>
+              }
+        }
+
+        <div class="fields-container">
+            <i [class]="((inputLocation?.touched && inputLocation?.errors?.['required'])) ? 'input-error': 'field-icon'" 
+                class="fa-solid fa-location-dot field-icon"></i>
+            <div class="field-container">
+                <label for="location">Location</label>
+                <input 
+                    [class]=" ((inputLocation?.touched && inputLocation?.errors?.['required'])) ? 'input-error': ''"
+                    type="location" 
+                    name="location" 
+                    id="location" 
+                    required
+                    [(ngModel)]="currentEvent.location"
+                    #inputLocation="ngModel">
+            </div>
+        </div>
+        <div id="map" style="height: 300px; width: 100%;"></div>
+        @if(inputLocation?.touched){
+              @if(inputLocation?.errors?.['required']){
+              <p class="validation-error">Location is required!</p>
+              }
+        }
+
+        <div class="button-container">
+            <button 
+                [disabled]="form.invalid"
+                [style]="{ backgroundColor: form.invalid ? 'grey' : '#3F72AF' }"
+            >Save</button>
+        </div>
+    </form>
+</div>
+
+@if(hasNotification){
+    <app-notification [message]="notificationMessage" [type]="notificationType"></app-notification>
+}

@@ -65,7 +65,7 @@ export class AddEventComponent implements OnInit{
 
   }
 
-  async addEvent(title:string,description:string,categoryID:number,parsedDate:Date,location:string): Promise<void> {
+  private async addEvent(title:string,description:string,categoryID:number,parsedDate:Date,location:string): Promise<void> {
     try {
 
       const userId = await this.userService.getUserInfo('id');      

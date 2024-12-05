@@ -1,0 +1,84 @@
+.edit-event-container {
+    width: 1000px;
+    background: #F9F7F7;
+    margin: 2em auto;
+    border-radius: 0.3em;
+    padding: 2em;
+}
+
+.edit-event-container form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.edit-event-container form .button-container{
+    text-align: center;
+    margin-top: 1.2em;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.button-container button{
+    font-size: 1.1rem;
+    padding: 0.5em 0.7em;
+    border: none;
+    border-radius: 0.3em;
+    color: #F9F7F7;
+    background: #3F72AF;
+    cursor: pointer;
+}
+
+.edit-event-container h3{
+    text-align: center;
+    font-size: 1.8rem;
+    color: #112D4E;
+}
+
+.fields-container{
+    display: flex;
+    gap: 0.5em;
+    align-items: end;
+}
+
+.field-icon{
+    font-size: 2rem;
+    border-right: 4px solid #112D4E;
+    padding-right: 0.3em;
+    color: #3F72AF;
+    margin-right: 0.3em;
+    width: 50px;
+}
+
+.field-container{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 49%;
+    gap: 0.3em;
+}
+
+
+.field-container label{
+    font-size: 1.1rem;
+    color: #3F72AF;
+}
+
+.field-container input,
+.field-container textarea{
+    font-size: 1rem;
+    padding: 0.2em 0.3em;
+}
+
+.field-container select{
+    font-size: 1.3rem;
+
+}
+.input-error{
+    color: red;
+    border-color: red;
+}

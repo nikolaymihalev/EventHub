@@ -17,7 +17,7 @@
                             </a>
                         </div>
                         <div class="event-btns">
-                            <a routerLink="/edit-event" class="yellow-btn"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a routerLink="/edit-event" class="yellow-btn" [routerLink]="eventItem.id.toString()"><i class="fa-solid fa-pen-to-square"></i></a>
                             <button class="red-btn" (click)="toggleDeleteContainer(eventItem.title, eventItem.id)"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
