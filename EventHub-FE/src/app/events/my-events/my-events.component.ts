@@ -4,11 +4,12 @@ import { SlicePipe } from "../../shared/pipes/slice.pipe";
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { ApiService } from '../../api.service';
 import { UserService } from '../../user/user.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-my-events',
   standalone: true,
-  imports: [SlicePipe, LoaderComponent],
+  imports: [SlicePipe, LoaderComponent, RouterLink],
   templateUrl: './my-events.component.html',
   styleUrl: './my-events.component.css'
 })

@@ -1,18 +1,25 @@
-<div class="home-container">
+<div class="myevents-container">
     @if (isLoading) {
         <app-loader />
     }@else {
         <div class="events-container">
+            <h1>My Events</h1>
             @if(eventsPageModel.events.length > 0){
                 @for (eventItem of eventsPageModel.events; track $index) {
-                    <div class="event-container">
-                        <a routerLink="/event">
-                            <div class="title">
-                                <h2>{{eventItem.title | slice: 20}}</h2>
-                                <span>{{eventItem.date}}</span>
-                            </div>
-                            <p>Description: {{eventItem.description | slice: 30}}</p>
-                        </a>
+                    <div class="event-info">
+                        <div class="event-container">
+                            <a routerLink="/event">
+                                <div class="title">
+                                    <h2>{{eventItem.title | slice: 20}}</h2>
+                                    <span>{{eventItem.date}}</span>
+                                </div>
+                                <p>Description: {{eventItem.description | slice: 30}}</p>
+                            </a>
+                        </div>
+                        <div class="event-btns">
+                            <a routerLink="" class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a routerLink="" class="delete-btn"><i class="fa-solid fa-trash"></i></a>
+                        </div>
                     </div>
                 }
             }
@@ -23,9 +30,9 @@
             }
         </div>
     }
-</div>
-<div class="pages-container">
-    @for (page of visiblePages; track $index) {
-        <button [class.currentPage]="page === currentPage" [disabled]="page === '...'" (click)="changePage(page)">{{page}}</button>        
-    }
+    <div class="pages-container">
+        @for (page of visiblePages; track $index) {
+            <button [class.currentPage]="page === currentPage" [disabled]="page === '...'" (click)="changePage(page)">{{page}}</button>        
+        }
+    </div>
 </div>
