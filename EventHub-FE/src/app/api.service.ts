@@ -62,4 +62,14 @@ export class ApiService {
                 })
             );
     }
+
+    deleteEvent(id: number, userId: string){
+        return this.http
+            .delete<{message: string}>(`/api/event/${id}/user/${userId}`)
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{
+                    return throwError(() => new Error(err.error));
+                })
+            );
+    }
 }

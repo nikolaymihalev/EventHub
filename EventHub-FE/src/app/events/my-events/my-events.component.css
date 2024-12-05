@@ -102,7 +102,8 @@
     text-align: center;
 }
 
-.event-btns a{
+.event-btns a,
+.event-btns button{
     font-size: 1.5rem;
     align-content: center;
     padding: 0 1em;
@@ -111,10 +112,48 @@
     border-radius: 0.3em;
 }
 
-.event-btns .edit-btn{
+.event-btns button{
+    border: none;
+    cursor: pointer;
+}
+
+.yellow-btn{
     background: #f2d633;
 }
 
-.event-btns .delete-btn{
+.red-btn{
     background: #ff0000;
+}
+
+.green-btn{
+    background: #25db14;
+}
+
+.delete-container{
+    padding: 1em 1.5em;
+    background: #DBE2EF;
+    border-radius: 0.3em;
+    font-size: 2rem;
+    color: #3F72AF;
+    position: absolute;
+}
+
+.delete-container .delete-btns{
+    display: flex;
+    width: 50%;
+    margin: 1em auto 0.5em auto;
+    justify-content: space-around;
+}
+
+.delete-btns button{
+    padding: 0.3em 0.5em;
+    font-size: 1.3rem;
+    cursor: pointer;
+    border-radius: 0.3em;
+    border: none;
+    color: #F9F7F7;
+}
+
+.delete-container{
+    display: none;
 }

@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
           this.notificationService.showNotification('Successfully logged in!', 'success');  
           this.hasNotification = true;
           setTimeout(() => {
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/myevents']);
           }, 2000);
         },
       error: ()=>{  

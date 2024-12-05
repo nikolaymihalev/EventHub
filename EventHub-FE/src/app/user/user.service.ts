@@ -55,9 +55,7 @@ export class UserService {
           tap((user) => {
             this.user$$.next(user);
           }),
-          catchError((err: HttpErrorResponse)=>{       
-            console.log(err);
-               
+          catchError((err: HttpErrorResponse)=>{      
             return throwError(() => new Error(err.error));
           })          
         ).subscribe();
