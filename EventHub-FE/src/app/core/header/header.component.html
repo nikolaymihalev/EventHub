@@ -17,15 +17,13 @@
         <div class="user-btns">
             @if(isLoggedIn){
                 <a class="add-event-btn" routerLink="/add-theme"><i class="fa-solid fa-plus"></i></a>
-                <details>
-                    <summary><i class="fa-solid fa-circle-user"></i></summary>
-                    <div class="logged-btns">
-                        <a routerLink="/myevents">My Events</a>
-                        <a routerLink="/">Registrations</a>
-                        <a routerLink="/">Profile</a>
-                        <a (click)="logout()">Log out</a>
-                    </div> 
-                </details>               
+                <i #profileBtn class="fa-solid fa-circle-user profile-btn" (mouseenter)="toggleLoggedBtnsContainer()"></i>
+                <div #loggedUserBtns class="logged-btns" (mouseleave)="toggleLoggedBtnsContainer()">
+                    <a routerLink="/myevents">My Events</a>
+                    <a routerLink="/">Registrations</a>
+                    <a routerLink="/">Profile</a>
+                    <a (click)="logout()">Log out</a>
+                </div> 
             }@else {
                 <a routerLink="/register" class="register-btn">Get started</a>
                 <a routerLink="/login">Sign in</a>

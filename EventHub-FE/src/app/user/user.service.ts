@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../types/user';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, catchError, firstValueFrom, map, Observable, tap, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserService {
     return !!token;
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   login(email: string, password: string) {
@@ -56,6 +57,11 @@ export class UserService {
             this.user$$.next(user);
           }),
           catchError((err: HttpErrorResponse)=>{      
+            if(err.error.message === 'Invalid token'){
+              this.logout();
+              this.router.navigate(['/login']);
+            }
+            
             return throwError(() => new Error(err.error));
           })          
         ).subscribe();
