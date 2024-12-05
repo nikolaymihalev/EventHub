@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { EventPageModel } from "./types/eventsPageModel";
 import { Category } from "./types/category";
 import { catchError, throwError } from "rxjs";
+import { Event } from "./types/event";
 
 @Injectable({
     providedIn: 'root',
@@ -70,6 +71,16 @@ export class ApiService {
                 catchError((err: HttpErrorResponse)=>{
                     return throwError(() => new Error(err.error));
                 })
+            );
+    }
+
+    getEventById(id: number){
+        return this.http
+            .get<Event>(`/api/event/get-by-id/${id}`)
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{
+                    return throwError(() => new Error(err.error));
+                }) 
             );
     }
 }

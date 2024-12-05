@@ -5,12 +5,13 @@ import { Category } from '../../types/category';
 import { EventValidationConstants } from '../constants/event.validation.constants';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../api.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../user/user.service';
 import { catchError, map, Observable } from 'rxjs';
 import * as L from 'leaflet';
 import { NotificationComponent } from '../../shared/notification/notification.component';
 import { Event } from '../../types/event';
+import { format, parse } from 'date-fns';
 
 @Component({
   selector: 'app-edit-event',
@@ -38,12 +39,14 @@ export class EditEventComponent implements OnInit{
     private apiService: ApiService, 
     private notificationService: NotificationService, 
     private router: Router, 
-    private userService: UserService){}
+    private route: ActivatedRoute){}
 
   ngOnInit(): void {
+    const id = this.route.snapshot.params['eventId'];
+
     this.initMap();
     this.subscribeToNotification();
-    this.getEventValues();
+    this.getEventValues(id);
     this.apiService.getCategories().subscribe((categories)=>{
       this.categories = categories;      
     })
@@ -102,7 +105,14 @@ export class EditEventComponent implements OnInit{
     });
   }
 
-  private getEventValues(){
-  }
-    
+  private getEventValues(id: number){
+    this.apiService.getEventById(id).subscribe((currentEvent)=>{
+      this.currentEvent = currentEvent;
+
+      const [day, month, year] = currentEvent.date.split('/');
+
+      this.currentEvent.date =  `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    }
+   );
+  }    
 }
