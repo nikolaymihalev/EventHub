@@ -39,6 +39,7 @@ export class EditEventComponent implements OnInit{
     private apiService: ApiService, 
     private notificationService: NotificationService, 
     private router: Router, 
+    private userService: UserService,
     private route: ActivatedRoute){}
 
   ngOnInit(): void {
@@ -50,6 +51,48 @@ export class EditEventComponent implements OnInit{
     this.apiService.getCategories().subscribe((categories)=>{
       this.categories = categories;      
     })
+  }
+
+  async save(form:NgForm){
+    if (form.invalid) {
+      return;
+    }
+
+    const {title, description, category, date, location} = form.value;
+
+    const parsedDate = parse(date, "yyyy-MM-dd", new Date());
+
+    const categoryID = parseInt(category);
+
+    const id = this.route.snapshot.params['eventId'];
+
+    await this.editEvent(id, title,description,categoryID, parsedDate, location);
+
+  }
+
+  private async editEvent(id: number,title:string,description:string,categoryID:number,parsedDate:Date,location:string): Promise<void> {
+    try {
+
+      const userId = await this.userService.getUserInfo('id');      
+      if (userId) {
+        this.apiService.editEvent(id,title,description,categoryID,parsedDate,location,userId!, userId!)
+          .subscribe({
+            next:()=>{
+              this.notificationService.showNotification(`Successfully saved ${title}!`, 'success');  
+              this.hasNotification = true;
+              setTimeout(() => {
+                this.router.navigate(['/myevents']);
+              }, 2000);
+            },
+            error: ()=>{  
+              this.notificationService.showNotification('Operation failed. Try again!', 'error');  
+              this.hasNotification = true;
+            }
+          })
+      }
+    } catch (error) {
+      console.error('Error getting user info:', error);
+    }
   }
 
   private initMap(): void {

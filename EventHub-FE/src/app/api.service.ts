@@ -83,4 +83,16 @@ export class ApiService {
                 }) 
             );
     }
+
+    editEvent(id: number, title: string, description: string, categoryId: number, date: Date, location: string, userId: string, creatorId: string){
+        return this.http
+        .put<{message:string}>(`/api/event/update/${userId}`,{id,title, description,date,location,categoryId,creatorId})
+        .pipe(
+            catchError((err: HttpErrorResponse)=>{
+                console.log(err);
+                
+                return throwError(() => new Error(err.error));
+            })
+        );
+    }
 }

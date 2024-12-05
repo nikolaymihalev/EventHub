@@ -2,7 +2,7 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <div class="edit-event-container">
-    <form #form="ngForm" (ngSubmit)="(form)">
+    <form #form="ngForm" (ngSubmit)="save(form)">
         <h3>Edit {{currentEvent.title}}</h3>
         <div class="fields-container">
             <i
