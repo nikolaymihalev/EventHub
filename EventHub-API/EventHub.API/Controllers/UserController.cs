@@ -72,6 +72,22 @@ namespace EventHub.API.Controllers
             return BadRequest(new { Message = result });
         }
 
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody] UserInfoModel model)
+        {
+            string result = "";
+            try
+            {
+                result = await userService.UpdateUserInfoAsync(model);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+
+            return Ok(new { Message = result });
+        }        
+
         [HttpGet("getUserInfo")]
         public async Task<IActionResult> GetUserInfo()
         {

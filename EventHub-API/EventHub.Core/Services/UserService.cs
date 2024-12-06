@@ -91,5 +91,30 @@ namespace EventHub.Core.Services
                 throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);
             }
         }
+
+        public async Task<string> UpdateUserInfoAsync(UserInfoModel model)
+        {
+            try
+            {
+                var user = await repository.AllReadonly<User>()
+                    .FirstOrDefaultAsync(x => x.Email == model.Email);
+
+                if (user == null || user.Email != model.Email)
+                    throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);
+
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Username = model.Username;
+
+                await repository.SaveChangesAsync();
+
+                return "Successfully updated information!";
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException(ErrorMessages.OperationFailedErrorMessage);
+            }
+            
+        }
     }
 }
