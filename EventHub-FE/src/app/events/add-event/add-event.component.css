@@ -36,8 +36,10 @@
 
 .add-event-container h3{
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: #112D4E;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid gray;
 }
 
 .fields-container{

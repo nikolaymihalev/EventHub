@@ -14,6 +14,8 @@
     font-size: 2.5rem;
     margin-bottom: 1em;
     color: #112D4E;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid gray;
 }
 
 .info-container ol{
