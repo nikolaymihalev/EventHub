@@ -1,0 +1,26 @@
+.profile-container{
+    width: 1000px;
+    background: #F9F7F7;
+    border-radius: 0.5em;
+    margin: 2em auto;
+    padding: 2em;
+}
+.profile-container h3{
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid gray;
+}
+
+.profile-info-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    font-size: 1.3rem;
+}
+
+.profile-info-container .info{
+    display: flex;
+    gap: 1em;
+}

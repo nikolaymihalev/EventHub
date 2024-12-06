@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class UserService {
   private user$$ = new BehaviorSubject<User | null>(null);
+  public user$ = this.user$$.asObservable();
 
   get isLogged(): boolean {
     const token = localStorage.getItem('authToken');
@@ -68,7 +69,7 @@ export class UserService {
     }
   }
 
-  async getUserInfo(property: string): Promise<string | undefined> {
+  async getUserPropertyInfo(property: string): Promise<string | undefined> {
     this.getUser();
   
     const userInfo$ = this.user$$.asObservable().pipe(
@@ -77,8 +78,8 @@ export class UserService {
           switch (property) {
             case 'id': return user.id;
             case 'email': return user.email;
-            case 'firstName': return user.firstname;
-            case 'lastName': return user.lastname;
+            case 'firstName': return user.firstName;
+            case 'lastName': return user.lastName;
             case 'username': return user.username;
             default: return undefined;
           }

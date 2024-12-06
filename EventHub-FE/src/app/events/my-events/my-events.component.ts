@@ -56,7 +56,7 @@ export class MyEventsComponent implements OnInit {
   
   async getEvents(page: number) : Promise<void>{
     try {
-      const userId = await this.userService.getUserInfo('id');      
+      const userId = await this.userService.getUserPropertyInfo('id');      
       if (userId) {
           this.apiService.getEvents(page,userId).subscribe((eventsPageModel)=>{
             this.setEventModelVariables(eventsPageModel);
@@ -70,7 +70,7 @@ export class MyEventsComponent implements OnInit {
   async deleteEvent(){
     if(this.currentDeleteId && this.currentDeleteTitle){
       try {
-        const userId = await this.userService.getUserInfo('id');      
+        const userId = await this.userService.getUserPropertyInfo('id');      
         if (userId) {
           this.apiService.deleteEvent(this.currentDeleteId, userId).subscribe({
             next: ()=>{

@@ -73,7 +73,7 @@ export class EditEventComponent implements OnInit{
   private async editEvent(id: number,title:string,description:string,categoryID:number,parsedDate:Date,location:string): Promise<void> {
     try {
 
-      const userId = await this.userService.getUserInfo('id');      
+      const userId = await this.userService.getUserPropertyInfo('id');      
       if (userId) {
         this.apiService.editEvent(id,title,description,categoryID,parsedDate,location,userId!, userId!)
           .subscribe({
