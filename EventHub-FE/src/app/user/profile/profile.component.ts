@@ -3,11 +3,13 @@ import { UserService } from '../user.service';
 import { User } from '../../types/user';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserValidationConstants } from '../constants/user.validation.constants';
+import { NotificationService } from '../../shared/notification/notification.service';
+import { NotificationComponent } from '../../shared/notification/notification.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NotificationComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -20,6 +22,10 @@ export class ProfileComponent implements OnInit{
   nameMaxLength = UserValidationConstants.NAME_MAX_LENGTH;
   usernameMinLength = UserValidationConstants.USERNAME_MIN_LENGTH;
   usernameMaxLength = UserValidationConstants.USERNAME_MAX_LENGTH;
+
+  notificationMessage: string = '';
+  notificationType: string = '';
+  hasNotification: boolean = false;
 
   form = new FormGroup({
     firstName: new FormControl('',[
@@ -40,10 +46,11 @@ export class ProfileComponent implements OnInit{
   });
 
 
-  constructor(private userService: UserService){}
+  constructor(private userService: UserService, private notificationService: NotificationService){}
 
   ngOnInit(): void {
     this.getUserInformation();
+    this.subscribeToNotification();
   }
 
   toggleEditMode(){
@@ -51,7 +58,29 @@ export class ProfileComponent implements OnInit{
   }
 
   saveUserInformation(){
-    this.toggleEditMode();
+    if (this.form.valid) {
+      const { firstName, lastName, username } = this.form.value;
+
+      const email = this.user?.email;
+
+      this.userService.updateUser(email!, firstName!, lastName!, username!)
+        .subscribe({
+          next: (response) => {
+            this.notificationService.showNotification('User successfully updated!', 'success');  
+            this.hasNotification = true;
+          setTimeout(() => {
+            this.getUserInformation();
+            this.toggleEditMode();
+          }, 2000);
+          },
+          error: (err) => {
+            this.notificationService.showNotification('Operation failed!', 'error');  
+            this.hasNotification = true;
+          },
+        });
+    } else {
+      alert('Form is invalid. Please fix the errors and try again.');
+    }
   }  
 
   isFieldTextMissing(controlName: string) {
@@ -84,6 +113,17 @@ export class ProfileComponent implements OnInit{
         lastName: user?.lastName,
         username: user?.username,
       })
+    });
+  }
+
+  private subscribeToNotification(): void{
+    this.notificationService.notification$.subscribe(notification => {
+      this.notificationMessage = notification.message;
+      this.notificationType = notification.type;
+      setTimeout(() => {
+        this.notificationMessage = '';
+        this.hasNotification = false;
+      }, 5000);
     });
   }
 }

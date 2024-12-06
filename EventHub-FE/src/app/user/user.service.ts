@@ -98,7 +98,7 @@ export class UserService {
 
   updateUser(email: string, firstName: string, lastName: string, username: string){
     return this.http
-      .put<{ token: string }>('/api/user/update', {username, email, firstName, lastName,  }, { withCredentials: true })
+      .put<{ message: string }>('/api/user/update', {username, email, firstName, lastName,  }, { withCredentials: true })
       .pipe(
         catchError((err: HttpErrorResponse)=>{
           return throwError(() => new Error(err.error));

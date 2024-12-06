@@ -64,7 +64,10 @@
                     }
                 }
                 <div class="btns-container">
-                    <button class="save-btn">Save</button>
+                    <button
+                    [disabled]="form.invalid"
+                    [style]="{ backgroundColor: form.invalid ? 'grey' : '#25db14' }" 
+                    class="save-btn">Save</button>
                 </div>
             </form>
         }@else{
@@ -92,3 +95,6 @@
         }
     </div>
 </div>
+@if(hasNotification){
+    <app-notification [message]="notificationMessage" [type]="notificationType"></app-notification>
+}

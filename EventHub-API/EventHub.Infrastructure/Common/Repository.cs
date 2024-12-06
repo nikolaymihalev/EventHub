@@ -40,7 +40,7 @@ namespace EventHub.Infrastructure.Common
         /// </summary>
         public IQueryable<T> AllReadonly<T>() where T : class
         {
-            return this.DbSet<T>().AsNoTracking();
+            return this.DbSet<T>();
         }
 
         /// <summary>
