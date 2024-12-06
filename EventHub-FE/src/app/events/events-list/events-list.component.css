@@ -79,6 +79,10 @@
     cursor: pointer;
 }
 
+.search-form button:hover{
+    background: #112D4E;
+}
+
 .pages-container{
     width: 100%;
     display: flex;

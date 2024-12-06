@@ -1,21 +1,94 @@
 <div class="profile-container">
     <h3>Welcome, {{user?.firstName}} {{user?.lastName}}</h3>
     <div class="profile-info-container">
-        <div class="info">
-            <h4>First name:</h4>
-            <span>{{user?.firstName}}</span>
-        </div>
-        <div class="info">
-            <h4>Last name:</h4>
-            <span>{{user?.lastName}}</span>
-        </div>
-        <div class="info">
-            <h4>Username:</h4>
-            <span>{{user?.username}}</span>
-        </div>
-        <div class="info">
-            <h4>Email:</h4>
-            <span>{{user?.email}}</span>
-        </div>
+        @if(isEditingMode){
+            <form class="profile-form" [formGroup]="form" (ngSubmit)="saveUserInformation()">
+                <div class="info">
+                    <label for="firstname">First name:</label>
+                    <input 
+                    [class]="isFieldTextMissing('firstName') || isNotInMinLength('firstName') || isOverMaxLength('firstName')  ? 'input-error'  : '' "
+                    type="text" 
+                    id="firstname" 
+                    name="firstname"
+                    formControlName="firstName">
+                </div>
+                @if(form.get('firstName')?.touched){
+                    @if(form.get('firstName')?.errors?.['required']){
+                    <p class="validation-error">First name is required!</p>
+                    }
+                    @if(form.get('firstName')?.errors?.['minlength']){
+                    <p class="validation-error">First name must be at least {{nameMinLength}} characters!</p>
+                    }
+                    @if(form.get('firstName')?.errors?.['maxlength']){
+                        <p class="validation-error">First name must not exceed {{nameMaxLength}} characters.</p>
+                    }
+                }
+                <div class="info">
+                    <label for="lastname">Last name:</label>
+                    <input 
+                    [class]="isFieldTextMissing('lastName') || isNotInMinLength('lastName') || isOverMaxLength('lastName')  ? 'input-error'  : '' "
+                    type="text" 
+                    id="lastname" 
+                    name="lastname"
+                    formControlName="lastName">
+                </div>
+                @if(form.get('lastName')?.touched){
+                    @if(form.get('lastName')?.errors?.['required']){
+                    <p class="validation-error">Last name is required!</p>
+                    }
+                    @if(form.get('lastName')?.errors?.['minlength']){
+                    <p class="validation-error">Last name must be at least {{nameMinLength}} characters!</p>
+                    }
+                    @if(form.get('lastName')?.errors?.['maxlength']){
+                        <p class="validation-error">Last name must not exceed {{nameMaxLength}} characters.</p>
+                    }
+                }
+                <div class="info">
+                    <label for="username">Username:</label>
+                    <input 
+                    [class]="isFieldTextMissing('username') || isNotInMinLength('username') || isOverMaxLength('username')  ? 'input-error'  : '' "
+                    type="text" 
+                    id="username" 
+                    name="username"
+                    formControlName="username">
+                </div>
+                @if(form.get('username')?.touched){
+                    @if(form.get('username')?.errors?.['required']){
+                    <p class="validation-error">Username is required!</p>
+                    }
+                    @if(form.get('username')?.errors?.['minlength']){
+                    <p class="validation-error">Username must be at least {{usernameMinLength}} characters!</p>
+                    }
+                    @if(form.get('username')?.errors?.['maxlength']){
+                        <p class="validation-error">Username must not exceed {{usernameMaxLength}} characters.</p>
+                    }
+                }
+                <div class="btns-container">
+                    <button class="save-btn">Save</button>
+                </div>
+            </form>
+        }@else{
+            <div class="info">
+                <h4>First name:</h4>
+                <span>{{user?.firstName}}</span>
+            </div>
+            <div class="info">
+                <h4>Last name:</h4>
+                <span>{{user?.lastName}}</span>
+            </div>
+            <div class="info">
+                <h4>Username:</h4>
+                <span>{{user?.username}}</span>
+            </div>
+            <div class="info">
+                <h4>Email:</h4>
+                <span>{{user?.email}}</span>
+            </div>
+        }
+    </div>
+    <div class="btns-container">
+        @if(!isEditingMode){
+            <button class="edit-btn" (click)="toggleEditMode()">Edit</button>
+        }
     </div>
 </div>

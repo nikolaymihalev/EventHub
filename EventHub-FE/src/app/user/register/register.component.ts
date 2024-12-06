@@ -131,14 +131,14 @@ export class RegisterComponent implements OnInit {
       }
     }
 
-    private subscribeToNotification(): void{
-      this.notificationService.notification$.subscribe(notification => {
-        this.notificationMessage = notification.message;
-        this.notificationType = notification.type;
-        setTimeout(() => {
-          this.notificationMessage = '';
-          this.hasNotification = false;
-        }, 5000);
-      });
-    }
+  private subscribeToNotification(): void{
+    this.notificationService.notification$.subscribe(notification => {
+      this.notificationMessage = notification.message;
+      this.notificationType = notification.type;
+      setTimeout(() => {
+        this.notificationMessage = '';
+        this.hasNotification = false;
+      }, 5000);
+    });
+  }
 }

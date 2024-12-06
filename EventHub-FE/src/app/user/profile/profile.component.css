@@ -11,16 +11,62 @@
     margin-bottom: 1em;
     padding-bottom: 0.5em;
     border-bottom: 1px solid gray;
+    color: #112D4E;
 }
 
-.profile-info-container{
+.profile-info-container,
+.profile-info-container .profile-form{
     display: flex;
     flex-direction: column;
     gap: 1em;
     font-size: 1.3rem;
 }
 
-.profile-info-container .info{
+.profile-info-container .info,
+.profile-info-container .profile-form .info{
     display: flex;
-    gap: 1em;
+    gap: 1em;    
+}
+
+.profile-info-container .info h4,
+.profile-info-container .profile-form label{
+    color: #112D4E;
+    font-weight: bold;
+}
+
+.profile-info-container .info span,
+.profile-info-container .profile-form input{    
+    color: #3F72AF;
+}
+
+.btns-container{
+    width: 100%;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.btns-container button{
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #DBE2EF;
+    border: none;
+    border-radius: 0.3em;
+}
+
+.save-btn{
+    background: #25db14;
+}
+
+.edit-btn{
+    background: #3F72AF;
+}
+
+.edit-btn:hover{
+    background: #112D4E;
+}
+
+.input-error{
+    color: red;
+    border-color: red;
 }
