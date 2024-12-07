@@ -125,6 +125,14 @@
     background: #ff0000;
 }
 
+.yellow-btn:hover{
+    background: #c7ae1c;
+}
+
+.red-btn:hover{
+    background: #ba0707;
+}
+
 .green-btn{
     background: #25db14;
 }

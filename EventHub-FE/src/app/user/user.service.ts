@@ -7,13 +7,13 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService{
   private user$$ = new BehaviorSubject<User | null>(null);
   public user$ = this.user$$.asObservable();
 
   get isLogged(): boolean {
     const token = localStorage.getItem('authToken');
-    return !!token;
+    return !!this.user$ && !!token;
   }
 
   constructor(private http: HttpClient, private router: Router) {

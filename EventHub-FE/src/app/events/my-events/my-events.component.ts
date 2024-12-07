@@ -34,8 +34,10 @@ export class MyEventsComponent implements OnInit {
     private renderer: Renderer2){}  
 
   ngOnInit(): void {
+    this.subscribeUserId();
     this.getEvents(1);
     this.subscribeToNotification();
+    
   }
 
   eventsPageModel= {} as EventPageModel;
@@ -57,19 +59,17 @@ export class MyEventsComponent implements OnInit {
   }
   
   getEvents(page: number){
-      this.userService.user$.subscribe((user)=>{        
-        this.apiService.getEvents(page,user?.id).subscribe((eventsPageModel)=>{
-          this.setEventModelVariables(eventsPageModel);
+    this.subscribeUserId();
+    if(this.userId){
+      this.apiService.getEvents(page,this.userId).subscribe((eventsPageModel)=>{
+        this.setEventModelVariables(eventsPageModel);
       });
-      })
+    }
   }
 
   deleteEvent(){
     if(this.currentDeleteId && this.currentDeleteTitle){
-      this.userService.getUser();
-      this.userService.user$.subscribe((user)=>{   
-        this.userId = user?.id!;    
-      });
+      this.subscribeUserId();
       this.apiService.deleteEvent(this.currentDeleteId, this.userId).subscribe({
         next: ()=>{
           this.notificationService.showNotification(`You have successfully deleted ${this.currentDeleteTitle}!`, 'success');  
@@ -148,6 +148,14 @@ export class MyEventsComponent implements OnInit {
         this.notificationMessage = '';
         this.hasNotification = false;
       }, 5000);
+    });
+  }
+
+  private subscribeUserId(){
+    this.userService.getUser();
+
+    this.userService.user$.subscribe((user)=>{   
+      this.userId = user?.id!;
     });
   }
 }

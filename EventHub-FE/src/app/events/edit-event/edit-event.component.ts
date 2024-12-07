@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../user/user.service';
-import { catchError, map, Observable } from 'rxjs';
+import { catchError, forkJoin, map, Observable } from 'rxjs';
 import * as L from 'leaflet';
 import { NotificationComponent } from '../../shared/notification/notification.component';
 import { Event } from '../../types/event';
@@ -23,6 +23,7 @@ import { format, parse } from 'date-fns';
 export class EditEventComponent implements OnInit{
   private map: L.Map | undefined;
   private userId:string = '';
+  private isUserCreator: boolean = false;
 
   titleMinLength = EventValidationConstants.TITLE_MIN_LENGTH;
   titleMaxLength = EventValidationConstants.TITLE_MAX_LENGTH;
@@ -42,18 +43,19 @@ export class EditEventComponent implements OnInit{
     private notificationService: NotificationService, 
     private router: Router, 
     private userService: UserService,
-    private route: ActivatedRoute){}
+    private route: ActivatedRoute){      
+    }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['eventId'];
 
     this.initMap();
     this.subscribeToNotification();
-    this.getEventValues(id);
+    this.getEventValues(id);   
+
     this.apiService.getCategories().subscribe((categories)=>{
       this.categories = categories;      
     })
-
   }
 
   save(form:NgForm){
@@ -74,12 +76,7 @@ export class EditEventComponent implements OnInit{
   }
 
   private editEvent(id: number,title:string,description:string,categoryID:number,parsedDate:Date,location:string) {
-    this.userService.getUser();
-
-    this.userService.user$.subscribe((user)=>{   
-      this.userId = user?.id!;
-    });
-    
+    this.subscribeUserId();    
     this.apiService.editEvent(id,title,description,categoryID,parsedDate,location,this.userId, this.userId)
       .subscribe({
         next:()=>{
@@ -150,13 +147,30 @@ export class EditEventComponent implements OnInit{
   }
 
   private getEventValues(id: number){
+    this.subscribeUserId();
     this.apiService.getEventById(id).subscribe((currentEvent)=>{
       this.currentEvent = currentEvent;
 
       const [day, month, year] = currentEvent.date.split('/');
 
       this.currentEvent.date =  `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
+      if(this.currentEvent.creatorId !== this.userId){
+        this.notificationService.showNotification(`Unauthorized!`, 'error');  
+          this.hasNotification = true;
+          setTimeout(() => {
+            this.router.navigate(['/myevents']);
+          }, 1000);     
+      }
     }
    );
-  }    
+  }   
+  
+  private subscribeUserId(){
+    this.userService.getUser();
+
+    this.userService.user$.subscribe((user)=>{   
+      this.userId = user?.id!;
+    });
+  }
 }

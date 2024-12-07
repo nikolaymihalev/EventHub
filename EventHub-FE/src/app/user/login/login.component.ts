@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private notificationService: NotificationService) {}
 
   ngOnInit() {
+    this.checkUserIsLoggedIn();
     this.subscribeToNotification();
   }
 
@@ -58,5 +59,11 @@ export class LoginComponent implements OnInit {
         this.hasNotification = false;
       }, 5000);
     });
+  }
+
+  private checkUserIsLoggedIn(){
+    if(this.userService.isLogged){
+      this.router.navigate(['/profile']);
+    }
   }
 }
