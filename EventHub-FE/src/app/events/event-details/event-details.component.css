@@ -1,0 +1,43 @@
+.event-container{
+    width: 1000px;
+    background: #F9F7F7;
+    margin: 2em auto;
+    border-radius: 0.3em;
+    padding: 2em;
+}
+
+.header-information{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-information button{
+    color: #3F72AF;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.header-information h3{
+    font-size: 2.5rem;
+    color: #112D4E;
+}
+
+.information{
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    font-size: 1.2rem;
+    margin-top: 1em;
+}
+
+.information span{
+    font-weight: bold;
+    color: #112D4E;
+}
+
+.information p{
+    color: #3F72AF;
+}

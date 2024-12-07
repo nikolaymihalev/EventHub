@@ -7,11 +7,11 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../user/user.service';
-import { catchError, forkJoin, map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import * as L from 'leaflet';
 import { NotificationComponent } from '../../shared/notification/notification.component';
 import { Event } from '../../types/event';
-import { format, parse } from 'date-fns';
+import { parse } from 'date-fns';
 
 @Component({
   selector: 'app-edit-event',

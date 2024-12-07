@@ -32,6 +32,16 @@ export class ApiService {
         return this.http.get<Category[]>(`/api/category/all`);
     }
 
+    getCategoryById(id: number){
+        return this.http
+            .get<Category>(`/api/category/get-by-id/${id}`)
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{
+                    return throwError(() => new Error(err.error));
+                }) 
+            );
+    }
+
     searchEvents(title?: string, categoryId?: number, currentPage?: number){
         let url = `/api/Event/search`;
 
