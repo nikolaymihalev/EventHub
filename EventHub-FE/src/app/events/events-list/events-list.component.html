@@ -16,7 +16,7 @@
             @if(eventsPageModel.events.length > 0){
                 @for (eventItem of eventsPageModel.events; track $index) {
                     <div class="event-container">
-                        <a routerLink="/event">
+                        <a [routerLink]="['/event', eventItem.id]">
                             <div class="title">
                                 <h2>{{eventItem.title | slice: 20}}</h2>
                                 <span>{{eventItem.date}}</span>

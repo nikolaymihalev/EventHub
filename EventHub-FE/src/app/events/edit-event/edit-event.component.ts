@@ -23,7 +23,6 @@ import { format, parse } from 'date-fns';
 export class EditEventComponent implements OnInit{
   private map: L.Map | undefined;
   private userId:string = '';
-  private isUserCreator: boolean = false;
 
   titleMinLength = EventValidationConstants.TITLE_MIN_LENGTH;
   titleMaxLength = EventValidationConstants.TITLE_MAX_LENGTH;
