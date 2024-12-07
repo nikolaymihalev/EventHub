@@ -16,6 +16,8 @@ import { NotificationComponent } from '../../shared/notification/notification.co
   styleUrl: './my-events.component.css'
 })
 export class MyEventsComponent implements OnInit {
+  private userId: string = '';
+
   @ViewChild('deleteContainer') deleteContainer!: ElementRef; 
   isDeleteContainerVisible = false;
   currentDeleteTitle = '';
@@ -43,51 +45,43 @@ export class MyEventsComponent implements OnInit {
   visiblePages: (number | string)[] = [];
 
 
-  async changePage(page: number| string):Promise<void>{
+  changePage(page: number| string){
     if (typeof page === 'string' || page === this.currentPage) {
       return;
     }
     
     if(typeof page ==='number'){
-      await this.getEvents(page);
+      this.getEvents(page);
       this.updateVisiblePages(); 
     }
   }
   
-  async getEvents(page: number) : Promise<void>{
-    try {
-      const userId = await this.userService.getUserPropertyInfo('id');      
-      if (userId) {
-          this.apiService.getEvents(page,userId).subscribe((eventsPageModel)=>{
-            this.setEventModelVariables(eventsPageModel);
-        });
-      }
-    } catch (error) {
-      console.error('Error getting user info:', error);
-    }    
+  getEvents(page: number){
+      this.userService.user$.subscribe((user)=>{        
+        this.apiService.getEvents(page,user?.id).subscribe((eventsPageModel)=>{
+          this.setEventModelVariables(eventsPageModel);
+      });
+      })
   }
 
-  async deleteEvent(){
+  deleteEvent(){
     if(this.currentDeleteId && this.currentDeleteTitle){
-      try {
-        const userId = await this.userService.getUserPropertyInfo('id');      
-        if (userId) {
-          this.apiService.deleteEvent(this.currentDeleteId, userId).subscribe({
-            next: ()=>{
-              this.notificationService.showNotification(`You have successfully deleted ${this.currentDeleteTitle}!`, 'success');  
-              this.hasNotification = true;
-              this.toggleDeleteContainer();
-              this.getEvents(1);
-            },
-            error: ()=>{
-              this.notificationService.showNotification('Operation failed!', 'error');  
-              this.hasNotification = true;
-            }
-          })
+      this.userService.getUser();
+      this.userService.user$.subscribe((user)=>{   
+        this.userId = user?.id!;    
+      });
+      this.apiService.deleteEvent(this.currentDeleteId, this.userId).subscribe({
+        next: ()=>{
+          this.notificationService.showNotification(`You have successfully deleted ${this.currentDeleteTitle}!`, 'success');  
+          this.hasNotification = true;
+          this.toggleDeleteContainer();
+          this.getEvents(1);
+        },
+        error: ()=>{
+          this.notificationService.showNotification('Operation failed!', 'error');  
+          this.hasNotification = true;
         }
-      } catch (error) {
-        console.error('Error getting user info:', error);
-      }    
+      })
     }
   }
 

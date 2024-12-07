@@ -22,6 +22,7 @@ import { parse } from 'date-fns';
 })
 export class AddEventComponent implements OnInit{
   private map: L.Map | undefined;
+  private userId: string = '';
 
   eventLocation: string = '';
   categoryId: number = 0;
@@ -48,46 +49,43 @@ export class AddEventComponent implements OnInit{
     this.apiService.getCategories().subscribe((categories)=>{
       this.categories = categories;      
     })
-  }
 
-  async create(form:NgForm){
+  }
+  
+  create(form:NgForm){
     if (form.invalid) {
       return;
     }
-
+    
     const {title, description, category, date, location} = form.value;
-
+    
     const parsedDate = parse(date, "yyyy-MM-dd", new Date());
-
+    
     const categoryID = parseInt(category);
-
-    await this.addEvent(title,description,categoryID, parsedDate, location);
-
+    
+    this.addEvent(title,description,categoryID, parsedDate, location);
+    
   }
-
-  private async addEvent(title:string,description:string,categoryID:number,parsedDate:Date,location:string): Promise<void> {
-    try {
-
-      const userId = await this.userService.getUserPropertyInfo('id');      
-      if (userId) {
-        this.apiService.addEvent(title,description,categoryID,parsedDate,location,userId!)
-          .subscribe({
-            next:()=>{
-              this.notificationService.showNotification('Successfully published new event!', 'success');  
-              this.hasNotification = true;
-              setTimeout(() => {
-                this.router.navigate(['/myevents']);
-              }, 2000);
-            },
-            error: ()=>{  
-              this.notificationService.showNotification('Operation failed. Try again!', 'error');  
-              this.hasNotification = true;
-            }
-          })
-      }
-    } catch (error) {
-      console.error('Error getting user info:', error);
-    }
+  
+  private addEvent(title:string,description:string,categoryID:number,parsedDate:Date,location:string) {
+    this.userService.getUser();
+    this.userService.user$.subscribe((user)=>{  
+       this.userId = user?.id!;
+    });
+    this.apiService.addEvent(title,description,categoryID,parsedDate,location,this.userId)
+      .subscribe({
+        next:()=>{
+          this.notificationService.showNotification('Successfully published new event!', 'success');  
+          this.hasNotification = true;
+          setTimeout(() => {
+            this.router.navigate(['/myevents']);
+          }, 2000);
+        },
+        error: ()=>{  
+          this.notificationService.showNotification('Operation failed. Try again!', 'error');  
+          this.hasNotification = true;
+        }
+      })
   }
 
   private initMap(): void {

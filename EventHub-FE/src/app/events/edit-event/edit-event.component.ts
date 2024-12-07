@@ -21,12 +21,14 @@ import { format, parse } from 'date-fns';
   styleUrl: './edit-event.component.css'
 })
 export class EditEventComponent implements OnInit{
+  private map: L.Map | undefined;
+  private userId:string = '';
+
   titleMinLength = EventValidationConstants.TITLE_MIN_LENGTH;
   titleMaxLength = EventValidationConstants.TITLE_MAX_LENGTH;
   descriptionMinLength = EventValidationConstants.DESCRIPTION_MIN_LENGTH;
   descriptionMaxLength = EventValidationConstants.DESCRIPTION_MAX_LENGTH;
 
-  private map: L.Map | undefined;
   categories: Category[] = [];
   hasNotification: boolean = false;
   notificationMessage: string = '';
@@ -51,9 +53,10 @@ export class EditEventComponent implements OnInit{
     this.apiService.getCategories().subscribe((categories)=>{
       this.categories = categories;      
     })
+
   }
 
-  async save(form:NgForm){
+  save(form:NgForm){
     if (form.invalid) {
       return;
     }
@@ -66,33 +69,31 @@ export class EditEventComponent implements OnInit{
 
     const id = this.route.snapshot.params['eventId'];
 
-    await this.editEvent(id, title,description,categoryID, parsedDate, location);
+    this.editEvent(id, title,description,categoryID, parsedDate, location);
 
   }
 
-  private async editEvent(id: number,title:string,description:string,categoryID:number,parsedDate:Date,location:string): Promise<void> {
-    try {
+  private editEvent(id: number,title:string,description:string,categoryID:number,parsedDate:Date,location:string) {
+    this.userService.getUser();
 
-      const userId = await this.userService.getUserPropertyInfo('id');      
-      if (userId) {
-        this.apiService.editEvent(id,title,description,categoryID,parsedDate,location,userId!, userId!)
-          .subscribe({
-            next:()=>{
-              this.notificationService.showNotification(`Successfully saved ${title}!`, 'success');  
-              this.hasNotification = true;
-              setTimeout(() => {
-                this.router.navigate(['/myevents']);
-              }, 2000);
-            },
-            error: ()=>{  
-              this.notificationService.showNotification('Operation failed. Try again!', 'error');  
-              this.hasNotification = true;
-            }
-          })
-      }
-    } catch (error) {
-      console.error('Error getting user info:', error);
-    }
+    this.userService.user$.subscribe((user)=>{   
+      this.userId = user?.id!;
+    });
+    
+    this.apiService.editEvent(id,title,description,categoryID,parsedDate,location,this.userId, this.userId)
+      .subscribe({
+        next:()=>{
+          this.notificationService.showNotification(`Successfully saved ${title}!`, 'success');  
+          this.hasNotification = true;
+          setTimeout(() => {
+            this.router.navigate(['/myevents']);
+          }, 2000);
+        },
+        error: ()=>{  
+          this.notificationService.showNotification('Operation failed. Try again!', 'error');  
+          this.hasNotification = true;
+        }
+      })
   }
 
   private initMap(): void {

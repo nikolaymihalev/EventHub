@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../types/user';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, catchError, firstValueFrom, map, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -67,28 +67,6 @@ export class UserService {
           })          
         ).subscribe();
     }
-  }
-
-  async getUserPropertyInfo(property: string): Promise<string | undefined> {
-    this.getUser();
-  
-    const userInfo$ = this.user$$.asObservable().pipe(
-      map(user => {
-        if (user) {
-          switch (property) {
-            case 'id': return user.id;
-            case 'email': return user.email;
-            case 'firstName': return user.firstName;
-            case 'lastName': return user.lastName;
-            case 'username': return user.username;
-            default: return undefined;
-          }
-        }
-        return undefined;
-      })
-    );
-  
-    return await firstValueFrom(userInfo$);
   }
   
   logout() {
