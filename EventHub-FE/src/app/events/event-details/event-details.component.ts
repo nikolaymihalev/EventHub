@@ -9,6 +9,7 @@ import { Comment } from '../../types/comment';
 import { User } from '../../types/user';
 import { EventValidationConstants } from '../constants/event.validation.constants';
 import { FormsModule, NgForm } from '@angular/forms';
+import { forkJoin, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-event-details',
@@ -30,11 +31,12 @@ export class EventDetailsComponent implements OnInit {
   eventCreator: User | undefined;
   
   comments: Comment[] = [];
-  commentsUsersnames: string[] = [];
   currentComment: Comment | any;
 
   isAddMode: boolean = false;
   isEditMode: boolean = false;
+  showMode: boolean = false;
+  isDeleteMode: boolean = false;
 
   hasNotification: boolean = false;
   notificationMessage: string = '';
@@ -71,6 +73,45 @@ export class EventDetailsComponent implements OnInit {
     this.isEditMode = !this.isEditMode;
   }
 
+  showComments(){
+    this.toggleShowMode();
+    this.getComments();
+  }
+
+  toggleShowMode(){
+    this.showMode = !this.showMode;
+    this.comments = [];
+  }
+
+  toggleDeleteMode(comment?: Comment){
+    if(comment){
+      this.currentComment = comment;
+    }else{
+      this.currentComment = undefined;
+    }
+
+    this.isDeleteMode = !this.isDeleteMode;
+  }
+
+  deleteComment(){
+    if(this.userId){
+      this.apiService.deleteComment(this.currentComment.id, this.userId).subscribe({
+        next:()=>{
+          this.notificationService.showNotification('Successfully deleted your comment!', 'success');  
+          this.hasNotification = true;
+        },
+        error: ()=>{  
+          this.notificationService.showNotification('Operation failed. Try again!', 'error');  
+          this.hasNotification = true;
+        }
+      })
+      setTimeout(() => {
+        this.getComments();
+        this.toggleDeleteMode();
+      }, 2000);
+    }
+  }
+
   createComment(form:NgForm){
     if(form.invalid)
       return;
@@ -84,20 +125,16 @@ export class EventDetailsComponent implements OnInit {
         next:()=>{
           this.notificationService.showNotification('Successfully poster new comment!', 'success');  
           this.hasNotification = true;
-          setTimeout(() => {
-            this.toggleAddMode();
-            this.getComments(eventId);
-          }, 2000);
         },
         error: ()=>{  
           this.notificationService.showNotification('Operation failed. Try again!', 'error');  
           this.hasNotification = true;
-          setTimeout(() => {
-            this.toggleAddMode();
-            this.getComments(eventId);
-          }, 2000);
         }
       })
+      setTimeout(() => {
+        this.getComments();
+        this.toggleAddMode();
+      }, 2000);
     }
   }
 
@@ -114,20 +151,16 @@ export class EventDetailsComponent implements OnInit {
         next:()=>{
           this.notificationService.showNotification('Successfully updated your comment!', 'success');  
           this.hasNotification = true;
-          setTimeout(() => {
-            this.toggleEditMode();
-            this.getComments(eventId);
-          }, 2000);
         },
         error: ()=>{  
           this.notificationService.showNotification('Operation failed. Try again!', 'error');  
           this.hasNotification = true;
-          setTimeout(() => {
-            this.toggleEditMode();
-            this.getComments(eventId);
-          }, 2000);
         }
       })
+      setTimeout(() => {
+        this.getComments();
+        this.toggleEditMode();
+      }, 2000);
     }
   }
 
@@ -149,14 +182,27 @@ export class EventDetailsComponent implements OnInit {
       const [day, month, year] = currentEvent.date.split('/');
       
       this.currentEvent.date =  `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    });
-    
-    this.getComments(id);    
+    }); 
   }   
 
-  private getComments(id: number){
-    this.apiService.getComments(id).subscribe((comments)=>{
-      this.comments = comments;   
+  private getComments(){
+    const id = this.route.snapshot.params['eventId'];
+
+    this.apiService.getComments(id).pipe(
+      switchMap((comments: Comment[]) => {
+        const commentObservables = comments.map((comment) =>
+          this.userService.getInformation(comment.userId).pipe(
+            map((user) => ({
+              ...comment,
+              username: user.username,
+            }))
+          )
+        );
+
+        return forkJoin(commentObservables);
+      })
+    ).subscribe((commentsWithUsername) => {
+      this.comments = commentsWithUsername;
     });
   }
 

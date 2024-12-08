@@ -120,9 +120,9 @@ export class ApiService {
             );
     }
 
-    deleteComment( id: number, userId: string){
+    deleteComment(id: number, userId: string){
         return this.http
-            .delete<{message:string}>(`/api/comment/delet/${id}/user/${userId}`)
+            .delete<{message:string}>(`/api/comment/delete/${id}/user/${userId}`)
             .pipe(
                 catchError((err: HttpErrorResponse)=>{
                     return throwError(() => new Error(err.error));

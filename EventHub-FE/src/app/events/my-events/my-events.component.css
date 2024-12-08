@@ -137,13 +137,19 @@
     background: #25db14;
 }
 
-.delete-container{
+.delete-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
     padding: 1em 1.5em;
     background: #DBE2EF;
     border-radius: 0.3em;
     font-size: 2rem;
     color: #3F72AF;
-    position: absolute;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; 
 }
 
 .delete-container .delete-btns{

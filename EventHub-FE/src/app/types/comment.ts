@@ -3,5 +3,6 @@ export interface Comment{
     content: string,
     createdAt: string,
     userId: string,
-    eventId: number
+    eventId: number,
+    username?: string;
 }

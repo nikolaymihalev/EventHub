@@ -138,3 +138,53 @@
 .red-btn:hover{
     background: #ba0707;
 }
+
+.show-hide-btns button{
+    font-size: 1rem;
+    border: none;
+    padding: 0.5em 0.7em;
+    border-radius: 0.3em;
+    background: #3F72AF;
+    color: #F9F7F7;
+    cursor: pointer;
+    margin: 1em 0;
+}
+
+.show-hide-btns button:hover{
+    background: #112D4E;
+}
+
+.green-btn{
+    background: #25db14;
+}
+
+.delete-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 1em 1.5em;
+    background: #DBE2EF;
+    border-radius: 0.3em;
+    font-size: 2rem;
+    color: #3F72AF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; 
+}
+
+.delete-container .delete-btns{
+    display: flex;
+    width: 50%;
+    margin: 1em auto 0.5em auto;
+    justify-content: space-around;
+}
+
+.delete-btns button{
+    padding: 0.3em 0.5em;
+    font-size: 1.3rem;
+    cursor: pointer;
+    border-radius: 0.3em;
+    border: none;
+    color: #F9F7F7;
+}

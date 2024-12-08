@@ -88,28 +88,46 @@
             }    
         </div>
     }
+    @if(isDeleteMode){
+        <div #deleteContainer class="delete-container">
+            <h4>Are you sure you want to delete?</h4>
+            <div class="delete-btns">
+                <button class="green-btn" (click)="toggleDeleteMode()">No</button>
+                <button class="red-btn" (click)="deleteComment()">Yes</button>
+            </div>
+        </div>
+    }
     <div class="comments-container">
         <h3>Comments</h3>
-        @if(comments.length > 0){
-            <ul>
-            @for (comment of comments; track $index) {
-                <li>
-                    <div class="comment-container">
-                        <span>{{commentsUsersnames[$index]}}:</span>
-                        <p>{{comment.content}}</p>
-                    </div>
-
-                    <div class="comment-btns">
-                        @if(userId === comment.userId){
-                            <button class="yellow-btn" (click)="toggleEditMode(comment)"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="red-btn"><i class="fa-solid fa-trash"></i></button>
-                        }
-                    </div>
-                </li>
+        <div class="show-hide-btns">
+            @if(showMode){
+                <button (click)="toggleShowMode()">Hide</button>
+            }@else {
+                <button (click)="showComments()">Show</button>
             }
-            </ul>
-        }@else {
-            <p>No comments yet!</p>
+        </div>
+        @if (showMode) {
+            @if(comments.length > 0){
+                <ul>
+                    @for (comment of comments; track $index) {
+                        <li>
+                            <div class="comment-container">
+                                <span>{{comment.username}}:</span>
+                                <p>{{comment.content}}</p>
+                            </div>
+                            
+                            <div class="comment-btns">
+                                @if(userId === comment.userId){
+                                    <button class="yellow-btn" (click)="toggleEditMode(comment)"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="red-btn" (click)="toggleDeleteMode(comment)"><i class="fa-solid fa-trash"></i></button>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }@else {
+                <p>No comments yet!</p>
+            }
         }
     </div>
 </div>
