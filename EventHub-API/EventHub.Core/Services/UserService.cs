@@ -17,6 +17,26 @@ namespace EventHub.Core.Services
             repository = _repository;
         }
 
+        public async Task<UserInfoModel?> GetInformationAboutUserAsync(string userId)
+        {
+            var user = await repository.AllReadonly<User>()
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            if (user != null)
+            {
+                return new UserInfoModel()
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Username = user.Username,
+                };
+            }
+
+            return null;
+        }
+
         public async Task<UserInfoModel?> GetUserInfoAsync(string email)
         {
             var user = await repository.AllReadonly<User>()

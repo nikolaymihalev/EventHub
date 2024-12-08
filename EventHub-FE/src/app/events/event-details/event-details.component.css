@@ -41,3 +41,100 @@
 .information p{
     color: #3F72AF;
 }
+
+.input-error{
+    color: red;
+    border-color: red;
+}
+
+.comments-container{
+    margin-top: 2em;
+}
+
+.comments-container h3{
+    color: #112D4E;
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.comments-container p{
+    margin-top: 1em;
+}
+
+.comments-container ul li{
+    display: flex;
+    margin-top: 1em;
+    list-style: outside none;
+    justify-content: space-between;
+}
+
+.comment-container,
+.comment-btns{
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+}
+
+.comment-container span{
+    color: #112D4E;
+}
+
+.comment-container p{
+    color: #3F72AF;
+    margin: 0;
+}
+
+.comment-operation-container{
+    margin-top: 3em;
+}
+
+.comment-operation-container form input{
+    font-size: 1rem;
+    padding: 0.3em;
+    margin-right: 1em;
+}
+
+.comment-operation-container button{
+    font-size: 1rem;
+    border: none;
+    padding: 0.5em 0.7em;
+    border-radius: 0.3em;
+    background: #3F72AF;
+    color: #F9F7F7;
+    cursor: pointer;
+    margin-right: 1em;
+}
+
+.comment-operation-container button:hover{
+    background: #112D4E;
+}
+
+.comment-btns{
+    display: flex;
+    gap: 1.5em;
+}
+
+.comment-btns button{
+    font-size: 1rem;
+    padding: 0.5em 0.7em;
+    border: none;
+    border-radius: 0.3em;
+    color: #F9F7F7;
+    cursor: pointer;
+}
+
+.yellow-btn{
+    background: #f2d633;
+}
+
+.red-btn{
+    background: #ff0000;
+}
+
+.yellow-btn:hover{
+    background: #c7ae1c;
+}
+
+.red-btn:hover{
+    background: #ba0707;
+}

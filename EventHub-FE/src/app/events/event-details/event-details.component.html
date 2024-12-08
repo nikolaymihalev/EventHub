@@ -10,6 +10,10 @@
         }
     </div>
     <div class="information">
+        <span>From:</span>
+        <p>{{eventCreator?.firstName}} {{eventCreator?.lastName}}</p>
+    </div>
+    <div class="information">
         <span>Category:</span>
         <p>{{categoryName}}</p>
     </div>
@@ -25,8 +29,88 @@
         <span>Location:</span>
         <p>{{currentEvent.location}}</p>
     </div>
+    @if(isLogged){
+        <div class="comment-operation-container">
+            @if(isAddMode){
+                <form #addForm="ngForm" (ngSubmit)="createComment(addForm)">
+                    <input 
+                        [class]="
+                            ((inputAddContent?.touched && inputAddContent?.errors?.['required']) || 
+                            (inputAddContent?.touched && inputAddContent?.errors?.['minlength']))
+                            ? 'input-error': ''"
+                        type="text" 
+                        id="content" 
+                        name="content"
+                        required
+                        ngModel
+                        #inputAddContent="ngModel"
+                        minlength={{commentContentMinLength}}
+                        maxlength={{commentContentMaxLength}}>
+                    <button [disabled]="addForm.invalid" [style]="{ backgroundColor: addForm.invalid ? 'grey' : '#3F72AF' }">Post</button>
+                    <button (click)="toggleAddMode()">Cancel</button>
+                </form>
+                @if(inputAddContent?.touched){
+                    @if(inputAddContent?.errors?.['required']){
+                    <p class="validation-error">Content is required!</p>
+                    }
+                    @if(inputAddContent?.errors?.['minlength']){
+                    <p class="validation-error">Content must be at least {{commentContentMinLength}} characters!</p>
+                    }
+                }      
+            }@else if (isEditMode) {
+                <form #editForm="ngForm" (ngSubmit)="updateComment(editForm)">
+                    <input 
+                        [class]="
+                            ((inputEditContent?.touched && inputEditContent?.errors?.['required']) || 
+                            (inputEditContent?.touched && inputEditContent?.errors?.['minlength']))
+                            ? 'input-error': ''"
+                        type="text" 
+                        id="content" 
+                        name="content"
+                        required
+                        [(ngModel)]="currentComment.content"
+                        #inputEditContent="ngModel"
+                        minlength={{commentContentMinLength}}
+                        maxlength={{commentContentMaxLength}}>
+                    <button [disabled]="editForm.invalid" [style]="{ backgroundColor: editForm.invalid ? 'grey' : '#3F72AF' }">Update</button>
+                    <button (click)="toggleEditMode()">Cancel</button>
+                </form>
+                @if(inputEditContent?.touched){
+                    @if(inputEditContent?.errors?.['required']){
+                    <p class="validation-error">Content is required!</p>
+                    }
+                    @if(inputEditContent?.errors?.['minlength']){
+                    <p class="validation-error">Content must be at least {{commentContentMinLength}} characters!</p>
+                    }
+                }
+            }@else {
+                <button (click)="toggleAddMode()">Add comment</button>
+            }    
+        </div>
+    }
     <div class="comments-container">
         <h3>Comments</h3>
+        @if(comments.length > 0){
+            <ul>
+            @for (comment of comments; track $index) {
+                <li>
+                    <div class="comment-container">
+                        <span>{{commentsUsersnames[$index]}}:</span>
+                        <p>{{comment.content}}</p>
+                    </div>
+
+                    <div class="comment-btns">
+                        @if(userId === comment.userId){
+                            <button class="yellow-btn" (click)="toggleEditMode(comment)"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="red-btn"><i class="fa-solid fa-trash"></i></button>
+                        }
+                    </div>
+                </li>
+            }
+            </ul>
+        }@else {
+            <p>No comments yet!</p>
+        }
     </div>
 </div>
 @if(hasNotification){

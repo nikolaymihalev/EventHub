@@ -34,5 +34,12 @@ namespace EventHub.Core.Contracts
         /// <param name="model">The user's information</param>
         /// <returns>A task that udpdates the user's information the asynchronous operation.</returns>
         Task<string> UpdateUserInfoAsync(UserInfoModel model);
+
+        /// <summary>
+        /// Returns a user model asynchronously.
+        /// </summary>
+        /// <param name="userId">The user's identifier</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        Task<UserInfoModel?> GetInformationAboutUserAsync(string userId);
     }
 }

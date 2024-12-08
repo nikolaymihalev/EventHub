@@ -83,4 +83,14 @@ export class UserService{
         })
       );
   }
+
+  getInformation(userId: string){
+    return this.http
+      .get<User>('/api/user/get-information', { params: { userId } })
+      .pipe(
+        catchError((err: HttpErrorResponse)=>{
+          return throwError(() => new Error(err.error));
+        })
+      )
+  }
 }

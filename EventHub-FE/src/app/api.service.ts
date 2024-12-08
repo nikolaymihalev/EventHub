@@ -4,6 +4,7 @@ import { EventPageModel } from "./types/eventsPageModel";
 import { Category } from "./types/category";
 import { catchError, throwError } from "rxjs";
 import { Event } from "./types/event";
+import { Comment } from "./types/comment";
 
 @Injectable({
     providedIn: 'root',
@@ -104,7 +105,7 @@ export class ApiService {
             );
     }
 
-    getComments(eventId: string){
+    getComments(eventId: number){
         return this.http
             .get<Comment[]>(`/api/comment/get-all/${eventId}`);
     }
@@ -129,9 +130,9 @@ export class ApiService {
             );
     }
 
-    editComment(appUserId: string ,content: string, userId: string, eventId: number){
+    editComment(appUserId: string ,id: number, content: string, userId: string, eventId: number){
         return this.http
-            .put<{message:string}>(`/api/comment/update/${appUserId}`, {content, userId, eventId})
+            .put<{message:string}>(`/api/comment/update/${appUserId}`, {id, content, userId, eventId})
             .pipe(
                 catchError((err: HttpErrorResponse)=>{
                     return throwError(() => new Error(err.error));

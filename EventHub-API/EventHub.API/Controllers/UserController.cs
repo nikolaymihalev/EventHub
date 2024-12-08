@@ -126,5 +126,16 @@ namespace EventHub.API.Controllers
                 return Unauthorized(new { Message = "Invalid token"});
             }
         }
+
+        [HttpGet("get-information")]
+        public async Task<IActionResult> GetInformationAboutUser(string userId)
+        {
+            var model = await userService.GetInformationAboutUserAsync(userId);                
+            
+            if(model is null)
+                return BadRequest(new { Message = "User doesnt't exist!" });
+
+            return Ok(model);
+        }
     }
 }
