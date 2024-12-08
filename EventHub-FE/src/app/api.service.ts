@@ -96,13 +96,46 @@ export class ApiService {
 
     editEvent(id: number, title: string, description: string, categoryId: number, date: Date, location: string, userId: string, creatorId: string){
         return this.http
-        .put<{message:string}>(`/api/event/update/${userId}`,{id,title, description,date,location,categoryId,creatorId})
-        .pipe(
-            catchError((err: HttpErrorResponse)=>{
-                console.log(err);
-                
-                return throwError(() => new Error(err.error));
-            })
-        );
+            .put<{message:string}>(`/api/event/update/${userId}`,{id,title, description,date,location,categoryId,creatorId})
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{                    
+                    return throwError(() => new Error(err.error));
+                })
+            );
+    }
+
+    getComments(eventId: string){
+        return this.http
+            .get<Comment[]>(`/api/comment/get-all/${eventId}`);
+    }
+
+    addComment( content: string, userId: string, eventId: number){
+        return this.http
+            .post<{message:string}>(`/api/comment/add`, {content, userId, eventId})
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{
+                    return throwError(() => new Error(err.error));
+                })
+            );
+    }
+
+    deleteComment( id: number, userId: string){
+        return this.http
+            .delete<{message:string}>(`/api/comment/delet/${id}/user/${userId}`)
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{
+                    return throwError(() => new Error(err.error));
+                })
+            );
+    }
+
+    editComment(appUserId: string ,content: string, userId: string, eventId: number){
+        return this.http
+            .put<{message:string}>(`/api/comment/update/${appUserId}`, {content, userId, eventId})
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{
+                    return throwError(() => new Error(err.error));
+                })
+            );
     }
 }

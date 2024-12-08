@@ -24,12 +24,17 @@ export class EventDetailsComponent implements OnInit {
   notificationMessage: string = '';
   notificationType: string = '';
 
+  
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
     private notificationService: NotificationService,
     private router: Router,
     private userService: UserService){}
+    
+  get isLogged() { 
+    return this.userService.isLogged;
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['eventId'];

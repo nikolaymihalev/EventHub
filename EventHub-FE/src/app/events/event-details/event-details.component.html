@@ -1,10 +1,12 @@
 <div class="event-container">
     <div class="header-information">
         <h3>{{currentEvent.title}}</h3>
-        @if(isUserCreator){
-            <button [routerLink]="['/myevents', currentEvent.id]"><i class="fa-solid fa-pen-to-square"></i></button>
-        }@else {
-            <button ><i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+        @if(isLogged){
+            @if(isUserCreator){
+                <button [routerLink]="['/myevents', currentEvent.id]"><i class="fa-solid fa-pen-to-square"></i></button>
+            }@else {
+                <button ><i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+            }
         }
     </div>
     <div class="information">
@@ -22,6 +24,9 @@
     <div class="information">
         <span>Location:</span>
         <p>{{currentEvent.location}}</p>
+    </div>
+    <div class="comments-container">
+        <h3>Comments</h3>
     </div>
 </div>
 @if(hasNotification){
