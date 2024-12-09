@@ -11,6 +11,11 @@
     margin: 0 auto;
 }
 
+.registration-info{
+    display: flex;
+    gap: 1em;
+}
+
 .registration-container{
     background: #3F72AF;
     padding: 1.5em 3em;

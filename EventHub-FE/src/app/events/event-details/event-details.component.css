@@ -188,3 +188,10 @@
     border: none;
     color: #F9F7F7;
 }
+
+.header-information .joined-btn{
+    color: #0d8a01;
+    background: #acfca4;
+    padding: 0.2em 0.3em;
+    border-radius: 0.3em;
+}

@@ -5,7 +5,11 @@
             @if(isUserCreator){
                 <button [routerLink]="['/myevents', currentEvent.id]"><i class="fa-solid fa-pen-to-square"></i></button>
             }@else {
-                <button ><i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+                @if(isJoinedToEvent){
+                    <button class="joined-btn" disabled><i class="fa-solid fa-check"></i></button>
+                }@else {
+                    <button (click)="joinToEvent()"><i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+                }
             }
         }
     </div>

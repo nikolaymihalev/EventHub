@@ -29,6 +29,7 @@ export class EventDetailsComponent implements OnInit {
   
   isUserCreator: boolean = false;
   eventCreator: User | undefined;
+  isJoinedToEvent: boolean = false;
   
   comments: Comment[] = [];
   currentComment: Comment | any;
@@ -57,6 +58,7 @@ export class EventDetailsComponent implements OnInit {
     const id = this.route.snapshot.params['eventId'];
     this.getEventValues(id);
     this.subscribeToNotification();
+    this.checkIfUserIsJoinedToEvent(id);
   }
 
   toggleAddMode(){
@@ -164,8 +166,26 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
+  joinToEvent(){
+    if(this.userId && this.isJoinedToEvent === false){
+      const eventId = this.route.snapshot.params['eventId'];
+      this.apiService.addRegistration(this.userId, eventId).subscribe({
+        next:()=>{
+          this.notificationService.showNotification('Successfully joined to event!', 'success');  
+          this.hasNotification = true;
+          this.isJoinedToEvent = true;
+        },
+        error: ()=>{  
+          this.notificationService.showNotification('Operation failed. Try again!', 'error');  
+          this.hasNotification = true;
+        }
+      })
+    }
+  }
+
   private getEventValues(id: number){
-    this.subscribeUserId();
+    this.subscribeUserId();   
+    
     this.apiService.getEventById(id).subscribe((currentEvent)=>{
       this.currentEvent = currentEvent;
 
@@ -222,6 +242,12 @@ export class EventDetailsComponent implements OnInit {
         this.notificationMessage = '';
         this.hasNotification = false;
       }, 5000);
+    });
+  }
+
+  private checkIfUserIsJoinedToEvent(id: number){
+    this.apiService.getRegistrations(this.userId).subscribe((registrations) => {
+      this.isJoinedToEvent = registrations.some(registration => registration.eventId == id);      
     });
   }
 }
