@@ -5,6 +5,7 @@ import { Category } from "./types/category";
 import { catchError, throwError } from "rxjs";
 import { Event } from "./types/event";
 import { Comment } from "./types/comment";
+import { Registration } from "./types/registration";
 
 @Injectable({
     providedIn: 'root',
@@ -133,6 +134,31 @@ export class ApiService {
     editComment(appUserId: string ,id: number, content: string, userId: string, eventId: number){
         return this.http
             .put<{message:string}>(`/api/comment/update/${appUserId}`, {id, content, userId, eventId})
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{
+                    return throwError(() => new Error(err.error));
+                })
+            );
+    }
+
+    getRegistrations(userId: string){
+        return this.http
+            .get<Registration[]>(`/api/registration/all/${userId}`)
+    }
+
+    addRegistration(userId: string, eventId: number,){
+        return this.http
+            .post<{message:string}>(`/api/registration/add`,{userId, eventId})
+            .pipe(
+                catchError((err: HttpErrorResponse)=>{
+                    return throwError(() => new Error(err.error));
+                })
+            );
+    }
+
+    deleteRegistration(id:number, userId:string){
+        return this.http
+            .delete<{message:string}>(`/api/registration/delete/${id}/user/${userId}`)
             .pipe(
                 catchError((err: HttpErrorResponse)=>{
                     return throwError(() => new Error(err.error));

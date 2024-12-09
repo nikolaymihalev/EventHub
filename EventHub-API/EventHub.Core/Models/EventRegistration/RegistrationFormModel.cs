@@ -28,7 +28,6 @@ namespace EventHub.Core.Models.EventRegistration
         /// <summary>
         /// Date and time of the registration.
         /// </summary>
-        [Required(ErrorMessage = ErrorMessages.RequireErrorMessage)]
         public DateTime RegisteredAt { get; set; }
     }
 }
