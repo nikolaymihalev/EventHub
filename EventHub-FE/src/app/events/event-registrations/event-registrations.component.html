@@ -1,1 +1,40 @@
-<p>event-registrations works!</p>
+<div class="myregistrations-container">
+    @if (isLoading) {
+        <app-loader />
+    }@else {
+        <div class="registrations-container">
+            <h1>My Registrations</h1>
+            @if(registrations.length > 0){
+                @for (regItem of registrations; track $index) {
+                    <div class="registration-info">
+                        <div class="registration-container">
+                            <a [routerLink]="['/event', regItem.eventId]">
+                                <div class="title">
+                                    <h2>{{regItem.eventTitle | slice: 20}}</h2>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="event-btns">
+                            <button class="red-btn" ><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                }
+                <div #deleteContainer class="delete-container">
+                    <h4>Are you sure you want to delete?</h4>
+                    <div class="delete-btns">
+                        <button class="green-btn" >No</button>
+                        <button class="red-btn" >Yes</button>
+                    </div>
+                </div>
+            }
+            @else{
+                <div class="no-results">
+                    <p>You haven't joined any events yet!</p>
+                </div> 
+            }
+        </div>
+    }
+</div>
+@if(hasNotification){
+    <app-notification [message]="notificationMessage" [type]="notificationType"></app-notification>
+}

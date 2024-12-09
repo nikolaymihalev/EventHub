@@ -1,0 +1,143 @@
+.myregistrations-container{
+    margin: 2em auto;
+}
+
+.registrations-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3em;   
+    margin: 0 auto;
+}
+
+.registration-container{
+    background: #3F72AF;
+    padding: 1.5em 3em;
+    border-radius: 0.5em;
+    width: 600px;
+}
+
+.registrations-container h1{
+    font-size: 2.5rem;
+}
+
+.registration-container a{
+    text-decoration: none;
+}
+
+.registration-container h2{
+    color: #F9F7F7;
+    font-size: 1.8rem;
+}
+
+.registration-container p{
+    color: #DBE2EF;
+    font-size: 1.2rem;
+    margin-top: 1em;
+}
+
+.registration-container .title span{
+    color: #DBE2EF;
+}
+
+.title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title p{
+    margin: 0;    
+}
+
+.no-results{
+    width: 600px;
+    text-align: start;
+}
+
+.no-results p{
+    font-size: 1.5rem;
+}
+
+.event-info{
+    display: flex;
+    gap: 3em;
+}
+
+.event-btns{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    text-align: center;
+}
+
+.event-btns a,
+.event-btns button{
+    font-size: 1.5rem;
+    align-content: center;
+    padding: 0 1em;
+    flex: 1 1 49%;
+    color: #F9F7F7;
+    border-radius: 0.3em;
+}
+
+.event-btns button{
+    border: none;
+    cursor: pointer;
+}
+
+.yellow-btn{
+    background: #f2d633;
+}
+
+.red-btn{
+    background: #ff0000;
+}
+
+.yellow-btn:hover{
+    background: #c7ae1c;
+}
+
+.red-btn:hover{
+    background: #ba0707;
+}
+
+.green-btn{
+    background: #25db14;
+}
+
+.delete-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 1em 1.5em;
+    background: #DBE2EF;
+    border-radius: 0.3em;
+    font-size: 2rem;
+    color: #3F72AF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; 
+}
+
+.delete-container .delete-btns{
+    display: flex;
+    width: 50%;
+    margin: 1em auto 0.5em auto;
+    justify-content: space-around;
+}
+
+.delete-btns button{
+    padding: 0.3em 0.5em;
+    font-size: 1.3rem;
+    cursor: pointer;
+    border-radius: 0.3em;
+    border: none;
+    color: #F9F7F7;
+}
+
+.delete-container{
+    display: none;
+}

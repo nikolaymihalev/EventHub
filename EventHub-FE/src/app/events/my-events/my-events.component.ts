@@ -36,8 +36,7 @@ export class MyEventsComponent implements OnInit {
   ngOnInit(): void {
     this.subscribeUserId();
     this.getEvents(1);
-    this.subscribeToNotification();
-    
+    this.subscribeToNotification();    
   }
 
   eventsPageModel= {} as EventPageModel;
