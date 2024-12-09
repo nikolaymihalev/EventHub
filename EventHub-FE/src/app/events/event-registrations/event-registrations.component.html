@@ -15,17 +15,19 @@
                             </a>
                         </div>
                         <div class="event-btns">
-                            <button class="red-btn" ><i class="fa-solid fa-xmark"></i></button>
+                            <button class="red-btn" (click)="toggleDeleteMode(regItem.id)"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 }
-                <div #deleteContainer class="delete-container">
-                    <h4>Are you sure you want to delete?</h4>
-                    <div class="delete-btns">
-                        <button class="green-btn" >No</button>
-                        <button class="red-btn" >Yes</button>
+                @if(isDeleteMode){
+                    <div #deleteContainer class="delete-container">
+                        <h4>Are you sure you want to unsubscribe?</h4>
+                        <div class="delete-btns">
+                            <button class="green-btn" (click)="toggleDeleteMode()">No</button>
+                            <button class="red-btn" (click)="unsubscibeFromEvent()">Yes</button>
+                        </div>
                     </div>
-                </div>
+                }
             }
             @else{
                 <div class="no-results">

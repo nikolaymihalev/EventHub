@@ -18,8 +18,10 @@ import { Registration } from '../../types/registration';
 })
 export class EventRegistrationsComponent implements OnInit {
   private userId: string = '';
+  private id: number | undefined;
 
   isLoading: boolean = false;
+  isDeleteMode: boolean = false;
 
   notificationMessage: string = '';
   notificationType: string = '';
@@ -36,6 +38,35 @@ export class EventRegistrationsComponent implements OnInit {
     this.subscribeUserId();
     this.subscribeToNotification();  
     this.getEventRegistrations();  
+  }
+
+  toggleDeleteMode(id?: number){
+    if(id){
+      this.id = id;
+    }else {
+      this.id = undefined;
+    }
+
+    this.isDeleteMode = !this.isDeleteMode;
+  }
+
+  unsubscibeFromEvent(){
+    if(this.userId && this.id){
+      this.apiService.deleteRegistration(this.id, this.userId).subscribe({
+        next:()=>{
+          this.notificationService.showNotification('Successfully unsubscribed from event!', 'success');  
+          this.hasNotification = true;
+        },
+        error: ()=>{  
+          this.notificationService.showNotification('Operation failed. Try again!', 'error');  
+          this.hasNotification = true;
+        }
+      })
+      setTimeout(() => {
+        this.getEventRegistrations();
+        this.toggleDeleteMode();
+      }, 2000);
+    }
   }
 
   private subscribeToNotification(): void{
