@@ -26,6 +26,18 @@ services:
     depends_on:
       - sqlserver
 
+  angular_app:
+    container_name: eventhub_frontend
+    build:
+      context: ./EventHub-FE
+      dockerfile: Dockerfile 
+    ports:
+      - "4200:80"
+    networks:
+      - eventhub_network
+    depends_on:
+      - api_app
+
 volumes:
   sqldata:
   appdata:
