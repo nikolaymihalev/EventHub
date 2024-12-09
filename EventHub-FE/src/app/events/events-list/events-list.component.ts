@@ -16,14 +16,17 @@ import { SlicePipe } from '../../shared/pipes/slice.pipe';
 })
 export class EventsListComponent implements OnInit{
   eventsPageModel= {} as EventPageModel;
-  categories: Category[] = [];
-  searchTitle: string | any;
-  searchCategoryId: number | any;
   pages: number[] = [];
   currentPage: number = 1;
-  operation: string | any;
-  isLoading = true;
   visiblePages: (number | string)[] = [];
+  
+  categories: Category[] = [];
+  
+  searchTitle: string | any;
+  searchCategoryId: number | any;
+  operation: string | any;
+  
+  isLoading = true;
 
   constructor(private apiService: ApiService){
   }

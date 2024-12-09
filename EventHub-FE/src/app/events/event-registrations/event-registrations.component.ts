@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { UserService } from '../../user/user.service';
 import { RouterLink } from '@angular/router';
-import { Event } from '../../types/event';
 import { SlicePipe } from "../../shared/pipes/slice.pipe";
 import { NotificationComponent } from '../../shared/notification/notification.component';
 import { NotificationService } from '../../shared/notification/notification.service';

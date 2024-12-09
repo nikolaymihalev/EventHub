@@ -25,8 +25,10 @@ export class AddEventComponent implements OnInit{
   private userId: string = '';
 
   eventLocation: string = '';
+  
   categoryId: number = 0;
   categories: Category[] = [];
+
   hasNotification: boolean = false;
   notificationMessage: string = '';
   notificationType: string = '';

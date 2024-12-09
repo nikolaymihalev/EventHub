@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
 import { emailValidator } from '../utils/email.validator';
 

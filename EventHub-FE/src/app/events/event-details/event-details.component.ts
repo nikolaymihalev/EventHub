@@ -29,15 +29,15 @@ export class EventDetailsComponent implements OnInit {
   
   isUserCreator: boolean = false;
   eventCreator: User | undefined;
-  isJoinedToEvent: boolean = false;
   
   comments: Comment[] = [];
   currentComment: Comment | any;
-
+  
   isAddMode: boolean = false;
   isEditMode: boolean = false;
   showMode: boolean = false;
   isDeleteMode: boolean = false;
+  isJoinedToEvent: boolean = false;
 
   hasNotification: boolean = false;
   notificationMessage: string = '';
@@ -222,7 +222,7 @@ export class EventDetailsComponent implements OnInit {
         return forkJoin(commentObservables);
       })
     ).subscribe((commentsWithUsername) => {
-      this.comments = commentsWithUsername;
+      this.comments = commentsWithUsername;      
     });
   }
 

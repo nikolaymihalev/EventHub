@@ -30,6 +30,7 @@ export class EditEventComponent implements OnInit{
   descriptionMaxLength = EventValidationConstants.DESCRIPTION_MAX_LENGTH;
 
   categories: Category[] = [];
+  
   hasNotification: boolean = false;
   notificationMessage: string = '';
   notificationType: string = '';
