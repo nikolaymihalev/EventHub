@@ -47,6 +47,10 @@ export const routes: Routes = [
       import('./user/profile/profile.component').then(
       (c) => c.ProfileComponent), canActivate: [AuthGuard],
     },
+    { path: 'registrations', loadComponent: () =>
+      import('./events/event-registrations/event-registrations.component').then(
+      (c) => c.EventRegistrationsComponent), canActivate: [AuthGuard],
+    },
     { path: '404', component: ErrorComponent },
     { path: '**', redirectTo: '/404' },
 ];
