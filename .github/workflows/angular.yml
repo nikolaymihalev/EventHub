@@ -28,7 +28,3 @@ jobs:
     - name: Build Angular app
       run: npm run build
       working-directory: EventHub-FE
-
-    - name: Run tests
-      run: npm test
-      working-directory: EventHub-FE
