@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { EventValidationConstants } from '../constants/event.validation.constants';
-import * as L from 'leaflet';
-import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../api.service';
 import { Category } from '../../types/category';
 import { NotificationService } from '../../shared/notification/notification.service';
@@ -21,7 +17,6 @@ import { parse } from 'date-fns';
   styleUrl: './add-event.component.css'
 })
 export class AddEventComponent implements OnInit{
-  private map: L.Map | undefined;
   private userId: string = '';
 
   eventLocation: string = '';
@@ -39,14 +34,12 @@ export class AddEventComponent implements OnInit{
   descriptionMaxLength = EventValidationConstants.DESCRIPTION_MAX_LENGTH;
 
   constructor(
-    private http: HttpClient,
     private apiService: ApiService, 
     private notificationService: NotificationService, 
     private router: Router, 
     private userService: UserService){}
 
   ngOnInit(): void {
-    this.initMap();
     this.subscribeToNotification();
     this.apiService.getCategories().subscribe((categories)=>{
       this.categories = categories;      
@@ -88,48 +81,6 @@ export class AddEventComponent implements OnInit{
           this.hasNotification = true;
         }
       })
-  }
-
-  private initMap(): void {
-    this.map = L.map('map').setView([42.6977, 23.3219], 13); 
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.map);
-    
-    this.map.on('click', (e: L.LeafletMouseEvent) => {
-      const lat = e.latlng.lat;
-      const lng = e.latlng.lng;
-
-       this.getAddress(lat, lng).subscribe(
-        (address: string) => {
-          this.eventLocation = address;                    
-        }
-      );
-    });
-  }
-
-  private getAddress(lat: number, lng: number): Observable<string>  {    
-    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
-
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        if (data && data.address) {
-          const address = data.address;
-          const fullAddress = `${address.road || ''}, ${address.city || ''}, ${address.country || ''}`;
-          return `${fullAddress}`;
-        } else {
-          return 'Address not found.';
-        }
-      }),
-      catchError((error) => {
-        return new Observable<string>((observer) => {
-          observer.next('Failed to retrieve address.');
-          observer.complete();
-        });
-      })
-    );
   }
 
   private subscribeToNotification(): void{

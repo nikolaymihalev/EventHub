@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { EventPageModel } from "./types/eventsPageModel";
 import { Category } from "./types/category";
-import { catchError, throwError } from "rxjs";
+import { catchError, map, Observable, throwError } from "rxjs";
 import { Event } from "./types/event";
 import { Comment } from "./types/comment";
 import { Registration } from "./types/registration";

@@ -125,7 +125,7 @@ export class EventDetailsComponent implements OnInit {
     if(this.userId){
       this.apiService.addComment(content, this.userId, eventId).subscribe({
         next:()=>{
-          this.notificationService.showNotification('Successfully poster new comment!', 'success');  
+          this.notificationService.showNotification('Successfully posted new comment!', 'success');  
           this.hasNotification = true;
         },
         error: ()=>{  

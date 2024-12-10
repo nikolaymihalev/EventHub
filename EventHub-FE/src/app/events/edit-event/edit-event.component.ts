@@ -3,12 +3,9 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { NotificationService } from '../../shared/notification/notification.service';
 import { Category } from '../../types/category';
 import { EventValidationConstants } from '../constants/event.validation.constants';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../user/user.service';
-import { catchError, map, Observable } from 'rxjs';
-import * as L from 'leaflet';
 import { NotificationComponent } from '../../shared/notification/notification.component';
 import { Event } from '../../types/event';
 import { parse } from 'date-fns';
@@ -21,7 +18,6 @@ import { parse } from 'date-fns';
   styleUrl: './edit-event.component.css'
 })
 export class EditEventComponent implements OnInit{
-  private map: L.Map | undefined;
   private userId:string = '';
 
   titleMinLength = EventValidationConstants.TITLE_MIN_LENGTH;
@@ -38,7 +34,6 @@ export class EditEventComponent implements OnInit{
   currentEvent: Event = { id: 0, title: '', description: '' , categoryId: 0, location: '', date: '', creatorId: ''  };
   
   constructor(
-    private http: HttpClient,
     private apiService: ApiService, 
     private notificationService: NotificationService, 
     private router: Router, 
@@ -49,7 +44,6 @@ export class EditEventComponent implements OnInit{
   ngOnInit(): void {
     const id = this.route.snapshot.params['eventId'];
 
-    this.initMap();
     this.subscribeToNotification();
     this.getEventValues(id);   
 
@@ -91,48 +85,6 @@ export class EditEventComponent implements OnInit{
           this.hasNotification = true;
         }
       })
-  }
-
-  private initMap(): void {
-    this.map = L.map('map').setView([42.6977, 23.3219], 13); 
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.map);
-    
-    this.map.on('click', (e: L.LeafletMouseEvent) => {
-      const lat = e.latlng.lat;
-      const lng = e.latlng.lng;
-
-       this.getAddress(lat, lng).subscribe(
-        (address: string) => {
-          this.currentEvent.location = address;                    
-        }
-      );
-    });
-  }
-
-  private getAddress(lat: number, lng: number): Observable<string>  {    
-    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
-
-    return this.http.get<any>(url).pipe(
-      map((data) => {
-        if (data && data.address) {
-          const address = data.address;
-          const fullAddress = `${address.road || ''}, ${address.city || ''}, ${address.country || ''}`;
-          return `${fullAddress}`;
-        } else {
-          return 'Address not found.';
-        }
-      }),
-      catchError((error) => {
-        return new Observable<string>((observer) => {
-          observer.next('Failed to retrieve address.');
-          observer.complete();
-        });
-      })
-    );
   }
 
   private subscribeToNotification(): void{
