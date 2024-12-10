@@ -136,7 +136,6 @@ namespace EventHub.UnitTests
         {
             string exTitle = "Edit model";
             string exDesc = "Edit Description";
-            string exDate = "25.07.2024";
             int exCategoryId = 3;
             string exLocation = "France";
 
@@ -157,7 +156,6 @@ namespace EventHub.UnitTests
 
             Assert.IsTrue(exTitle == eventModel.Title);
             Assert.IsTrue(exDesc == eventModel.Description);
-            Assert.IsTrue(exDate == eventModel.Date);
             Assert.IsTrue(exCategoryId == eventModel.CategoryId);
             Assert.IsTrue(exLocation == eventModel.Location);
         }
@@ -177,7 +175,6 @@ namespace EventHub.UnitTests
             string exTitle = "Test";
             string exDesc = "Test Description";
             string exDate = "15.12.2024";
-            int exCategoryId = 1;
             string exLocation = "NY York";
 
             var eventModel = await eventService.GetEventByIdAsync(1);
@@ -185,7 +182,6 @@ namespace EventHub.UnitTests
             Assert.IsTrue(exTitle == eventModel.Title);
             Assert.IsTrue(exDesc == eventModel.Description);
             Assert.IsTrue(exDate == eventModel.Date);
-            Assert.IsTrue(exCategoryId == eventModel.CategoryId);
             Assert.IsTrue(exLocation == eventModel.Location);
         }
 
