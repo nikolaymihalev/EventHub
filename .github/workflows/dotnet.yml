@@ -25,7 +25,7 @@ jobs:
       run: dotnet restore EventHub-API/EventHub.API/EventHub.API.sln
 
     - name: Build project
-      run: dotnet build EventHub-API/EventHub.API/EventHub.API.sln --no-restore --configuration Release
+      run: dotnet build EventHub-API/EventHub.API/EventHub.API.sln --no-restore
 
     - name: Run tests
       run: dotnet test EventHub-API/EventHub.UnitTests/EventHub.UnitTests.csproj --no-build --verbosity normal
