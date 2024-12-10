@@ -1,0 +1,31 @@
+name: Build and Test .NET API
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore EventHub-API/EventHub.API/EventHub.API.sln
+
+    - name: Build project
+      run: dotnet build EventHub-API/EventHub.API/EventHub.API.sln --no-restore
+
+    - name: Run tests
+      run: dotnet test EventHub-API/EventHub.UnitTests/EventHub.UnitTests.csproj --no-build --verbosity normal
