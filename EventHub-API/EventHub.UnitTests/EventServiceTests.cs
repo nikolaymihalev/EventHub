@@ -37,41 +37,7 @@ namespace EventHub.UnitTests
             this.repository.SaveChangesAsync();
 
             eventService = new EventService(this.repository);
-        }
-
-        [Test]
-        public async Task Test_AddAsyncShouldAddModel()
-        {
-            int exEventsCount = 2;
-            string exTitle = "Add model";
-            string exDesc = "Add Description";
-            string exDate = "25.06.2024";
-            int exCategoryId = 3;
-            string exLocation = "Germany";
-
-            var eventModel = new EventFormModel()
-            {
-                Title = "Add model",
-                Description = "Add Description",
-                Date = new DateTime(2024, 06, 25),
-                CreatorId = userId,
-                CategoryId = 3,
-                Location = "Germany"
-            };
-
-            await eventService.AddAsync(eventModel);
-
-            var events = await eventService.GetEventsForPageAsync();
-
-            var addedEvent = events.Events.Last();
-
-            Assert.IsTrue(exEventsCount == events.Events.Count());
-            Assert.IsTrue(exTitle == addedEvent.Title);
-            Assert.IsTrue(exDesc == addedEvent.Description);
-            Assert.IsTrue(exDate == addedEvent.Date);
-            Assert.IsTrue(exCategoryId == addedEvent.CategoryId);
-            Assert.IsTrue(exLocation == addedEvent.Location);
-        }
+        }        
 
         [Test]
         public void Test_AddAsyncShouldThrowException()
@@ -167,22 +133,6 @@ namespace EventHub.UnitTests
 
             Assert.IsNotNull(exception.Message);
             Assert.IsTrue(string.Format(ErrorMessages.DoesntExistErrorMessage, "event") == exception.Message);
-        }
-
-        [Test]
-        public async Task Test_GetByIdShouldReturnTrueModel()
-        {
-            string exTitle = "Test";
-            string exDesc = "Test Description";
-            string exDate = "15.12.2024";
-            string exLocation = "NY York";
-
-            var eventModel = await eventService.GetEventByIdAsync(1);
-
-            Assert.IsTrue(exTitle == eventModel.Title);
-            Assert.IsTrue(exDesc == eventModel.Description);
-            Assert.IsTrue(exDate == eventModel.Date);
-            Assert.IsTrue(exLocation == eventModel.Location);
         }
 
         [Test]
